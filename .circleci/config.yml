@@ -1,6 +1,8 @@
 version: 2
 jobs:
   build:
+    environment:
+      CC_TEST_REPORTER_ID: 75513f407d75e3eaa34435a5eb2cc039ea35e816bdf01a3188919b2dc72ca768
     docker:
       - image: circleci/node:10
     working_directory: ~/repo
@@ -18,8 +20,17 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: lint
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+      - run: ./cc-test-reporter before-build
+      - run:
+          name: Linting files
           command: npm run lint
       - run:
-          name: test
+          name: Running tests
           command: npm test
+      - run:
+          name: Sending Code Climate coverage report
+          command: ./cc-test-reporter after-build -t lcov coverage/lcov.info --exit-code $?
