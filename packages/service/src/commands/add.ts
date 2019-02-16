@@ -25,15 +25,16 @@ export class Add implements ICommandHandler {
   public async run(args: string[], silent: boolean) {
     let result: any = await prompt(this.questions);
     const packageName = result.package;
-    const source = runtimeRoot(`node_modules/@vuesion/${packageName}/template`);
+    const dependencyName = `@vuesion/${packageName}`;
+    const source = runtimeRoot(`node_modules/${dependencyName}/template`);
     const destination = runtimeRoot();
     const spinner = new Spinner();
 
-    spinner.message = `Installing ${chalk.bold(packageName)} into your project...`;
+    spinner.message = `Installing ${chalk.bold(dependencyName)} into your project...`;
     spinner.start();
 
     try {
-      await runProcess('npm', ['install', '--save', packageName], { silent: true });
+      await runProcess('npm', ['install', '--save', dependencyName], { silent: true });
     } catch (e) {
       spinner.stop();
       handleProcessError(e);
@@ -45,7 +46,7 @@ export class Add implements ICommandHandler {
           spinner.stop();
           logErrorBold(e);
         } else {
-          spinner.message = `Package ${chalk.bold(packageName)} successfully installed`;
+          spinner.message = `Package ${chalk.bold(dependencyName)} successfully installed`;
           spinner.stop();
 
           this.questions = [

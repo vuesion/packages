@@ -22,6 +22,7 @@ export interface IServerContext {
   htmlLang: string;
   appConfig: IAppConfig;
   redirect: boolean;
+  rendered?: () => void;
 }
 
 export interface IPreLoad {
@@ -84,53 +85,55 @@ export default (context: IServerContext) => {
 
     router.push(context.url);
 
-    router.onReady(() => {
+    router.onReady(async () => {
       if (router.currentRoute.fullPath !== context.url) {
         return reject({ code: 302, cookies: [], path: router.currentRoute.fullPath });
       }
 
       const matchedComponents: Component[] = [App as Component].concat(router.getMatchedComponents());
 
-      Promise.all(
-        matchedComponents.map((component: Component) => {
-          if ((component as any).prefetch) {
-            return (component as any).prefetch({ store, route: router.currentRoute, router } as IPreLoad);
-          }
+      try {
+        await Promise.all(
+          matchedComponents.map((component: Component) => {
+            if ((component as any).prefetch) {
+              return (component as any).prefetch({ store, route: router.currentRoute, router } as IPreLoad);
+            }
 
-          return Promise.resolve();
-        }),
-      )
-        // catch prefetch errors just as we're doing on the client side
-        .catch((error: any) => {
-          if (error.response.status === 404) {
-            reject({ code: 404 });
-          }
-          Logger.warn(
-            'error in prefetch for route: %s; error: %s',
-            router.currentRoute.fullPath,
-            JSON.stringify(error, Object.getOwnPropertyNames(error)),
-          );
-        })
-        .then(() => {
+            return Promise.resolve();
+          }),
+        );
+
+        context.rendered = () => {
           context.state = store.state;
+        };
 
-          // If the route from the VueRouter instance differs from the request we assume a redirect was triggered in
-          // the Vue application. In case only the pending route is different, `router.push` or `router.replace`
-          // was called, e.g. in `prefetch`.
-          const currentPath = router.currentRoute.fullPath;
-          const pendingPath = router.history.pending && router.history.pending.fullPath;
+        // If the route from the VueRouter instance differs from the request we assume a redirect was triggered in
+        // the Vue application. In case only the pending route is different, `router.push` or `router.replace`
+        // was called, e.g. in `prefetch`.
+        const currentPath = router.currentRoute.fullPath;
+        const pendingPath = router.history.pending && router.history.pending.fullPath;
 
-          if (currentPath !== context.url || (pendingPath && pendingPath !== context.url)) {
-            reject({
-              code: 302,
-              cookies: PersistCookieStorage.getCookiesFromState(context.cookies, context.state),
-              path: pendingPath || currentPath,
-            });
-          } else {
-            resolve(app);
-          }
-        })
-        .catch(reject);
+        if (currentPath !== context.url || (pendingPath && pendingPath !== context.url)) {
+          reject({
+            code: 302,
+            cookies: PersistCookieStorage.getCookiesFromState(context.cookies, context.state),
+            path: pendingPath || currentPath,
+          });
+        } else {
+          resolve(app);
+        }
+      } catch (e) {
+        if (e.response.status === 404) {
+          reject({ code: 404 });
+        } else {
+          reject(e);
+        }
+        Logger.warn(
+          'error in prefetch for route: %s; error: %s',
+          router.currentRoute.fullPath,
+          JSON.stringify(e, Object.getOwnPropertyNames(e)),
+        );
+      }
     }, reject);
   });
 };
