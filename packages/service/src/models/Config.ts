@@ -20,7 +20,7 @@ export interface IConfig {
   };
 }
 
-export const configPath: string = runtimeRoot('.vue-starter/config.json');
+export const configPath: string = runtimeRoot('.vuesion/config.json');
 
 export let Config: IConfig;
 

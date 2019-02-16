@@ -10,7 +10,7 @@ const opn = require('opn');
 @Command({
   name: 'add',
   alias: 'a',
-  description: 'Add a vue-starter package to your project.',
+  description: 'Add a vuesion package to your project.',
 })
 export class Add implements ICommandHandler {
   private questions: Question[] = [
@@ -18,14 +18,14 @@ export class Add implements ICommandHandler {
       type: 'list',
       name: 'package',
       message: 'Which package do you want to add to your project?',
-      choices: ['vue-starter-contentful'],
+      choices: ['addon-contentful'],
     },
   ];
 
   public async run(args: string[], silent: boolean) {
     let result: any = await prompt(this.questions);
     const packageName = result.package;
-    const source = runtimeRoot(`node_modules/${packageName}/template`);
+    const source = runtimeRoot(`node_modules/@vuesion/${packageName}/template`);
     const destination = runtimeRoot();
     const spinner = new Spinner();
 
@@ -61,7 +61,7 @@ export class Add implements ICommandHandler {
 
           if (result.open) {
             try {
-              await opn(`https://github.com/devCrossNet/vue-starter-packages/tree/master/packages/${packageName}`, {
+              await opn(`https://github.com/vuesion/packages/tree/master/packages/${packageName}`, {
                 wait: false,
               });
             } catch (e) {

@@ -10,7 +10,7 @@ npm i -D --save-exact @vuesion/service
 
 # Usage
 
-Please make sure to have the contents from **[this .vue-starter folder](https://github.com/devCrossNet/vue-starter/tree/master/.vue-starter)** in the root directory of your project.
+Please make sure to have the contents from **[this .vuesion folder](https://github.com/devCrossNet/vue-starter/tree/master/.vuesion)** in the root directory of your project.
 
 ```
 Usage: vuesion [options] [command]
@@ -23,7 +23,7 @@ Options:
   -h, --help                 output usage information
 
 Commands:
-  add|a                      Add a vue-starter package to your project.
+  add|a                      Add a vuesion package to your project.
   build|b [options]          Build project for production.
   clean|c                    Clean up the project directory.
   create|c [options] [name]  Create a new vue-starter project.

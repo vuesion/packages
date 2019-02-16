@@ -12,7 +12,7 @@ export class Update implements ICommandHandler {
     try {
       await runProcess('node', [packageRoot('dist/scripts/update.js')], { silent });
 
-      await runProcess('vue-starter-service', ['prettier', '--pattern', '.vue-starter/*.json'], {
+      await runProcess('vuesion', ['prettier', '--pattern', '.vuesion/*.json'], {
         silent,
       });
     } catch (e) {

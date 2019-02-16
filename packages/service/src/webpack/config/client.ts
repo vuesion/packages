@@ -42,6 +42,6 @@ if (isProd) {
   ]);
 }
 
-client = require(runtimeRoot('.vue-starter/webpack.config'))(client, 'client');
+client = require(runtimeRoot('.vuesion/webpack.config'))(client, 'client');
 
 export default client;

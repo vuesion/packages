@@ -1,5 +1,5 @@
 import { Command, ICommandHandler } from '../lib/command';
-import { HeadLine, logErrorBold, logInfo, Result, Spinner } from '../utils/ui';
+import { Spinner } from '../utils/ui';
 import { runtimeRoot } from '../utils/path';
 import { handleProcessError, runProcess } from '../utils/process';
 import chalk from 'chalk';

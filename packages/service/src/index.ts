@@ -6,7 +6,7 @@ import { packageRoot } from './utils/path';
 sync(`${packageRoot()}/dist/commands/*.js`).forEach((file: string) => require(file));
 
 commander
-  .name(Package.name)
+  .name('vuesion')
   .version(Package.version, '-v, --version')
   .option('-s, --silent', 'silence output.', false)
   .description(Package.description);

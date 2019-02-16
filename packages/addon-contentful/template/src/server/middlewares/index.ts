@@ -2,7 +2,7 @@ import * as Express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import * as compression from 'compression';
-import { ContentfulMiddleware } from 'vue-starter-contentful';
+import { ContentfulMiddleware } from '@vuesion/addon-contentful';
 
 export const applyMiddlewares = (app: Express.Application) => {
   app.use(bodyParser.json());

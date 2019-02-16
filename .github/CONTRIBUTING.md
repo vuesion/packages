@@ -48,13 +48,13 @@ Before you submit an issue, please search the issue tracker, maybe an issue for 
 We want to fix all the issues as soon as possible, but before fixing a bug we need to reproduce and confirm it. Having a reproducible
 scenario gives us wealth of important information without going back & forth to you with additional questions.
 
-You can file new issues by filling out our [new issue form](https://github.com/devCrossNet/vue-starter/issues/new).
+You can file new issues by filling out our [new issue form](https://github.com/vuesion/packages/issues/new).
 
 ### <a name="submit-pr"></a> Submitting a Pull Request (PR)
 
 Before you submit your Pull Request (PR) consider the following guidelines:
 
-- Search [GitHub](https://github.com/devCrossNet/vue-starter/pulls) for an open or closed PR
+- Search [GitHub](https://github.com/vuesion/packages/pulls) for an open or closed PR
   that relates to your submission. You don't want to duplicate effort.
 - Make your changes in a new git branch:
 
@@ -81,7 +81,7 @@ Before you submit your Pull Request (PR) consider the following guidelines:
   git push origin my-fix-branch
   ```
 
-- In GitHub, send a pull request to `vue-starter:next`.
+- In GitHub, send a pull request to `packages:master`.
 - If we suggest changes then:
 
   - Make the required updates.
@@ -196,4 +196,4 @@ The body should include the motivation for the change and contrast this with pre
 The footer should contain any information about **Breaking Changes** and is also the place to
 reference GitHub issues that this commit **Closes**.
 
-[github]: https://github.com/devCrossNet/vue-starter/issues
+[github]: https://github.com/vuesion/packages/issues

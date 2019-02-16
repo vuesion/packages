@@ -27,6 +27,6 @@ export let baseServer: webpack.Configuration = merge(base, {
   },
 }) as any;
 
-baseServer = require(runtimeRoot('.vue-starter/webpack.config'))(baseServer, 'server');
+baseServer = require(runtimeRoot('.vuesion/webpack.config'))(baseServer, 'server');
 
 export default baseServer;

@@ -35,7 +35,7 @@ const prettier = async (args: string[], pattern: string, silent: boolean) => {
   ];
 
   try {
-    await runProcess('vue-starter-service', ['clean'], { silent });
+    await runProcess('vuesion', ['clean'], { silent });
 
     await runProcess('prettier', args, { silent });
   } catch (e) {

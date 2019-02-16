@@ -108,6 +108,6 @@ if (analyze) {
   base.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
 }
 
-base = require(runtimeRoot('.vue-starter/webpack.config'))(base);
+base = require(runtimeRoot('.vuesion/webpack.config'))(base);
 
 export default base;

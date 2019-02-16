@@ -22,7 +22,7 @@ export class Storybook implements ICommandHandler {
       args = args.concat(['--output-dir', './storybook-static']);
     }
 
-    args = args.concat(['--config-dir', './.vue-starter/storybook']);
+    args = args.concat(['--config-dir', './.vuesion//storybook']);
 
     args = args.filter((arg: string) => arg !== '--silent');
 

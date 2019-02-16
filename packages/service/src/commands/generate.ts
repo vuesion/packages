@@ -13,7 +13,7 @@ export class Generate implements ICommandHandler {
     try {
       await runProcess('plop', ['--plopfile', packageRoot('dist/generators/index.js')], { silent });
 
-      await runProcess('vue-starter-service', ['prettier', '--pattern', `${Config.generators.outputDirectory}/**/*`], {
+      await runProcess('vuesion', ['prettier', '--pattern', `${Config.generators.outputDirectory}/**/*`], {
         silent,
       });
     } catch (e) {
