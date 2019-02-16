@@ -1,0 +1,40 @@
+{
+  "name": "@vuesion/addon-contentful",
+  "version": "0.0.0",
+  "description": "vuesion contentful integration",
+  "author": "Johannes Werner <johannes.werner86@gmail.com>",
+  "homepage": "https://github.com/vuesion/packages#readme",
+  "license": "MIT",
+  "directories": {
+    "dist": "dist"
+  },
+  "files": [
+    "dist",
+    "template"
+  ],
+  "main": "dist/ContentfulMiddleware.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuesion/packages.git"
+  },
+  "scripts": {
+    "compile": "tsc",
+    "prebuild": "npm run clean",
+    "build": "npm run compile",
+    "clean": "rimraf ./dist ./build",
+    "dev": "tsc --watch",
+    "lint": "tslint -c tslint.json './src/**/*.ts'"
+  },
+  "bugs": {
+    "url": "https://github.com/vuesion/packages/issues"
+  },
+  "dependencies": {
+    "contentful": "7.3.0",
+    "express": "^4.16.4",
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "rimraf": "2.6.3",
+    "typescript": "^3.3.3"
+  }
+}

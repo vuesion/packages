@@ -1,0 +1,38 @@
+{
+  "name": "@vuesion/addon-vuex-persist",
+  "version": "0.0.0",
+  "description": "vuesion vuex middleware to persist state + adapters",
+  "author": "Johannes Werner <johannes.werner86@gmail.com>",
+  "homepage": "https://github.com/vuesion/packages#readme",
+  "license": "MIT",
+  "directories": {
+    "dist": "dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/vuex-persist.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuesion/packages.git"
+  },
+  "scripts": {
+    "compile": "tsc",
+    "prebuild": "npm run clean",
+    "build": "npm run compile",
+    "clean": "rimraf ./dist ./build",
+    "dev": "tsc --watch"
+  },
+  "bugs": {
+    "url": "https://github.com/vuesion/packages/issues"
+  },
+  "dependencies": {
+    "deepmerge": "^3.0.0",
+    "js-cookie": "^2.2.0",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "rimraf": "2.6.3",
+    "typescript": "^3.3.3"
+  }
+}

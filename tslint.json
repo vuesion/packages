@@ -1,0 +1,28 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "jsRules": {
+    "trailing-comma": [true]
+  },
+  "rules": {
+    "interface-name": [false],
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "no-var-requires": false,
+    "max-line-length": [120],
+    "max-file-line-count": [250],
+    "import-spacing": false,
+    "space-before-function-paren": [
+      false,
+      {
+        "anonymous": "always"
+      }
+    ],
+    "prettier": [true, null, { "editorconfig": false }],
+    "cyclomatic-complexity": [true, 11]
+  },
+  "rulesDirectory": ["tslint-plugin-prettier"],
+  "linterOptions": {
+    "exclude": ["**/node_modules/**"]
+  }
+}
