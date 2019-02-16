@@ -14,25 +14,25 @@ npm run add
 
 ## Page
 
-![page model](page.png?raw=true)
+![page model](https://raw.githubusercontent.com/vuesion/packages/master/packages/addon-contentful/page.png?raw=true)
 
 ## Text
 
-![page model](text.png?raw=true)
+![page model](https://raw.githubusercontent.com/vuesion/packages/master/packages/addon-contentful/text.png?raw=true)
 
 ## Gallery
 
-![page model](gallery.png?raw=true)
+![page model](https://raw.githubusercontent.com/vuesion/packages/master/packages/addon-contentful/gallery.png?raw=true)
 
 # Create Content
 
 ## Test Page
 
-![page model](testpage.png?raw=true)
+![page model](https://raw.githubusercontent.com/vuesion/packages/master/packages/addon-contentful/testpage.png?raw=true)
 
 ## Notfound Page
 
-![page model](notfound.png?raw=true)
+![page model](https://raw.githubusercontent.com/vuesion/packages/master/packages/addon-contentful/notfound.png?raw=true)
 
 # Testing
 
