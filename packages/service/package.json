@@ -114,5 +114,8 @@
     "node-sass": "^4.11.0",
     "rimraf": "2.6.3",
     "vue-template-compiler": "^2.6.4"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
