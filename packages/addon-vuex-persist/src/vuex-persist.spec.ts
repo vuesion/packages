@@ -2,14 +2,12 @@ import { Plugin } from 'vuex';
 import { IVuexPersistStorage, VuexPersist } from './vuex-persist';
 
 class PersistMockStorage implements IVuexPersistStorage {
+  private readonly localBeforePersist: <T>(state: T) => T;
   public modules: string[];
   public prefix: string;
   public length: number;
   public forceInitialState: boolean;
-  private readonly localBeforePersist: <T>(state: T) => T;
-
   [key: string]: any;
-
   [index: number]: string;
 
   constructor(modules: string[] = [], beforePersist?: <T>(state: T) => T, prefix: string = 'vuexpersist') {
@@ -17,6 +15,10 @@ class PersistMockStorage implements IVuexPersistStorage {
     this.prefix = prefix;
     this.localBeforePersist = beforePersist;
     this.forceInitialState = false;
+  }
+
+  private getKey(key: string) {
+    return `${this.prefix}${key}`;
   }
 
   public clear(): void {
@@ -45,10 +47,6 @@ class PersistMockStorage implements IVuexPersistStorage {
     }
 
     return state;
-  }
-
-  private getKey(key: string) {
-    return `${this.prefix}${key}`;
   }
 }
 
