@@ -54,8 +54,8 @@ export const runProcess = (
       }
     });
 
-    childProcess.on('error', () => {
-      const err: IProcessError = { code: 1, trace };
+    childProcess.on('error', (e) => {
+      const err: IProcessError = { code: e.code, trace: e.toString() };
       reject(err);
     });
 
