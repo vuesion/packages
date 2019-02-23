@@ -8,39 +8,42 @@ import { Spinner } from '../utils/ui';
   description: 'Run commands in parallel.',
 })
 export class Add implements ICommandHandler {
+  private promises = [];
+  private startTime = Date.now();
+  private spinner = new Spinner();
+  private max = 0;
+  private done = 0;
+
+  private setSpinnerMessage() {
+    if (this.done === this.max) {
+      this.spinner.message = `Finished running tasks in ${Date.now() - this.startTime}ms`;
+    } else {
+      this.spinner.message = `Running tasks ${this.done}/${this.max} ...`;
+    }
+  }
+
   public async run(args: string[], silent: boolean) {
-    const promises = [];
-    const startTime: number = Date.now();
-    const spinner = new Spinner();
-    const max = args.length;
-    let done = 0;
+    this.max = args.length;
+    this.done = 0;
 
-    const setSpinnerMessage = () => {
-      if (done === 3) {
-        spinner.message = `Finished running tasks in ${Date.now() - startTime}ms`;
-      } else {
-        spinner.message = `Running tasks ${done}/${max} ...`;
-      }
-    };
-
-    spinner.start();
-    setSpinnerMessage();
+    this.spinner.start();
+    this.setSpinnerMessage();
 
     args.forEach((command: string) => {
       const split = command.split(' ');
-      promises.push(
+      this.promises.push(
         runProcess(split.shift(), split, { silent: true }).then(() => {
-          done = done + 1;
-          setSpinnerMessage();
+          this.done = this.done + 1;
+          this.setSpinnerMessage();
         }),
       );
     });
 
     try {
-      await Promise.all(promises);
-      spinner.stop();
+      await Promise.all(this.promises);
+      this.spinner.stop();
     } catch (e) {
-      handleProcessError(e, spinner);
+      handleProcessError(e, this.spinner);
     }
   }
 }
