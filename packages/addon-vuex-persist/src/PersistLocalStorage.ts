@@ -1,19 +1,23 @@
 import { IVuexPersistStorage } from './vuex-persist';
 
 export class PersistLocalStorage implements IVuexPersistStorage {
-  [key: string]: any;
-  [index: number]: string;
+  private readonly localBeforePersist: (state: any) => any;
   public modules: string[];
   public prefix: string;
   public length: number;
   public forceInitialState: boolean;
-  private readonly localBeforePersist: (state: any) => any;
+  [key: string]: any;
+  [index: number]: string;
 
   constructor(modules: string[] = [], beforePersist?: (state: any) => any, prefix: string = 'vuexpersist') {
     this.modules = modules;
     this.prefix = prefix;
     this.localBeforePersist = beforePersist;
     this.forceInitialState = false;
+  }
+
+  private getKey(key: string) {
+    return `${this.prefix}${key}`;
   }
 
   public clear(): void {
@@ -42,9 +46,5 @@ export class PersistLocalStorage implements IVuexPersistStorage {
     }
 
     return state;
-  }
-
-  private getKey(key: string) {
-    return `${this.prefix}${key}`;
   }
 }

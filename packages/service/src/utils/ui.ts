@@ -23,9 +23,9 @@ export const Result = (message: string) => {
 };
 
 export class Spinner {
-  public message: string = '';
   private spinner: string[] = ['◜', '◠', '◝', '◞', '◡', '◟'];
   private timer = null;
+  public message: string = '';
 
   public start = () => {
     const play = (arr: string[]) => {

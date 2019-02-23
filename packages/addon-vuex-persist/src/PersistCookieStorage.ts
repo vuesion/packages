@@ -9,29 +9,14 @@ interface IPersistCookieStorageConfig {
 }
 
 export class PersistCookieStorage implements IVuexPersistStorage {
-  public static getMergedStateFromServerContext<T>(cookies: any, state: any): T {
-    const vuexPersistCookie: any = JSON.parse(cookies[this.indexKey] || '{}');
-    const cookieState: any = {};
-
-    Object.keys(cookies).forEach((key: string) => {
-      const mappedKey: string = vuexPersistCookie[key];
-
-      if (mappedKey) {
-        try {
-          cookieState[mappedKey] = JSON.parse(cookies[key]);
-        } catch (e) {
-          cookieState[mappedKey] = state[mappedKey] || {};
-        }
-      }
-    });
-
-    return merge(state, cookieState, {
-      clone: false,
-      arrayMerge: (initial, cookie) => {
-        return cookie;
-      },
-    });
-  }
+  private static indexKey: string = 'vuexpersistcookie';
+  public modules: string[];
+  public prefix: string;
+  public length: number;
+  public options: IPersistCookieStorageConfig;
+  public forceInitialState: boolean;
+  [key: string]: any;
+  [index: number]: string;
 
   public static getCookiesFromState(cookies: any, state: any): Array<{ name: string; value: string }> {
     const vuexPersistCookie: any = JSON.parse(cookies[this.indexKey] || '{}');
@@ -56,17 +41,29 @@ export class PersistCookieStorage implements IVuexPersistStorage {
     return result;
   }
 
-  private static indexKey: string = 'vuexpersistcookie';
+  public static getMergedStateFromServerContext<T>(cookies: any, state: any): T {
+    const vuexPersistCookie: any = JSON.parse(cookies[this.indexKey] || '{}');
+    const cookieState: any = {};
 
-  public modules: string[];
-  public prefix: string;
-  public length: number;
-  public options: IPersistCookieStorageConfig;
-  public forceInitialState: boolean;
+    Object.keys(cookies).forEach((key: string) => {
+      const mappedKey: string = vuexPersistCookie[key];
 
-  [key: string]: any;
+      if (mappedKey) {
+        try {
+          cookieState[mappedKey] = JSON.parse(cookies[key]);
+        } catch (e) {
+          cookieState[mappedKey] = state[mappedKey] || {};
+        }
+      }
+    });
 
-  [index: number]: string;
+    return merge(state, cookieState, {
+      clone: false,
+      arrayMerge: (initial, cookie) => {
+        return cookie;
+      },
+    });
+  }
 
   constructor(
     modules: string[] = [],
@@ -77,6 +74,30 @@ export class PersistCookieStorage implements IVuexPersistStorage {
     this.prefix = prefix;
     this.options = options;
     this.forceInitialState = true;
+  }
+
+  private getKey(key: string) {
+    return `${this.prefix}${key}`;
+  }
+
+  private getIndex(): any {
+    return JSON.parse(Cookies.get(PersistCookieStorage.indexKey) || '{}');
+  }
+
+  private addToIndex(key: string) {
+    const index: any = this.getIndex();
+
+    index[this.getKey(key)] = key;
+
+    Cookies.set(PersistCookieStorage.indexKey, JSON.stringify(index), this.options.cookieOptions);
+  }
+
+  private removeFromIndex(key: string) {
+    const index: any = this.getIndex();
+
+    delete index[this.getKey(key)];
+
+    Cookies.set(PersistCookieStorage.indexKey, JSON.stringify(index), this.options.cookieOptions);
   }
 
   public clear(): void {
@@ -113,29 +134,5 @@ export class PersistCookieStorage implements IVuexPersistStorage {
     }
 
     return state;
-  }
-
-  private getKey(key: string) {
-    return `${this.prefix}${key}`;
-  }
-
-  private getIndex(): any {
-    return JSON.parse(Cookies.get(PersistCookieStorage.indexKey) || '{}');
-  }
-
-  private addToIndex(key: string) {
-    const index: any = this.getIndex();
-
-    index[this.getKey(key)] = key;
-
-    Cookies.set(PersistCookieStorage.indexKey, JSON.stringify(index), this.options.cookieOptions);
-  }
-
-  private removeFromIndex(key: string) {
-    const index: any = this.getIndex();
-
-    delete index[this.getKey(key)];
-
-    Cookies.set(PersistCookieStorage.indexKey, JSON.stringify(index), this.options.cookieOptions);
   }
 }
