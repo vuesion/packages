@@ -4,7 +4,6 @@ import { Config } from '../models/Config';
 
 @Command({
   name: 'prettier',
-  alias: 'p',
   description: 'Format project files.',
   options: [
     { flags: '-p, --pattern <pattern>', description: 'Match file pattern' },
