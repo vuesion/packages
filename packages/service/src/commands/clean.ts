@@ -1,11 +1,10 @@
 import { Command, ICommandHandler } from '../lib/command';
 import { handleProcessError, runProcess } from '../utils/process';
-import { logErrorBold, Spinner } from '../utils/ui';
+import { Spinner } from '../utils/ui';
 import { Config } from '../models/Config';
 
 @Command({
   name: 'clean',
-  alias: 'c',
   description: 'Clean up the project directory.',
 })
 export class Clean implements ICommandHandler {
