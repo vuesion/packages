@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Command, ICommandHandler } from '../lib/command';
 import { handleProcessError, runProcess } from '../utils/process';
-import { HeadLine } from '../utils/ui';
+import { HeadLine, logInfo } from '../utils/ui';
 import { packageRoot } from '../utils/path';
 
 const waitForApp = async (url: string) => {
@@ -21,7 +21,7 @@ const waitForApp = async (url: string) => {
 
         if (elapsedTime > timeout) {
           clearInterval(instance);
-          reject({ code: 1, trace: 'not able to connect to dev-server' });
+          reject({ code: e.response.status, trace: `Unable to connect to dev-server.\nTry to open ${url} manually.` });
         }
       }
     }, interval);
@@ -64,8 +64,13 @@ export class Dev implements ICommandHandler {
       });
 
       if (this.open) {
-        await waitForApp(url);
-        await opn(url, { wait: false });
+        try {
+          await waitForApp(url);
+          await opn(url, { wait: false });
+        } catch (e) {
+          logInfo(`Dev-server returned status code: ${e.code}.`);
+          logInfo(e.trace);
+        }
       }
     } catch (e) {
       handleProcessError(e);
