@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Command, ICommandHandler } from '../lib/command';
+import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { handleProcessError, runProcess } from '../utils/process';
 import { HeadLine, logInfo } from '../utils/ui';
 import { packageRoot } from '../utils/path';
@@ -42,26 +42,28 @@ export class Dev implements ICommandHandler {
   public port: string;
   public open: boolean;
 
-  public async run(args: string[], silent: boolean) {
+  public async run(args: string[], options: IRunOptions) {
     process.env.NODE_ENV = 'development';
     process.env.PORT = this.port;
 
     const url = `http://localhost:${this.port}`;
 
     try {
-      await runProcess('rimraf', ['./dist'], { silent });
+      await runProcess('rimraf', ['./dist'], { silent: true, ...options });
 
       HeadLine('Start development mode...');
 
       await runProcess(
         'webpack',
         ['--mode', 'development', '--config', packageRoot('dist/webpack/config/dev-server.js')],
-        { silent },
+        options,
       );
 
-      runProcess('webpack', ['--mode', 'development', '--config', packageRoot('dist/webpack/config/server.js')], {
-        silent,
-      });
+      runProcess(
+        'webpack',
+        ['--mode', 'development', '--config', packageRoot('dist/webpack/config/server.js')],
+        options,
+      );
 
       if (this.open) {
         try {

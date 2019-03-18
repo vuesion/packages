@@ -1,6 +1,12 @@
 import { ChildProcess, SpawnOptions } from 'child_process';
 import { logError, Spinner } from './ui';
 import Signals = NodeJS.Signals;
+import { IRunOptions } from '../lib/command';
+
+interface IProcessOptions extends IRunOptions {
+  cwd?: string;
+  silent?: boolean;
+}
 
 interface IProcessError {
   code: number;
@@ -15,41 +21,25 @@ const killProcesses = () => {
   });
 };
 
-export const runProcess = (
-  name: string,
-  args: string[] = [],
-  options: { cwd?: string; silent?: boolean } = {},
-): Promise<any> => {
+export const runProcess = (name: string, args: string[] = [], options?: IProcessOptions): Promise<any> => {
   return new Promise((resolve: any, reject: any) => {
-    const silent = options.silent === undefined ? false : options.silent;
+    options = Object.assign({ cwd: process.cwd(), silent: false, debug: false }, options);
 
-    const localOptions: SpawnOptions = {
-      detached: true,
-      cwd: options.cwd ? options.cwd : process.cwd(),
-      env: process.env,
-    };
-
-    if (!silent) {
-      localOptions.stdio = 'inherit';
-    }
-
+    const localOptions: SpawnOptions = Object.assign(
+      {
+        detached: true,
+        cwd: options.cwd,
+        env: process.env,
+      },
+      options.silent === false || options.debug === true ? { stdio: 'inherit' } : {},
+    );
     const childProcess: any = spawn(name, args, localOptions);
-    let trace = '';
-
-    if (silent) {
-      childProcess.stdout.on('data', (data: any) => {
-        trace += data;
-      });
-      childProcess.stderr.on('data', (data: any) => {
-        trace += data;
-      });
-    }
 
     childProcess.on('exit', (code: number) => {
       if (code === 0) {
         resolve(undefined);
       } else {
-        const err: IProcessError = { code, trace };
+        const err: IProcessError = { code, trace: '' };
         reject(err);
       }
     });

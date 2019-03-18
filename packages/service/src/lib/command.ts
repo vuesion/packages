@@ -23,11 +23,29 @@ export interface IArgument {
   defaultValue?: string;
 }
 
-export interface ICommandHandler {
-  run(args: string[], silent: boolean);
+export interface IRunOptions {
+  debug?: boolean;
 }
 
-const getProperties = (obj: any): string[] => {
+export interface ICommandHandler {
+  run(args: string[], options?: IRunOptions);
+}
+
+const getCommand = (args: any) => {
+  const max = args.length;
+  let command = null;
+
+  for (let i = 0; i < max; i++) {
+    if (args[i].parent) {
+      command = args[i];
+      break;
+    }
+  }
+
+  return command;
+};
+
+const getOptions = (obj: any): string[] => {
   const result = [];
   for (const property in obj) {
     if (
@@ -42,52 +60,39 @@ const getProperties = (obj: any): string[] => {
 };
 
 export function Command(meta: ICommandMetadata): any {
+  meta = Object.assign({ alias: null, options: [], arguments: [] }, meta);
+
   return (Target) => {
-    const target = new Target();
+    const target: ICommandHandler = new Target();
     const command = commander.command(meta.name);
 
     command.allowUnknownOption();
+    command.alias(meta.alias);
+    command.description(meta.description);
 
-    if (meta.alias) {
-      command.alias(meta.alias);
-    }
+    meta.options.forEach((option: IOption) => {
+      if (option.formatter) {
+        command.option(option.flags, option.description, option.formatter, option.defaultValue);
+      } else {
+        command.option(option.flags, option.description, option.defaultValue);
+      }
+    });
 
-    if (meta.description) {
-      command.description(meta.description);
-    }
-
-    if (meta.options) {
-      meta.options.forEach((option: IOption) => {
-        if (option.formatter) {
-          command.option(option.flags, option.description, option.formatter, option.defaultValue);
-        } else {
-          command.option(option.flags, option.description, option.defaultValue);
-        }
-      });
-    }
-
-    if (meta.arguments) {
-      meta.arguments.forEach((arg: IArgument) => {
-        if (arg.required) {
-          command.arguments(`<${arg.name}>`);
-        } else {
-          command.arguments(`[${arg.name}]`);
-        }
-      });
-    }
+    meta.arguments.forEach((arg: IArgument) => {
+      if (arg.required) {
+        command.arguments(`<${arg.name}>`);
+      } else {
+        command.arguments(`[${arg.name}]`);
+      }
+    });
 
     command.action(function() {
-      const hasArgs = meta.arguments ? meta.arguments.length > 0 : false;
-      const data = hasArgs ? arguments[meta.arguments.length] : arguments[0];
-      const options = getProperties(data);
-      let args = (data && data.parent && data.parent.rawArgs.splice(3)) || [];
-      const silent = !!(data && data.parent && data.parent.silent);
+      const hasArgs = meta.arguments.length > 0;
+      const localCommand = getCommand(arguments);
+      const options = getOptions(localCommand);
+      const args = localCommand.parent.rawArgs.splice(3);
 
-      if (_.isArray(data)) {
-        args = data;
-      } else {
-        options.forEach((option: any) => (target[option] = data[option]));
-      }
+      options.forEach((option: string) => (target[option] = localCommand[option]));
 
       if (hasArgs) {
         meta.arguments.forEach((arg: IArgument, idx: number) => {
@@ -95,7 +100,7 @@ export function Command(meta: ICommandMetadata): any {
         });
       }
 
-      target.run(args, silent);
+      target.run(args.filter((arg: string) => ['--debug'].indexOf(arg) === -1), { debug: !!localCommand.parent.debug });
     });
 
     return target;
