@@ -91,9 +91,16 @@ export const ContentfulMiddleware = (options: IContentfulMiddlewareOptions) => {
     const slug: string = req.query.slug || '/';
     const locale: string = req.query.locale;
     const entry: Entry<any> = entries.find((p: Entry<any>) => getLocaleValue(p.fields.slug, locale) === slug);
+    let page: IContentfulPage;
 
-    if (entry) {
-      res.status(200).json(transformContentfulPageToVue(entry, locale));
+    try {
+      page = transformContentfulPageToVue(entry, locale);
+    } catch (e) {
+      page = null;
+    }
+
+    if (page) {
+      res.status(200).json();
     } else {
       res.status(404).json({ message: 'not found' });
     }
