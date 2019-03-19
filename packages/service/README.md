@@ -19,7 +19,7 @@ vuesion service for development tasks
 
 Options:
   -v, --version              output the version number
-  -s, --silent               silence output.
+  -d, --debug                Show debugging output.
   -h, --help                 output usage information
 
 Commands:
