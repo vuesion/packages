@@ -74,6 +74,10 @@ export const ContentfulMiddleware = (options: IContentfulMiddlewareOptions) => {
     return properties;
   };
   const transformContentfulPageToVue = (page: Entry<any>, locale: string): IContentfulPage => {
+    if (!page) {
+      return null;
+    }
+
     return {
       slug: getLocaleValue(page.fields.slug, locale),
       title: getLocaleValue(page.fields.title, locale),
