@@ -8,7 +8,7 @@ sync(`${packageRoot()}/dist/commands/*.js`).forEach((file: string) => require(fi
 commander
   .name('vuesion')
   .version(Package.version, '-v, --version')
-  .option('-s, --silent', 'silence output.', false)
+  .option('-d, --debug', 'Show debugging output.', false)
   .description(Package.description);
 
 commander.parse(process.argv);

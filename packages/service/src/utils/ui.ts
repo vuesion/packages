@@ -27,7 +27,11 @@ export class Spinner {
   private timer = null;
   public message: string = '';
 
-  public start = () => {
+  public start = (debug: boolean = false) => {
+    if (debug) {
+      return;
+    }
+
     const play = (arr: string[]) => {
       const len = arr.length;
       let i = 0;

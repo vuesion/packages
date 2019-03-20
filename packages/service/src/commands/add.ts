@@ -1,6 +1,6 @@
 import * as fs from 'fs-extra';
 import chalk from 'chalk';
-import { Command, ICommandHandler } from '../lib/command';
+import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { prompt, Question } from 'inquirer';
 import { logErrorBold, Spinner } from '../utils/ui';
 import { handleProcessError, runProcess } from '../utils/process';
@@ -22,7 +22,7 @@ export class Add implements ICommandHandler {
     },
   ];
 
-  public async run(args: string[], silent: boolean) {
+  public async run(args: string[], options: IRunOptions) {
     let result: any = await prompt(this.questions);
     const packageName = result.package;
     const dependencyName = `@vuesion/${packageName}`;
@@ -34,7 +34,7 @@ export class Add implements ICommandHandler {
     spinner.start();
 
     try {
-      await runProcess('npm', ['install', '--save', dependencyName], { silent: true });
+      await runProcess('npm', ['install', '--save', dependencyName], { silent: true, ...options });
     } catch (e) {
       spinner.stop();
       handleProcessError(e);

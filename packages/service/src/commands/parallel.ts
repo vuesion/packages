@@ -1,4 +1,4 @@
-import { Command, ICommandHandler } from '../lib/command';
+import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { handleProcessError, runProcess } from '../utils/process';
 import { Spinner } from '../utils/ui';
 
@@ -22,17 +22,17 @@ export class Add implements ICommandHandler {
     }
   }
 
-  public async run(args: string[], silent: boolean) {
+  public async run(args: string[], options: IRunOptions) {
     this.max = args.length;
     this.done = 0;
 
-    this.spinner.start();
+    this.spinner.start(options.debug);
     this.setSpinnerMessage();
 
     args.forEach((command: string) => {
       const split = command.split(' ');
       this.promises.push(
-        runProcess(split.shift(), split, { silent: true }).then(() => {
+        runProcess(split.shift(), split, { silent: true, ...options }).then(() => {
           this.done = this.done + 1;
           this.setSpinnerMessage();
         }),
