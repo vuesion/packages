@@ -1,4 +1,4 @@
-import { Command, ICommandHandler } from '../lib/command';
+import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { handleProcessError, runProcess } from '../utils/process';
 
 @Command({
@@ -9,7 +9,7 @@ import { handleProcessError, runProcess } from '../utils/process';
 export class Storybook implements ICommandHandler {
   public dev: boolean;
 
-  public async run(args: string[], silent: boolean) {
+  public async run(args: string[], options: IRunOptions) {
     const dev = Boolean(this.dev);
     let binary = 'build-storybook';
 
@@ -27,7 +27,7 @@ export class Storybook implements ICommandHandler {
     args = args.filter((arg: string) => arg !== '--silent');
 
     try {
-      await runProcess(binary, args, { silent });
+      await runProcess(binary, args, options);
     } catch (e) {
       handleProcessError(e);
     }

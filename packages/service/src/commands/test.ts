@@ -9,7 +9,7 @@ import { Command, ICommandHandler } from '../lib/command';
 export class Test implements ICommandHandler {
   public coverage: boolean;
 
-  public async run(args: string[], silent: boolean) {
+  public async run(args: string[]) {
     process.env.NODE_ENV = 'test';
 
     const jest = require('jest');

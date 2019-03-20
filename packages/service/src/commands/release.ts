@@ -1,4 +1,4 @@
-import { Command, ICommandHandler } from '../lib/command';
+import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { handleProcessError, runProcess } from '../utils/process';
 import { log, logInfo, Result } from '../utils/ui';
 
@@ -17,7 +17,7 @@ export class Release implements ICommandHandler {
   public minor: boolean;
   public patch: boolean;
 
-  public async run(args: string[], silent: boolean) {
+  public async run(args: string[], options: IRunOptions) {
     let npmVersion = 'major';
 
     if (this.minor) {
@@ -31,27 +31,27 @@ export class Release implements ICommandHandler {
     try {
       logInfo('Generating CHANGELOG.md...');
 
-      await runProcess('changelog', args.filter((arg: string) => arg !== '--silent'), { silent });
+      await runProcess('changelog', args.filter((arg: string) => arg !== '--silent'), { silent: true, ...options });
 
       logInfo('Adding CHANGELOG.md...');
 
-      await runProcess('git', ['add', 'CHANGELOG.md'], { silent });
+      await runProcess('git', ['add', 'CHANGELOG.md'], { silent: true, ...options });
 
       logInfo('Committing changes...');
 
-      await runProcess('git', ['commit', '-m', 'chore: update changelog'], { silent });
+      await runProcess('git', ['commit', '-m', 'chore: update changelog'], { silent: true, ...options });
 
       logInfo(`Releasing npm ${npmVersion} version...`);
 
-      await runProcess('npm', ['version', npmVersion], { silent });
+      await runProcess('npm', ['version', npmVersion], { silent: true, ...options });
 
       logInfo('Pushing changes...');
 
-      await runProcess('git', ['push', 'origin'], { silent });
+      await runProcess('git', ['push', 'origin'], { silent: true, ...options });
 
       logInfo('Pushing tags...');
 
-      await runProcess('git', ['push', 'origin', '--tags'], { silent });
+      await runProcess('git', ['push', 'origin', '--tags'], { silent: true, ...options });
 
       log('');
 

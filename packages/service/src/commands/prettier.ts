@@ -1,4 +1,4 @@
-import { Command, ICommandHandler } from '../lib/command';
+import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { handleProcessError, runProcess } from '../utils/process';
 import { Config } from '../models/Config';
 
@@ -14,16 +14,16 @@ export class Prettier implements ICommandHandler {
   public pattern: string;
   public staged: boolean;
 
-  public async run(args: string[], silent: boolean) {
+  public async run(args: string[], options: IRunOptions) {
     if (this.staged) {
-      prettyQuick(args, silent);
+      prettyQuick(args, options);
     } else {
-      prettier(args, this.pattern, silent);
+      prettier(args, this.pattern, options);
     }
   }
 }
 
-const prettier = async (args: string[], pattern: string, silent: boolean) => {
+const prettier = async (args: string[], pattern: string, options: IRunOptions) => {
   args = [
     '--config',
     '.prettierrc',
@@ -34,19 +34,19 @@ const prettier = async (args: string[], pattern: string, silent: boolean) => {
   ];
 
   try {
-    await runProcess('vuesion', ['clean'], { silent });
+    await runProcess('vuesion', ['clean'], options);
 
-    await runProcess('prettier', args, { silent });
+    await runProcess('prettier', args, options);
   } catch (e) {
     handleProcessError(e);
   }
 };
 
-const prettyQuick = async (args: string[], silent: boolean) => {
+const prettyQuick = async (args: string[], options: IRunOptions) => {
   args = ['--staged'].concat(args);
 
   try {
-    await runProcess('pretty-quick', args, { silent });
+    await runProcess('pretty-quick', args, options);
   } catch (e) {
     handleProcessError(e);
   }

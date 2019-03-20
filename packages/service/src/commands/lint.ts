@@ -1,4 +1,4 @@
-import { Command, ICommandHandler } from '../lib/command';
+import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { handleProcessError, runProcess } from '../utils/process';
 import { Spinner } from '../utils/ui';
 
@@ -8,22 +8,18 @@ import { Spinner } from '../utils/ui';
   description: 'Lint project files.',
 })
 export class Lint implements ICommandHandler {
-  public async run(args: string[], silent: boolean) {
+  public async run(args: string[], options: IRunOptions) {
     args = args.concat(['--fix', '-c', 'tslint.json', '-p', 'tsconfig.json']);
     const spinner = new Spinner();
 
-    if (!silent) {
-      spinner.message = 'Linting files...';
-      spinner.start();
-    }
+    spinner.message = 'Linting files...';
+    spinner.start(options.debug);
 
     try {
-      await runProcess('tslint', args.filter((arg: string) => arg !== '--silent'), { silent });
+      await runProcess('tslint', args.filter((arg: string) => arg !== '--silent'), { silent: true, ...options });
 
-      if (!silent) {
-        spinner.message = 'All files passed linting';
-        spinner.stop();
-      }
+      spinner.message = 'All files passed linting';
+      spinner.stop();
     } catch (e) {
       handleProcessError(e, spinner);
     }

@@ -1,4 +1,4 @@
-import { Command, ICommandHandler } from '../lib/command';
+import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { Spinner } from '../utils/ui';
 import { runtimeRoot } from '../utils/path';
 import { handleProcessError, runProcess } from '../utils/process';
@@ -17,13 +17,13 @@ export class Create implements ICommandHandler {
   public name: string;
   public next: string;
 
-  public async run(args: string[], silent: boolean) {
+  public async run(args: string[], options: IRunOptions) {
     const destination = runtimeRoot(this.name);
     const branch = this.next ? 'github:devCrossNet/vue-starter#next' : 'github:devCrossNet/vue-starter';
     const spinner = new Spinner();
 
     spinner.message = 'Downloading project...';
-    spinner.start();
+    spinner.start(options.debug);
 
     download(branch, destination, async (e: any) => {
       if (e) {
@@ -33,7 +33,7 @@ export class Create implements ICommandHandler {
       spinner.message = 'Installing dependencies...';
 
       try {
-        await runProcess('npm', ['install'], { cwd: destination, silent: true });
+        await runProcess('npm', ['install'], { cwd: destination, silent: true, ...options });
 
         spinner.message = `Project ${chalk.bold(this.name)} successfully created`;
         spinner.stop();
