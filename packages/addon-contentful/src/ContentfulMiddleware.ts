@@ -1,6 +1,5 @@
 import { ContentfulClientApi, createClient, CreateClientParams, Entry, EntryCollection } from 'contentful';
 import { Request, Response } from 'express';
-import * as _ from 'lodash';
 
 export interface IContentfulMiddlewareOptions extends CreateClientParams {
   space: string;
@@ -50,28 +49,24 @@ export const ContentfulMiddleware = (options: IContentfulMiddlewareOptions) => {
 
     return item[options.defaultLocale];
   };
-  const getProperties = (item: Entry<any>, locale: string) => {
-    const properties: any = {};
+  const getProperties = (fields: any, locale: string = options.defaultLocale, result: any = {}) => {
+    Object.keys(fields).map((key) => {
+      if (fields[key].hasOwnProperty(locale)) {
+        const item = fields[key][locale];
 
-    Object.keys(item.fields).forEach((key: string) => {
-      const value: any | any[] = getLocaleValue(item.fields[key], locale);
-
-      if (_.isArray(value)) {
-        properties[key] = value.map((entry: Entry<any>) => {
-          const prop: any = {};
-
-          Object.keys(entry.fields).forEach((k: string) => {
-            prop[k] = getLocaleValue(entry.fields[k], locale);
-          });
-
-          return prop;
-        });
-      } else {
-        properties[key] = value;
+        if (typeof item !== 'object') {
+          return (result[key] = item);
+        } else if (item.hasOwnProperty('fields')) {
+          return (result[key] = getProperties(item.fields, locale));
+        } else if (Array.isArray(item)) {
+          return (result[key] = item.map((e) => getProperties(e, locale)));
+        } else {
+          return (result[key] = item);
+        }
       }
     });
 
-    return properties;
+    return result;
   };
   const transformContentfulPageToVue = (page: Entry<any>, locale: string): IContentfulPage => {
     if (!page) {
@@ -85,7 +80,7 @@ export const ContentfulMiddleware = (options: IContentfulMiddlewareOptions) => {
       contentItems: getLocaleValue(page.fields.contentItems, locale).map((item: Entry<any>) => {
         return {
           component: item.sys.contentType.sys.id,
-          properties: getProperties(item, locale),
+          properties: getProperties(item.fields, locale),
         };
       }),
     };
@@ -104,7 +99,7 @@ export const ContentfulMiddleware = (options: IContentfulMiddlewareOptions) => {
     }
 
     if (page) {
-      res.status(200).json();
+      res.status(200).json(page);
     } else {
       res.status(404).json({ message: 'not found' });
     }
