@@ -1,6 +1,6 @@
 # `@vuesion/service`
 
-> This service includes tasks and tools that are used by the [vuesion](https://github.com/vuesion/vuesion)
+> This service includes tasks and tools that are used by the [vuesion project](https://github.com/vuesion/vuesion)
 
 # Installation
 

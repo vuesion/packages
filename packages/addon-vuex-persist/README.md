@@ -1,6 +1,6 @@
 # `@vuesion/addon-vuex-persist`
 
-> vuex-middleware used by the [vuesion](https://github.com/vuesion/vuesion) to persist state to cookies or localStorage
+> vuex-middleware used by the [vuesion project](https://github.com/vuesion/vuesion) to persist state to cookies or localStorage
 
 # Installation
 

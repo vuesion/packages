@@ -1,6 +1,6 @@
 # `@vuesion/addon-contentful`
 
-> contentful integration for the [vuesion](https://github.com/vuesion/vuesion)
+> contentful integration for the [vuesion project](https://github.com/vuesion/vuesion)
 
 # Installation
 
