@@ -5,7 +5,7 @@ import { packageRoot } from '../utils/path';
 @Command({
   name: 'update',
   alias: 'u',
-  description: 'Update your local copy of the vue-starter.',
+  description: 'Update your local copy of vuesion.',
 })
 export class Update implements ICommandHandler {
   public async run(args: string[], options: IRunOptions) {

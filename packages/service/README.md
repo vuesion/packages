@@ -1,6 +1,6 @@
 # `@vuesion/service`
 
-> This service includes tasks and tools that are used by the [vue-starter project](https://github.com/devCrossNet/vue-starter)
+> This service includes tasks and tools that are used by the [vuesion](https://github.com/vuesion/vuesion)
 
 # Installation
 
@@ -10,7 +10,7 @@ npm i -D --save-exact @vuesion/service
 
 # Usage
 
-Please make sure to have the contents from **[this .vuesion folder](https://github.com/devCrossNet/vue-starter/tree/master/.vuesion)** in the root directory of your project.
+Please make sure to have the contents from **[this .vuesion folder](https://github.com/vuesion/vuesion/tree/master/.vuesion)** in the root directory of your project.
 
 ```
 Usage: vuesion [options] [command]
@@ -26,7 +26,7 @@ Commands:
   add|a                      Add a vuesion package to your project.
   build|b [options]          Build project for production.
   clean                      Clean up the project directory.
-  create|c [options] [name]  Create a new vue-starter project.
+  create|c [options] [name]  Create a new vuesion project.
   dev|d [options]            Serve application for development.
   e2e|e                      Run e2e tests with cypress.io. All cypress CLI options are supported.
   extract-i18n-messages|em   Extract i18n default messages from .vue files.
@@ -38,6 +38,6 @@ Commands:
   statistics|s               Generates a report for certain project management KPIs.
   storybook [options]        Run Storybook.
   test|t [options]           Run unit-tests with jest. All Jest CLI options are supported.
-  update|u                   Update your local copy of the vue-starter.
+  update|u                   Update your local copy of vuesion.
 
 ```
