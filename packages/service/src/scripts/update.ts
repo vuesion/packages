@@ -11,7 +11,7 @@ interface IFile {
   previous_filename: string;
 }
 
-const vueStarterRepo: string = 'https://api.github.com/repos/devCrossNet/vue-starter';
+const vuesionRepo: string = 'https://api.github.com/repos/vuesion/vuesion';
 const deleteFile = (status: string, filePath: string) => {
   try {
     fs.unlinkSync(filePath);
@@ -62,7 +62,7 @@ const downloadFile = (status: string, filePath: string, url: string) => {
 
 async function update() {
   try {
-    const tagsResponse: AxiosResponse<any> = await axios.get(`${vueStarterRepo}/tags`);
+    const tagsResponse: AxiosResponse<any> = await axios.get(`${vuesionRepo}/tags`);
     const latestVersion: string = tagsResponse.data[0].name;
     const currentVersion: string = Config.currentVersion;
 
@@ -74,13 +74,13 @@ async function update() {
     Result(`Update from version: ${currentVersion} to version: ${latestVersion}.`);
 
     const diffResponse: AxiosResponse<any> = await axios.get(
-      `${vueStarterRepo}/compare/${currentVersion}...${latestVersion}`,
+      `${vuesionRepo}/compare/${currentVersion}...${latestVersion}`,
     );
     const diffFiles: IFile[] = diffResponse.data.files;
 
     diffFiles.forEach((diffFile: IFile) => {
       const dest: string = runtimeRoot(diffFile.filename);
-      const url: string = `https://raw.githubusercontent.com/devCrossNet/vue-starter/master/${diffFile.filename}`;
+      const url: string = `https://raw.githubusercontent.com/vuesion/vuesion/master/${diffFile.filename}`;
 
       if (diffFile.status === 'removed') {
         deleteFile(diffFile.status, dest);

@@ -9,7 +9,7 @@ const download = require('download-git-repo');
 @Command({
   name: 'create',
   alias: 'c',
-  description: 'Create a new vue-starter project.',
+  description: 'Create a new vuesion project.',
   arguments: [{ name: 'name', defaultValue: 'my-app' }],
   options: [{ flags: '-n, --next', description: 'Download latest version.' }],
 })
@@ -19,7 +19,7 @@ export class Create implements ICommandHandler {
 
   public async run(args: string[], options: IRunOptions) {
     const destination = runtimeRoot(this.name);
-    const branch = this.next ? 'github:devCrossNet/vue-starter#next' : 'github:devCrossNet/vue-starter';
+    const branch = this.next ? 'github:vuesion/vuesion#next' : 'github:vuesion/vuesion';
     const spinner = new Spinner();
 
     spinner.message = 'Downloading project...';

@@ -1,10 +1,10 @@
 # `@vuesion/addon-contentful`
 
-> contentful integration for the [vue-starter project](https://github.com/devCrossNet/vue-starter)
+> contentful integration for the [vuesion project](https://github.com/vuesion/vuesion)
 
 # Installation
 
-Inside your vue-starter project run:
+Inside your vuesion project run:
 
 ```js
 npm run add

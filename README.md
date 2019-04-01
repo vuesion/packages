@@ -1,6 +1,6 @@
 # Vuesion
 
-> Packages to support the [vue-starter project](https://github.com/devCrossNet/vue-starter)
+> Packages to support the [vuesion project](https://github.com/vuesion/vuesion)
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/vuesion/packages/graphs/commit-activity)
 [![CircleCI](https://circleci.com/gh/vuesion/packages.svg?style=svg)](https://circleci.com/gh/vuesion/packages)
