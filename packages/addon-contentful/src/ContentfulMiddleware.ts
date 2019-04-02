@@ -1,4 +1,5 @@
 import { ContentfulClientApi, createClient, CreateClientParams, Entry, EntryCollection } from 'contentful';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 import { Request, Response } from 'express';
 
 export interface IContentfulMiddlewareOptions extends CreateClientParams {
@@ -58,6 +59,8 @@ export const ContentfulMiddleware = (options: IContentfulMiddlewareOptions) => {
           return (result[key] = item);
         } else if (item.hasOwnProperty('fields')) {
           return (result[key] = getProperties(item.fields, locale));
+        } else if (item.hasOwnProperty('nodeType') && item.nodeType === 'document') {
+          return (result[key] = documentToHtmlString(item));
         } else if (Array.isArray(item)) {
           return (result[key] = item.map((e) => getProperties(e, locale)));
         } else {
