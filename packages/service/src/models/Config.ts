@@ -1,7 +1,9 @@
 import * as fs from 'fs';
 import { runtimeRoot } from '../utils/path';
+import { pathOr } from 'ramda';
 
 export interface IConfig {
+  currentVersion: string;
   generators: {
     blueprintDirectory: string;
     outputDirectory: string;
@@ -12,17 +14,20 @@ export interface IConfig {
     defaultLocale: string;
     supportedLocales: string[];
   };
-  jest: any;
   clean: string[];
-  currentVersion: string;
   prettier: {
     extensions: string;
+  };
+  webpack: {
+    aliases: { [key: string]: string };
   };
 }
 
 export const configPath: string = runtimeRoot('.vuesion/config.json');
 
 export let Config: IConfig;
+
+export const getWebpackAliases = () => pathOr(null, ['webpack', 'aliases'], Config);
 
 if (fs.existsSync(configPath)) {
   Config = JSON.parse(fs.readFileSync(configPath).toString());
