@@ -19,17 +19,17 @@ export class Test implements ICommandHandler {
     const aliases = getWebpackAliases();
     const jestConfig = JSON.parse(fs.readFileSync(runtimeRoot('package.json')).toString()).jest;
 
-    if (!jestConfig.moduleNameMapper) {
-      jestConfig.moduleNameMapper = {};
-    }
-
     if (aliases) {
+      if (!jestConfig.moduleNameMapper) {
+        jestConfig.moduleNameMapper = {};
+      }
+
       Object.keys(aliases).map((alias: string) => {
         jestConfig.moduleNameMapper[`^${alias}/(.*)$`] = `<rootDir>/${aliases[alias]}/$1`;
       });
-    }
 
-    args.push(`--config=${JSON.stringify(jestConfig)}`);
+      args.push(`--config=${JSON.stringify(jestConfig)}`);
+    }
 
     jest.run(args);
   }
