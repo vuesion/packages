@@ -10,10 +10,6 @@ const concurrently = require('concurrently');
 })
 export class Add implements ICommandHandler {
   public async run(args: string[], options: IRunOptions) {
-    try {
-      await concurrently(args);
-    } catch (e) {
-      handleProcessError(e);
-    }
+    concurrently(args).then(null, (e: any) => handleProcessError(e));
   }
 }
