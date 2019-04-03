@@ -1,4 +1,7 @@
+import * as fs from 'fs';
 import { Command, ICommandHandler } from '../lib/command';
+import { getWebpackAliases } from '../models/Config';
+import { runtimeRoot } from '../utils/path';
 
 @Command({
   name: 'test',
@@ -13,6 +16,20 @@ export class Test implements ICommandHandler {
     process.env.NODE_ENV = 'test';
 
     const jest = require('jest');
+    const aliases = getWebpackAliases();
+    const jestConfig = JSON.parse(fs.readFileSync(runtimeRoot('package.json')).toString()).jest;
+
+    if (aliases) {
+      if (!jestConfig.moduleNameMapper) {
+        jestConfig.moduleNameMapper = {};
+      }
+
+      Object.keys(aliases).map((alias: string) => {
+        jestConfig.moduleNameMapper[`^${alias}/(.*)$`] = `<rootDir>/${aliases[alias]}/$1`;
+      });
+
+      args.push(`--config=${JSON.stringify(jestConfig)}`);
+    }
 
     jest.run(args);
   }

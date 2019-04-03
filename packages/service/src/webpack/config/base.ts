@@ -1,6 +1,7 @@
 import * as webpack from 'webpack';
 import { analyze, isDev, isProd } from './utils';
 import { packageRoot, runtimeRoot } from '../../utils/path';
+import { getWebpackAliases } from '../../models/Config';
 
 const { VueLoaderPlugin } = require('vue-loader');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -106,6 +107,14 @@ export let base: webpack.Configuration = {
 
 if (analyze) {
   base.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
+}
+
+const aliases = getWebpackAliases();
+
+if (aliases) {
+  Object.keys(aliases).map((alias: string) => {
+    base.resolve.alias[alias] = runtimeRoot(aliases[alias]);
+  });
 }
 
 base = require(runtimeRoot('.vuesion/webpack.config'))(base);
