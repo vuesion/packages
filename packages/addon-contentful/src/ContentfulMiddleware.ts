@@ -54,18 +54,21 @@ export const ContentfulMiddleware = (options: IContentfulMiddlewareOptions) => {
     Object.keys(fields).map((key) => {
       if (fields[key].hasOwnProperty(locale)) {
         const item = fields[key][locale];
+        let property: any;
 
         if (typeof item !== 'object') {
-          return (result[key] = item);
+          property = result[key] = item;
         } else if (item.hasOwnProperty('fields')) {
-          return (result[key] = getProperties(item.fields, locale));
+          property = result[key] = getProperties(item.fields, locale);
         } else if (item.hasOwnProperty('nodeType') && item.nodeType === 'document') {
-          return (result[key] = documentToHtmlString(item));
+          property = result[key] = documentToHtmlString(item);
         } else if (Array.isArray(item)) {
-          return (result[key] = item.map((e) => getProperties(e, locale)));
+          property = result[key] = item.map((e) => getProperties(e, locale));
         } else {
-          return (result[key] = item);
+          property = result[key] = item;
         }
+
+        return property;
       }
     });
 
