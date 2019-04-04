@@ -51,28 +51,7 @@ export const runProcess = (name: string, args: string[] = [], options?: IProcess
 
     processes.push(childProcess);
 
-    [
-      'SIGHUP',
-      'SIGINT',
-      'SIGQUIT',
-      'SIGUSR1',
-      'SIGUSR2',
-      'SIGTERM',
-      'SIGCONT',
-      'SIGILL',
-      'SIGTRAP',
-      'SIGABRT',
-      'SIGBUS',
-      'SIGFPE',
-      'SIGSEGV',
-      'SIGPIPE',
-      'SIGALRM',
-      'SIGTSTP',
-      'SIGTTIN',
-      'SIGTTOU',
-      'SIGPROF',
-      'SIGSYS',
-    ].forEach((signal: Signals) => {
+    ['SIGINT', 'SIGTERM'].forEach((signal: Signals) => {
       process.on(signal, () => {
         killProcesses();
 
