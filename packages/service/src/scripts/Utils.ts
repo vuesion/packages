@@ -4,6 +4,26 @@ export const getTranslationsFromString = (content: string): RegExpMatchArray => 
 
   matches = matches.concat(content.match(/\$t\(\s.*\s.*\s.*\s.*\)/gm) || []);
 
+  /**
+   * handle multiple comments
+   */
+  const removeIdxs = [];
+  matches.forEach((match: string, idx: number) => {
+    if (match.indexOf('*/,') > -1) {
+      removeIdxs.push(idx);
+      match.split('*/,').forEach((m: string) => {
+        if (m.indexOf('$t(') > -1) {
+          result.push(m.trim() + ' */');
+        }
+      });
+    }
+  });
+
+  removeIdxs.forEach((idx) => delete matches[idx]);
+
+  /**
+   * handle if statements
+   */
   matches.forEach((match: string) => match.split(' : ').forEach((m: string) => result.push(m.trim())));
 
   return result;
