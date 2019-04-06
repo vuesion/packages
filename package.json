@@ -4,6 +4,7 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "build": "lerna run build",
+    "pretest": "npm run build",
     "test": "jest --coverage",
     "lint": "tslint -c tslint.json './packages/**/src/**/*.ts'",
     "preversion": "npm run build"
