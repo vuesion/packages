@@ -15,7 +15,7 @@ const download = require('download-git-repo');
 })
 export class Create implements ICommandHandler {
   public name: string;
-  public next: string;
+  public next: boolean;
 
   public async run(args: string[], options: IRunOptions) {
     const destination = runtimeRoot(this.name);

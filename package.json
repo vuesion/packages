@@ -47,6 +47,7 @@
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "testPathIgnorePatterns": [
       "/node_modules/",
+      "/tmp/",
       "/template/"
     ],
     "coverageThreshold": {
@@ -59,6 +60,8 @@
     },
     "coveragePathIgnorePatterns": [
       "/node_modules/",
+      "/tmp/",
+      "/utils/",
       "/template/"
     ],
     "coverageDirectory": "./coverage",
