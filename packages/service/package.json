@@ -25,7 +25,9 @@
     "prebuild": "npm run clean",
     "build": "npm run compile",
     "clean": "rimraf ./dist ./build",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "pree2e": "npm run build",
+    "e2e": "jest"
   },
   "bugs": {
     "url": "https://github.com/vuesion/packages/issues"
@@ -119,5 +121,24 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "jest": {
+    "globals": {
+      "window": true
+    },
+    "rootDir": "./test",
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ],
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": ".*\\.ts$",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "preset": "ts-jest",
+    "testMatch": null
   }
 }

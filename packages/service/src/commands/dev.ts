@@ -4,7 +4,7 @@ import { handleProcessError, runProcess } from '../utils/process';
 import { HeadLine, logInfo } from '../utils/ui';
 import { packageRoot } from '../utils/path';
 
-const waitForApp = async (url: string) => {
+export const waitForApp = async (url: string) => {
   const interval = 500;
   const timeout = 30000;
   let elapsedTime = 0;
@@ -21,7 +21,10 @@ const waitForApp = async (url: string) => {
 
         if (elapsedTime > timeout) {
           clearInterval(instance);
-          reject({ code: e.response.status, trace: `Unable to connect to dev-server.\nTry to open ${url} manually.` });
+          reject({
+            code: (e && e.response && e.response.status) || 500,
+            trace: `Unable to connect to dev-server.\nTry to open ${url} manually.`,
+          });
         }
       }
     }, interval);
