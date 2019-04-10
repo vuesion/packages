@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/addon-contentful",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0",
   "description": "vuesion contentful integration",
   "author": "Johannes Werner <johannes.werner86@gmail.com>",
   "homepage": "https://github.com/vuesion/packages#readme",
