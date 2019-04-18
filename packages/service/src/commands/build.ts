@@ -114,45 +114,38 @@ const spa = async (options: IRunOptions) => {
 
   try {
     await Promise.all([runWebpack('isomorphic', options), runWebpack('spa', options)]);
+    await renderPages(options);
   } catch (e) {
     handleProcessError(e, spinner);
   }
 
-  /**
-   * render static pages
-   */
+  spinner.message = `Production build finished in ${Date.now() - startTime}ms`;
+  spinner.stop();
+};
+
+const renderPages = async (options: IRunOptions) => {
   const renderer: BundleRenderer = createBundleRenderer(runtimeRoot('dist/server/vue-ssr-bundle.json'), {
     template: fs.readFileSync(runtimeRoot('dist/client/index.html')).toString(),
   });
   const routes = (Config.spa && Config.spa.routesToRender) || ['/'];
-  const pages = [];
 
   for (const route of routes) {
-    pages.push({
-      url: route,
-      html: await renderer.renderToString({
-        url: route,
-        cookies: {},
-        acceptLanguage: Config.i18n.defaultLocale,
-        htmlLang: Config.i18n.defaultLocale.substr(0, 2),
-        appConfig: {},
-        redirect: null,
-      }),
-    });
-  }
-
-  pages.forEach(({ url, html }) => {
-    const filename = url === '/' ? '/index.html' : `${url}.html`;
+    const filename = route === '/' ? '/index.html' : `${route}.html`;
     const filePath = runtimeRoot(`dist${filename}`);
+    const html = await renderer.renderToString({
+      url: route,
+      cookies: {},
+      acceptLanguage: Config.i18n.defaultLocale,
+      htmlLang: Config.i18n.defaultLocale.substr(0, 2),
+      appConfig: {},
+      redirect: null,
+    });
     ensureDirectoryExists(filePath);
     fs.writeFileSync(filePath, html, 'utf-8');
-  });
+  }
 
   await runProcess('rimraf', ['./dist/server', './dist/client/index.html', './dist/client/index.html.gz'], {
     silent: true,
     ...options,
   });
-
-  spinner.message = `Production build finished in ${Date.now() - startTime}ms`;
-  spinner.stop();
 };
