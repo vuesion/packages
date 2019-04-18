@@ -30,13 +30,17 @@
   },
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^13.1.0",
-    "contentful": "7.3.0",
-    "express": "^4.16.4",
-    "lodash": "^4.17.11"
+    "contentful": "7.5.0"
   },
   "devDependencies": {
-    "rimraf": "2.6.3",
-    "typescript": "^3.3.3"
+    "express": "4.*",
+    "lodash": "4.*",
+    "rimraf": "2.*",
+    "typescript": "3.*"
+  },
+  "peerDependencies": {
+    "express": "4.*",
+    "lodash": "4.*"
   },
   "publishConfig": {
     "access": "public"

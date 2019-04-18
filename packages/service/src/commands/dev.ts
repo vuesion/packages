@@ -30,7 +30,7 @@ export const waitForApp = async (url: string) => {
     }, interval);
   });
 };
-const opn = require('opn');
+const opn = require('open');
 
 @Command({
   name: 'dev',

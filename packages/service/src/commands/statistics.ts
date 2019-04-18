@@ -5,7 +5,7 @@ import { packageRoot } from '../utils/path';
 import { logErrorBold } from '../utils/ui';
 
 const spawn = require('cross-spawn');
-const opn = require('opn');
+const opn = require('open');
 
 interface IStat {
   hash: string;
