@@ -21,6 +21,9 @@ export interface IConfig {
   webpack: {
     aliases: { [key: string]: string };
   };
+  spa: {
+    routesToRender: string[];
+  };
 }
 
 export const configPath: string = runtimeRoot('.vuesion/config.json');

@@ -89,7 +89,6 @@
     "ramda": "0.26.1",
     "react": "16.8.1",
     "react-dom": "16.8.1",
-    "rimraf": "2.6.3",
     "sass-loader": "7.1.0",
     "serviceworker-webpack-plugin": "1.0.1",
     "start-server-webpack-plugin": "2.2.5",
@@ -103,6 +102,7 @@
     "typescript": "^3.3.3",
     "vue-jest": "3.0.3",
     "vue-loader": "15.6.2",
+    "vue-server-renderer": "^2.6.10",
     "vue-ssr-webpack-plugin": "3.0.0",
     "webpack": "4.28.4",
     "webpack-bundle-analyzer": "3.0.3",
@@ -116,7 +116,6 @@
     "@types/fs-extra": "5.0.4",
     "@types/ramda": "0.25.48",
     "node-sass": "^4.11.0",
-    "rimraf": "2.6.3",
     "vue-template-compiler": "^2.6.10"
   },
   "publishConfig": {

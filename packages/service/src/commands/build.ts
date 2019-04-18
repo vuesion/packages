@@ -1,7 +1,10 @@
 import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { handleProcessError, runProcess } from '../utils/process';
 import { logErrorBold, Spinner } from '../utils/ui';
-import { packageRoot } from '../utils/path';
+import { ensureDirectoryExists, packageRoot, runtimeRoot } from '../utils/path';
+import { BundleRenderer, createBundleRenderer } from 'vue-server-renderer';
+import * as fs from 'fs';
+import { Config } from '../models/Config';
 
 @Command({
   name: 'build',
@@ -9,12 +12,14 @@ import { packageRoot } from '../utils/path';
   description: 'Build project for production.',
   options: [
     { flags: '-a, --analyze', description: 'Analyze client bundle.' },
-    { flags: '-spa, --spa', description: 'Build only client-side application.' },
+    { flags: '-spa, --spa', description: 'Build only client-side application and renders static HTML content.' },
+    { flags: '-static, --static', description: 'Build only client-side application and renders static HTML content.' },
   ],
 })
 export class Build implements ICommandHandler {
   public analyze: boolean;
   public spa: boolean;
+  public static: boolean;
 
   public async run(args: string[], options: IRunOptions) {
     process.env.NODE_ENV = 'production';
@@ -27,7 +32,7 @@ export class Build implements ICommandHandler {
 
     if (this.analyze) {
       analyze(options).catch((e) => logErrorBold(e));
-    } else if (this.spa) {
+    } else if (this.spa || this.static) {
       spa(options).catch((e) => logErrorBold(e));
     } else {
       build(options).catch((e) => logErrorBold(e));
@@ -51,9 +56,9 @@ const build = async (options: IRunOptions) => {
 
   const setSpinnerMessage = () => {
     if (done === 3) {
-      spinner.message = `Finished building production bundles in ${Date.now() - startTime}ms`;
+      spinner.message = `Finished building universal application in ${Date.now() - startTime}ms`;
     } else {
-      spinner.message = `Building production bundles ${done}/3 ...`;
+      spinner.message = `Building universal application ${done}/3 ...`;
     }
   };
 
@@ -88,7 +93,7 @@ const analyze = async (options: IRunOptions) => {
   const spinner = new Spinner();
 
   spinner.start(options.debug);
-  spinner.message = `Start analyzing client bundle...`;
+  spinner.message = `Analyzing application bundle...`;
 
   try {
     await runWebpack('client', options);
@@ -105,13 +110,48 @@ const spa = async (options: IRunOptions) => {
   const spinner = new Spinner();
 
   spinner.start(options.debug);
-  spinner.message = `Start building client bundle only...`;
+  spinner.message = `Building client-side application and render static HTML...`;
 
   try {
-    await runWebpack('spa', options);
+    await Promise.all([runWebpack('isomorphic', options), runWebpack('spa', options)]);
   } catch (e) {
     handleProcessError(e, spinner);
   }
+
+  /**
+   * render static pages
+   */
+  const renderer: BundleRenderer = createBundleRenderer(runtimeRoot('dist/server/vue-ssr-bundle.json'), {
+    template: fs.readFileSync(runtimeRoot('dist/client/index.html')).toString(),
+  });
+  const routes = (Config.spa && Config.spa.routesToRender) || ['/'];
+  const pages = [];
+
+  for (const route of routes) {
+    pages.push({
+      url: route,
+      html: await renderer.renderToString({
+        url: route,
+        cookies: {},
+        acceptLanguage: Config.i18n.defaultLocale,
+        htmlLang: Config.i18n.defaultLocale.substr(0, 2),
+        appConfig: {},
+        redirect: null,
+      }),
+    });
+  }
+
+  pages.forEach(({ url, html }) => {
+    const filename = url === '/' ? '/index.html' : `${url}.html`;
+    const filePath = runtimeRoot(`dist${filename}`);
+    ensureDirectoryExists(filePath);
+    fs.writeFileSync(filePath, html, 'utf-8');
+  });
+
+  await runProcess('rimraf', ['./dist/server', './dist/client/index.html', './dist/client/index.html.gz'], {
+    silent: true,
+    ...options,
+  });
 
   spinner.message = `Production build finished in ${Date.now() - startTime}ms`;
   spinner.stop();
