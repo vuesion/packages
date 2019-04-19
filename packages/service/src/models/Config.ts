@@ -22,7 +22,8 @@ export interface IConfig {
     aliases: { [key: string]: string };
   };
   spa: {
-    routesToRender: string[];
+    appShellRoute: string;
+    additionalRoutes: string[];
   };
 }
 

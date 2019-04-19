@@ -1,9 +1,10 @@
+import * as fs from 'fs';
+import { BundleRenderer, createBundleRenderer } from 'vue-server-renderer';
+import { pathOr } from 'ramda';
 import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { handleProcessError, runProcess } from '../utils/process';
-import { logErrorBold, Spinner } from '../utils/ui';
+import { logInfo, logInfoBold, Spinner } from '../utils/ui';
 import { ensureDirectoryExists, packageRoot, runtimeRoot } from '../utils/path';
-import { BundleRenderer, createBundleRenderer } from 'vue-server-renderer';
-import * as fs from 'fs';
 import { Config } from '../models/Config';
 
 @Command({
@@ -13,13 +14,11 @@ import { Config } from '../models/Config';
   options: [
     { flags: '-a, --analyze', description: 'Analyze client bundle.' },
     { flags: '-spa, --spa', description: 'Build only client-side application and renders static HTML content.' },
-    { flags: '-static, --static', description: 'Build only client-side application and renders static HTML content.' },
   ],
 })
 export class Build implements ICommandHandler {
   public analyze: boolean;
   public spa: boolean;
-  public static: boolean;
 
   public async run(args: string[], options: IRunOptions) {
     process.env.NODE_ENV = 'production';
@@ -31,11 +30,11 @@ export class Build implements ICommandHandler {
     }
 
     if (this.analyze) {
-      analyze(options).catch((e) => logErrorBold(e));
-    } else if (this.spa || this.static) {
-      spa(options).catch((e) => logErrorBold(e));
+      analyze(options);
+    } else if (this.spa) {
+      spa(options);
     } else {
-      build(options).catch((e) => logErrorBold(e));
+      build(options);
     }
   }
 }
@@ -105,6 +104,56 @@ const analyze = async (options: IRunOptions) => {
   spinner.stop();
 };
 
+const renderPages = async (options: IRunOptions) => {
+  const renderer: BundleRenderer = createBundleRenderer(runtimeRoot('dist/server/vue-ssr-bundle.json'), {
+    template: fs.readFileSync(runtimeRoot('dist/client/index.html')).toString(),
+  });
+  const appShellRoute: string = pathOr<string>('/', ['spa', 'appShellRoute'], Config);
+  const routes: string[] = pathOr<string[]>([], ['spa', 'additionalRoutes'], Config);
+
+  routes.unshift(appShellRoute);
+
+  for (const route of routes) {
+    const filename = route === appShellRoute ? '/index.html' : `${route}.html`;
+    const filePath = runtimeRoot(`dist${filename}`);
+
+    try {
+      const html = await renderer.renderToString({
+        url: route,
+        cookies: {},
+        acceptLanguage: Config.i18n.defaultLocale,
+        htmlLang: Config.i18n.defaultLocale.substr(0, 2),
+        appConfig: {},
+        redirect: null,
+      });
+      ensureDirectoryExists(filePath);
+      fs.writeFileSync(filePath, html, 'utf-8');
+    } catch (e) {
+      e.route = route;
+      throw e;
+    }
+  }
+
+  await runProcess('rimraf', ['./dist/server', './dist/client/index.html', './dist/client/index.html.gz'], {
+    silent: true,
+    ...options,
+  });
+};
+
+const handleRenderError = (e: any, spinner: Spinner) => {
+  spinner.stop(true);
+
+  logInfoBold(`Error during rendering ${e.route}`);
+
+  if (e.code && e.code === 302) {
+    logInfo('This route probably has a route guard and can not be rendered to static HTML.');
+  } else if (e.code && e.code === 404) {
+    logInfo('This route does not exist and can not be rendered to static HTML.');
+  } else {
+    logInfo(e.message);
+  }
+};
+
 const spa = async (options: IRunOptions) => {
   const startTime: number = Date.now();
   const spinner = new Spinner();
@@ -114,38 +163,19 @@ const spa = async (options: IRunOptions) => {
 
   try {
     await Promise.all([runWebpack('isomorphic', options), runWebpack('spa', options)]);
-    await renderPages(options);
   } catch (e) {
     handleProcessError(e, spinner);
+    return;
+  }
+
+  try {
+    spinner.message = `Rendering static HTML...`;
+    await renderPages(options);
+  } catch (e) {
+    handleRenderError(e, spinner);
+    return;
   }
 
   spinner.message = `Production build finished in ${Date.now() - startTime}ms`;
   spinner.stop();
-};
-
-const renderPages = async (options: IRunOptions) => {
-  const renderer: BundleRenderer = createBundleRenderer(runtimeRoot('dist/server/vue-ssr-bundle.json'), {
-    template: fs.readFileSync(runtimeRoot('dist/client/index.html')).toString(),
-  });
-  const routes = (Config.spa && Config.spa.routesToRender) || ['/'];
-
-  for (const route of routes) {
-    const filename = route === '/' ? '/index.html' : `${route}.html`;
-    const filePath = runtimeRoot(`dist${filename}`);
-    const html = await renderer.renderToString({
-      url: route,
-      cookies: {},
-      acceptLanguage: Config.i18n.defaultLocale,
-      htmlLang: Config.i18n.defaultLocale.substr(0, 2),
-      appConfig: {},
-      redirect: null,
-    });
-    ensureDirectoryExists(filePath);
-    fs.writeFileSync(filePath, html, 'utf-8');
-  }
-
-  await runProcess('rimraf', ['./dist/server', './dist/client/index.html', './dist/client/index.html.gz'], {
-    silent: true,
-    ...options,
-  });
 };
