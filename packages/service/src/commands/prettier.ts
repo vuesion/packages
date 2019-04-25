@@ -34,8 +34,6 @@ const prettier = async (args: string[], pattern: string, options: IRunOptions) =
   ];
 
   try {
-    await runProcess('vuesion', ['clean'], options);
-
     await runProcess('prettier', args, options);
   } catch (e) {
     handleProcessError(e);
