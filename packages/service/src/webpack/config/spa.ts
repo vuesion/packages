@@ -5,14 +5,14 @@ import { runtimeRoot } from '../../utils/path';
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-client.plugins.unshift(new webpack.DefinePlugin({ CLIENT: true, SERVER: false, TEST: true }));
+client.plugins.unshift(new webpack.DefinePlugin({ CLIENT: true, SERVER: false, TEST: false, SPA: true }));
+
+client.output.path = runtimeRoot('dist');
+client.output.publicPath = '/';
 
 export const spa: webpack.Configuration = merge(client, {
   plugins: [
-    new CopyWebpackPlugin([
-      { from: runtimeRoot('src/static'), to: '../' },
-      { from: runtimeRoot('i18n'), to: '../i18n' },
-    ]),
+    new CopyWebpackPlugin([{ from: runtimeRoot('src/static'), to: './' }, { from: runtimeRoot('i18n'), to: './i18n' }]),
   ],
 });
 

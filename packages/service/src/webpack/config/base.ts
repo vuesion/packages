@@ -96,7 +96,7 @@ export let base: webpack.Configuration = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new webpack.DefinePlugin({ PRODUCTION: isProd, DEVELOPMENT: isDev, TEST: false }),
+    new webpack.DefinePlugin({ PRODUCTION: isProd, DEVELOPMENT: isDev, TEST: false, SPA: false }),
     new ForkTsCheckerWebpackPlugin({
       tsconfig: runtimeRoot('tsconfig.json'),
       tslint: runtimeRoot('tslint.json'),

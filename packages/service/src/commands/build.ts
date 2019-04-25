@@ -116,7 +116,7 @@ const renderPage = async (renderer: BundleRenderer, route: string) => {
 };
 
 const spaCleanUp = async (options: IRunOptions) => {
-  await runProcess('rimraf', ['./dist/server', './dist/client/index.html', './dist/client/index.html.gz'], {
+  await runProcess('rimraf', ['./dist/server'], {
     silent: true,
     ...options,
   });
@@ -124,7 +124,7 @@ const spaCleanUp = async (options: IRunOptions) => {
 
 const renderPages = async (options: IRunOptions) => {
   const renderer: BundleRenderer = createBundleRenderer(runtimeRoot('dist/server/vue-ssr-bundle.json'), {
-    template: fs.readFileSync(runtimeRoot('dist/client/index.html')).toString(),
+    template: fs.readFileSync(runtimeRoot('dist/index.html')).toString(),
   });
   const appShellRoute: string = pathOr<string>('/', ['spa', 'appShellRoute'], Config);
   const routes: string[] = pathOr<string[]>([], ['spa', 'additionalRoutes'], Config);
@@ -136,7 +136,7 @@ const renderPages = async (options: IRunOptions) => {
     const filePath = runtimeRoot(`dist${filename}`);
 
     try {
-      const html = renderPage(renderer, route);
+      const html = await renderPage(renderer, route);
 
       ensureDirectoryExists(filePath);
       fs.writeFileSync(filePath, html, 'utf-8');
