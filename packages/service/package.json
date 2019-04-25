@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/service",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "vuesion service for development tasks",
   "author": "Johannes Werner <johannes.werner86@gmail.com>",
   "homepage": "https://github.com/vuesion/packages#readme",
@@ -111,17 +111,17 @@
     "lodash": "^4.17.11",
     "node-sass": "^4.11.0",
     "typescript": "^3.4.5",
-    "vue-template-compiler": "^2.6.10",
+    "vue-router": "^3.0.6",
     "vue-server-renderer": "^2.6.10",
-    "vue-router": "^3.0.6"
+    "vue-template-compiler": "^2.6.10"
   },
   "peerDependencies": {
     "axios": ">=0 <1",
     "lodash": ">=4",
     "node-sass": ">=4",
-    "vue-template-compiler": ">=2",
+    "vue-router": ">=3",
     "vue-server-renderer": ">=2",
-    "vue-router": ">=3"
+    "vue-template-compiler": ">=2"
   },
   "publishConfig": {
     "access": "public"
