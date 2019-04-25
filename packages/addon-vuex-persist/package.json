@@ -30,14 +30,14 @@
     "js-cookie": "^2.2.0"
   },
   "devDependencies": {
-    "deepmerge": "3.*",
-    "rimraf": "2.6.3",
-    "typescript": "3.*",
-    "vuex": "3.*"
+    "deepmerge": "^3.2.0",
+    "rimraf": "^2.6.3",
+    "typescript": "^3.4.5",
+    "vuex": "^3.1.0"
   },
   "peerDependencies": {
-    "deepmerge": "3.*",
-    "vuex": "3.*"
+    "deepmerge": ">=3",
+    "vuex": ">=3"
   },
   "publishConfig": {
     "access": "public"

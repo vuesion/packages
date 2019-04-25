@@ -106,22 +106,22 @@
     "webpack-node-externals": "1.7.2"
   },
   "devDependencies": {
-    "@types/jest": "24.*",
-    "axios": "0.*",
-    "lodash": "4.*",
-    "node-sass": "4.*",
-    "typescript": "3.*",
-    "vue-template-compiler": "2.*",
-    "vue-server-renderer": "2.*",
-    "vue-router": "3.*"
+    "@types/jest": "^24.0.11",
+    "axios": "^0.18.0",
+    "lodash": "^4.17.11",
+    "node-sass": "^4.11.0",
+    "typescript": "^3.4.5",
+    "vue-template-compiler": "^2.6.10",
+    "vue-server-renderer": "^2.6.10",
+    "vue-router": "^3.0.6"
   },
   "peerDependencies": {
-    "axios": "0.*",
-    "lodash": "4.*",
-    "node-sass": "4.*",
-    "vue-template-compiler": "2.*",
-    "vue-server-renderer": "2.*",
-    "vue-router": "3.*"
+    "axios": ">=0 <1",
+    "lodash": ">=4",
+    "node-sass": ">=4",
+    "vue-template-compiler": ">=2",
+    "vue-server-renderer": ">=2",
+    "vue-router": ">=3"
   },
   "publishConfig": {
     "access": "public"
