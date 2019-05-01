@@ -6,7 +6,10 @@
     "build": "lerna run build",
     "test": "jest --coverage",
     "lint": "tslint -c tslint.json './packages/**/src/**/*.ts'",
-    "preversion": "npm run build"
+    "preversion": "npm run build",
+    "release:patch": "lerna version patch --force-publish && lerna publish from-git",
+    "release:minor": "lerna version minor --force-publish && lerna publish from-git",
+    "release:major": "lerna version major --force-publish && lerna publish from-git"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
