@@ -1,6 +1,8 @@
 import * as Express from 'express';
 import { WebpackDevMiddleware } from 'webpack-dev-middleware';
+import { statsSettings } from '../config/utils';
 import { Config } from '../../models/Config';
+import { logError, logWarning } from '../../utils/ui';
 
 const path = require('path');
 const webpack = require('webpack');
@@ -39,10 +41,7 @@ export default (app: Express.Application, callback: any): void => {
   clientCompiler = webpack(clientConfig);
   devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
-    stats: {
-      colors: true,
-      chunks: false,
-    },
+    stats: statsSettings,
     watchOptions: (Config.devServer && Config.devServer.watchOptions) || {
       aggregateTimeout: 300,
       poll: false,
@@ -76,9 +75,16 @@ export default (app: Express.Application, callback: any): void => {
     if (err) {
       throw err;
     }
-    stats = stats.toJson();
-    stats.errors.forEach((e: any) => console.log(JSON.stringify(err, Object.getOwnPropertyNames(e)))); // tslint:disable-line
-    stats.warnings.forEach((e: any) => console.log(JSON.stringify(err, Object.getOwnPropertyNames(e)))); // tslint:disable-line
+
+    const jsonStats = stats.toJson();
+
+    if (jsonStats.hasErrors) {
+      jsonStats.errors.forEach((error) => logError(error));
+      throw new Error(`Build failed with errors.`);
+    }
+    if (jsonStats.hasWarnings) {
+      jsonStats.warnings.forEach((warning) => logWarning(warning));
+    }
 
     const bundlePath: string = path.join(isomorphicConfig.output.path, 'vue-ssr-bundle.json');
 

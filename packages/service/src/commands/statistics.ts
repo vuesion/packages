@@ -106,8 +106,8 @@ const getColor = (type: string) => {
   alias: 's',
   description: 'Generates a report for certain project management KPIs.',
 })
-export class Add implements ICommandHandler {
-  public async run(args: string[]) {
+export class Statistics implements ICommandHandler {
+  public async run() {
     const childProcess: any = spawn('git', ['log', 'master', '--pretty=format:"%T|%s|%an|%cd"'], {});
     const stats: IStat[] = [];
     const types = [];

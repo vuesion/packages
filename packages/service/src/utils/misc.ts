@@ -1,8 +1,7 @@
+import * as fs from 'fs';
 import { getWebpackAliases } from '../models/Config';
 import { runtimeRoot } from './path';
-import * as fs from 'fs';
-
-const prettier = require('prettier');
+import { format } from 'prettier';
 
 export const updateTsConfig = () => {
   const aliases = getWebpackAliases();
@@ -17,7 +16,7 @@ export const updateTsConfig = () => {
 
     fs.writeFileSync(
       tsconfigPath,
-      prettier.format(JSON.stringify(tsconfig), {
+      format(JSON.stringify(tsconfig), {
         ...JSON.parse(fs.readFileSync(runtimeRoot('.prettierrc')).toString()),
         parser: 'json',
       }),

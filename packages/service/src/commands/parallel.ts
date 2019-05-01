@@ -1,5 +1,5 @@
-import { Command, ICommandHandler, IRunOptions } from '../lib/command';
-import { handleProcessError } from '../utils/process';
+import { Command, ICommandHandler } from '../lib/command';
+import { logError } from '../utils/ui';
 
 const concurrently = require('concurrently');
 
@@ -9,7 +9,11 @@ const concurrently = require('concurrently');
   description: 'Run commands in parallel.',
 })
 export class Add implements ICommandHandler {
-  public async run(args: string[], options: IRunOptions) {
-    concurrently(args).then(null, () => handleProcessError({ code: 1, trace: 'One of the child processes failed.' }));
+  public async run(args: string[]) {
+    try {
+      await concurrently(args);
+    } catch (e) {
+      logError(e);
+    }
   }
 }

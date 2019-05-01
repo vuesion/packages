@@ -1,19 +1,18 @@
-import { Command, ICommandHandler, IRunOptions } from '../lib/command';
-import { handleProcessError, runProcess } from '../utils/process';
+import { Command, ICommandHandler } from '../lib/command';
+import { logError } from '../utils/ui';
+const cypress = require('cypress');
 
 @Command({
   name: 'e2e',
   alias: 'e',
-  description: 'Run e2e tests with cypress.io. All cypress CLI options are supported.',
+  description: 'Run e2e tests with cypress.io.',
 })
 export class E2E implements ICommandHandler {
-  public async run(args: string[], options: IRunOptions) {
-    args = args.concat(['run']);
-
+  public async run() {
     try {
-      await runProcess('cypress', args, options);
+      await cypress.run();
     } catch (e) {
-      handleProcessError(e);
+      logError(e);
     }
   }
 }

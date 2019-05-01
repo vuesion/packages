@@ -28,6 +28,7 @@ jobs:
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
       - run: ./cc-test-reporter before-build
+      - run: chown -R $USER:$USER ./packages
       - run:
           name: Linting files
           command: npm run lint

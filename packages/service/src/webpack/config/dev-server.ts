@@ -4,6 +4,7 @@ import { baseServer } from './base-server';
 import { packageRoot } from '../../utils/path';
 
 export const devServer: webpack.Configuration = merge(baseServer, {
+  name: 'devServer',
   entry: {
     'dev-server': packageRoot('dist/webpack/dev/server'),
   },

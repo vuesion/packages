@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const StartServerPlugin = require('start-server-webpack-plugin');
 
 export let server = merge(baseServer, {
+  name: 'server',
   entry: [runtimeRoot('src/server/index')],
   output: {
     filename: 'server.js',

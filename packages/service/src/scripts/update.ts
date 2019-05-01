@@ -60,7 +60,22 @@ const downloadFile = (status: string, filePath: string, url: string) => {
     });
 };
 
-async function update() {
+const handleFiles = (diffFiles: IFile[]) => {
+  diffFiles.forEach((diffFile: IFile) => {
+    const dest: string = runtimeRoot(diffFile.filename);
+    const url: string = `https://raw.githubusercontent.com/vuesion/vuesion/master/${diffFile.filename}`;
+
+    if (diffFile.status === 'removed') {
+      deleteFile(diffFile.status, dest);
+    } else if (diffFile.status === 'renamed') {
+      renameFile(diffFile.status, runtimeRoot(diffFile.previous_filename), dest);
+    } else {
+      downloadFile(diffFile.status, dest, url);
+    }
+  });
+};
+
+export async function run() {
   try {
     const tagsResponse: AxiosResponse<any> = await axios.get(`${vuesionRepo}/tags`);
     const latestVersion: string = tagsResponse.data[0].name;
@@ -76,20 +91,8 @@ async function update() {
     const diffResponse: AxiosResponse<any> = await axios.get(
       `${vuesionRepo}/compare/${currentVersion}...${latestVersion}`,
     );
-    const diffFiles: IFile[] = diffResponse.data.files;
 
-    diffFiles.forEach((diffFile: IFile) => {
-      const dest: string = runtimeRoot(diffFile.filename);
-      const url: string = `https://raw.githubusercontent.com/vuesion/vuesion/master/${diffFile.filename}`;
-
-      if (diffFile.status === 'removed') {
-        deleteFile(diffFile.status, dest);
-      } else if (diffFile.status === 'renamed') {
-        renameFile(diffFile.status, runtimeRoot(diffFile.previous_filename), dest);
-      } else {
-        downloadFile(diffFile.status, dest, url);
-      }
-    });
+    handleFiles(diffResponse.data.files);
 
     Config.currentVersion = latestVersion;
 
@@ -98,5 +101,3 @@ async function update() {
     logErrorBold(e);
   }
 }
-
-update();

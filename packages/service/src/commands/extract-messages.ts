@@ -1,6 +1,6 @@
-import { Command, ICommandHandler, IRunOptions } from '../lib/command';
-import { handleProcessError, runProcess } from '../utils/process';
-import { packageRoot } from '../utils/path';
+import { Command, ICommandHandler } from '../lib/command';
+import { run } from '../scripts/extract-i18n-messages';
+import { logError } from '../utils/ui';
 
 @Command({
   name: 'extract-i18n-messages',
@@ -8,11 +8,11 @@ import { packageRoot } from '../utils/path';
   description: 'Extract i18n default messages from .vue files.',
 })
 export class ExtractMessages implements ICommandHandler {
-  public async run(args: string[], options: IRunOptions) {
+  public run() {
     try {
-      await runProcess('node', [packageRoot('dist/scripts/extract-i18n-messages.js')], options);
+      run();
     } catch (e) {
-      handleProcessError(e);
+      logError(e);
     }
   }
 }

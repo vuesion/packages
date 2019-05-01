@@ -5,6 +5,7 @@
     "postinstall": "lerna bootstrap",
     "build": "lerna run build",
     "test": "jest --coverage",
+    "e2e": "lerna run e2e",
     "lint": "tslint -c tslint.json './packages/**/src/**/*.ts'",
     "preversion": "npm run build",
     "release:patch": "lerna version patch --force-publish && lerna publish from-git",

@@ -1,6 +1,6 @@
-import { Command, ICommandHandler, IRunOptions } from '../lib/command';
-import { handleProcessError, runProcess } from '../utils/process';
-import { packageRoot } from '../utils/path';
+import { Command, ICommandHandler } from '../lib/command';
+import { run } from '../scripts/update';
+import { logError } from '../utils/ui';
 
 @Command({
   name: 'update',
@@ -8,12 +8,11 @@ import { packageRoot } from '../utils/path';
   description: 'Update your local copy of vuesion.',
 })
 export class Update implements ICommandHandler {
-  public async run(args: string[], options: IRunOptions) {
+  public async run() {
     try {
-      await runProcess('node', [packageRoot('dist/scripts/update.js')], options);
-      await runProcess('vuesion', ['prettier', '--pattern', '.vuesion/*.json'], { silent: true, ...options });
+      await run();
     } catch (e) {
-      handleProcessError(e);
+      logError(e);
     }
   }
 }

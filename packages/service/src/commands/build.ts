@@ -6,6 +6,7 @@ import { handleProcessError, runProcess } from '../utils/process';
 import { logInfo, logInfoBold, Spinner } from '../utils/ui';
 import { ensureDirectoryExists, packageRoot, runtimeRoot } from '../utils/path';
 import { Config } from '../models/Config';
+import { sync } from 'rimraf';
 
 @Command({
   name: 'build',
@@ -23,11 +24,7 @@ export class Build implements ICommandHandler {
   public async run(args: string[], options: IRunOptions) {
     process.env.NODE_ENV = 'production';
 
-    try {
-      await runProcess('rimraf', ['./dist'], { silent: true, ...options });
-    } catch (e) {
-      handleProcessError(e);
-    }
+    sync('./dist');
 
     if (this.analyze) {
       analyze(options);
@@ -41,8 +38,8 @@ export class Build implements ICommandHandler {
 
 const runWebpack = (configName: string, options: IRunOptions) => {
   return runProcess(
-    'webpack',
-    ['--mode', 'production', '--config', packageRoot(`dist/webpack/config/${configName}.js`)],
+    'node',
+    [packageRoot('dist/scripts/run-webpack.js'), configName, 'production', `${options.debug}`],
     { silent: true, ...options },
   );
 };
