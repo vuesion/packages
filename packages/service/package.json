@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/service",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "vuesion service for development tasks",
   "author": "Johannes Werner <johannes.werner86@gmail.com>",
   "homepage": "https://github.com/vuesion/packages#readme",
@@ -51,8 +51,8 @@
     "@types/webpack": "4.4.29",
     "@types/webpack-dev-middleware": "2.0.2",
     "@types/webpack-merge": "4.1.5",
-    "axios": "^0.18.0",
     "autoprefixer": "9.5.1",
+    "axios": "^0.18.0",
     "babel-core": "6.26.3",
     "babel-loader": "8.0.5",
     "babel-preset-env": "1.7.0",
