@@ -1,5 +1,6 @@
 import * as Express from 'express';
 import { WebpackDevMiddleware } from 'webpack-dev-middleware';
+import { Config } from '../../models/Config';
 
 const path = require('path');
 const webpack = require('webpack');
@@ -42,9 +43,9 @@ export default (app: Express.Application, callback: any): void => {
       colors: true,
       chunks: false,
     },
-    watchOptions: {
+    watchOptions: (Config.devServer && Config.devServer.watchOptions) || {
       aggregateTimeout: 300,
-      poll: true,
+      poll: false,
     },
   });
 

@@ -25,6 +25,9 @@ export interface IConfig {
     appShellRoute: string;
     additionalRoutes: string[];
   };
+  devServer: {
+    watchOptions: any;
+  };
 }
 
 export const configPath: string = runtimeRoot('.vuesion/config.json');

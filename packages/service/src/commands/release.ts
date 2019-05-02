@@ -31,27 +31,27 @@ export class Release implements ICommandHandler {
     try {
       logInfo('Generating CHANGELOG.md...');
 
-      await runProcess('changelog', args.filter((arg: string) => arg !== '--silent'), { silent: true, ...options });
+      await runProcess('changelog', args, { silent: false, ...options });
 
       logInfo('Adding CHANGELOG.md...');
 
-      await runProcess('git', ['add', 'CHANGELOG.md'], { silent: true, ...options });
+      await runProcess('git', ['add', 'CHANGELOG.md'], { silent: false, ...options });
 
       logInfo('Committing changes...');
 
-      await runProcess('git', ['commit', '-m', 'chore: update changelog'], { silent: true, ...options });
+      await runProcess('git', ['commit', '-m', 'chore: update changelog'], { silent: false, ...options });
 
       logInfo(`Releasing npm ${npmVersion} version...`);
 
-      await runProcess('npm', ['version', npmVersion], { silent: true, ...options });
+      await runProcess('npm', ['version', npmVersion], { silent: false, ...options });
 
       logInfo('Pushing changes...');
 
-      await runProcess('git', ['push', 'origin'], { silent: true, ...options });
+      await runProcess('git', ['push', 'origin'], { silent: false, ...options });
 
       logInfo('Pushing tags...');
 
-      await runProcess('git', ['push', 'origin', '--tags'], { silent: true, ...options });
+      await runProcess('git', ['push', 'origin', '--tags'], { silent: false, ...options });
 
       log('');
 
