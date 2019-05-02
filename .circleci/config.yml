@@ -35,5 +35,8 @@ jobs:
           name: Running tests
           command: npm test
       - run:
+          name: Building packages
+          command: npm run build
+      - run:
           name: Sending Code Climate coverage report
           command: ./cc-test-reporter after-build -t lcov coverage/lcov.info --exit-code $?
