@@ -2,6 +2,14 @@
   "name": "@vuesion/addon-contentful",
   "version": "2.2.0",
   "description": "vuesion contentful integration",
+  "keywords": [
+    "vue.js",
+    "express",
+    "middleware",
+    "contentful",
+    "vuesion",
+    "vue-starter"
+  ],
   "author": "Johannes Werner <johannes.werner86@gmail.com>",
   "homepage": "https://github.com/vuesion/packages#readme",
   "license": "MIT",

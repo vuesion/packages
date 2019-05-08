@@ -65,10 +65,16 @@ export let base: webpack.Configuration = {
                 require('autoprefixer')({ browsers: ['last 2 versions', 'ie >= 11'] }),
                 require('css-mqpacker')(),
                 require('cssnano')({
-                  discardComments: {
-                    removeAll: true,
-                  },
-                  zindex: false,
+                  preset: [
+                    'default',
+                    {
+                      discardComments: {
+                        removeAll: true,
+                      },
+                      zindex: false,
+                      normalizeWhitespace: isProd,
+                    },
+                  ],
                 }),
               ],
             },
