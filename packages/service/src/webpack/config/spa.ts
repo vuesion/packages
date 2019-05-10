@@ -11,6 +11,7 @@ client.output.path = runtimeRoot('dist');
 client.output.publicPath = '/';
 
 export const spa: webpack.Configuration = merge(client, {
+  name: 'spa',
   plugins: [
     new CopyWebpackPlugin([{ from: runtimeRoot('src/static'), to: './' }, { from: runtimeRoot('i18n'), to: './i18n' }]),
   ],

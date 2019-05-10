@@ -6,6 +6,7 @@ import { runtimeRoot } from '../../utils/path';
 const VueSSRPlugin = require('vue-ssr-webpack-plugin');
 
 export const isomorphic: webpack.Configuration = merge(baseServer, {
+  name: 'isomorphic',
   entry: { isomorphic: runtimeRoot('src/server/isomorphic') },
   output: {
     filename: 'isomorphic.js',

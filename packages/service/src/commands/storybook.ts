@@ -1,5 +1,4 @@
-import { Command, ICommandHandler, IRunOptions } from '../lib/command';
-import { handleProcessError, runProcess } from '../utils/process';
+import { Command, ICommandHandler } from '../lib/command';
 
 @Command({
   name: 'storybook',
@@ -9,27 +8,23 @@ import { handleProcessError, runProcess } from '../utils/process';
 export class Storybook implements ICommandHandler {
   public dev: boolean;
 
-  public async run(args: string[], options: IRunOptions) {
+  public async run(args: string[]) {
     const dev = Boolean(this.dev);
-    let binary = 'build-storybook';
+
+    process.argv = process.argv.concat([
+      '-p',
+      '6006',
+      '--output-dir',
+      './storybook-static',
+      '--config-dir',
+      './.vuesion/storybook',
+      ...args,
+    ]);
 
     if (dev) {
-      binary = 'start-storybook';
-
-      args.pop();
-      args = args.concat(['-p', '6006']);
+      require('@storybook/vue/bin/index.js');
     } else {
-      args = args.concat(['--output-dir', './storybook-static']);
-    }
-
-    args = args.concat(['--config-dir', './.vuesion//storybook']);
-
-    args = args.filter((arg: string) => arg !== '--silent');
-
-    try {
-      await runProcess(binary, args, options);
-    } catch (e) {
-      handleProcessError(e);
+      require('@storybook/vue/bin/build.js');
     }
   }
 }

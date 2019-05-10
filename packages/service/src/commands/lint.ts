@@ -1,5 +1,5 @@
 import { Command, ICommandHandler, IRunOptions } from '../lib/command';
-import { handleProcessError, runProcess } from '../utils/process';
+import { handleProcessError } from '../utils/process';
 import { Spinner } from '../utils/ui';
 
 @Command({
@@ -9,14 +9,15 @@ import { Spinner } from '../utils/ui';
 })
 export class Lint implements ICommandHandler {
   public async run(args: string[], options: IRunOptions) {
-    args = args.concat(['--fix', '-c', 'tslint.json', '-p', 'tsconfig.json']);
     const spinner = new Spinner();
 
     spinner.message = 'Linting files...';
     spinner.start(options.debug);
 
+    process.argv = [process.argv[0], null, '--fix', '-c', 'tslint.json', '-p', 'tsconfig.json', ...args];
+
     try {
-      await runProcess('tslint', args.filter((arg: string) => arg !== '--silent'), { silent: true, ...options });
+      require('tslint/lib/tslintCli.js');
 
       spinner.message = 'All files passed linting';
       spinner.stop();

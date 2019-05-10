@@ -1,5 +1,5 @@
 import * as webpack from 'webpack';
-import { analyze, isDev, isProd } from './utils';
+import { analyze, isDev, isProd, statsSettings } from './utils';
 import { packageRoot, runtimeRoot } from '../../utils/path';
 import { getWebpackAliases } from '../../models/Config';
 
@@ -8,10 +8,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 export let base: webpack.Configuration = {
-  stats: {
-    assets: true,
-    children: true,
-  },
+  stats: statsSettings,
   devtool: isProd ? false : '#eval-source-map',
   resolve: {
     extensions: ['.ts', '.js', '.vue', '.json', '.node'],
@@ -101,6 +98,7 @@ export let base: webpack.Configuration = {
       tsconfig: runtimeRoot('tsconfig.json'),
       tslint: runtimeRoot('tslint.json'),
       vue: true,
+      silent: true,
     }),
   ],
 };

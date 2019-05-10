@@ -3,6 +3,7 @@ import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { handleProcessError, runProcess } from '../utils/process';
 import { HeadLine, logInfo } from '../utils/ui';
 import { packageRoot } from '../utils/path';
+import { sync } from 'rimraf';
 
 export const waitForApp = async (url: string) => {
   const interval = 500;
@@ -52,19 +53,19 @@ export class Dev implements ICommandHandler {
     const url = `http://localhost:${this.port}`;
 
     try {
-      await runProcess('rimraf', ['./dist'], { silent: true, ...options });
+      sync('./dist');
 
       HeadLine('Start development mode...');
 
       await runProcess(
-        'webpack',
-        ['--mode', 'development', '--config', packageRoot('dist/webpack/config/dev-server.js')],
+        'node',
+        [packageRoot('dist/scripts/run-webpack.js'), 'dev-server', 'development', `${options.debug}`],
         options,
       );
 
       runProcess(
-        'webpack',
-        ['--mode', 'development', '--config', packageRoot('dist/webpack/config/server.js')],
+        'node',
+        [packageRoot('dist/scripts/run-webpack.js'), 'server', 'development', `${options.debug}`],
         options,
       );
 

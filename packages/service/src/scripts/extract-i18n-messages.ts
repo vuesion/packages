@@ -6,7 +6,7 @@ import { Config } from '../models/Config';
 import { HeadLine, log, Result } from '../utils/ui';
 import { ensureDirectoryExists } from '../utils/path';
 
-const run = (): void => {
+export const run = (): void => {
   glob('./src/app/**/*.vue', (err: any, files: string[]) => {
     const basePath: string = path.resolve(process.cwd());
     const supportedLocales: string[] = Config.i18n.supportedLocales;
@@ -66,5 +66,3 @@ const run = (): void => {
     Result('I18n extraction finished.');
   });
 };
-
-run();
