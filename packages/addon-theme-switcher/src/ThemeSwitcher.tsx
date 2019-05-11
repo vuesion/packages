@@ -1,5 +1,5 @@
 import React from 'react';
-import { SET_STORIES } from '@storybook/core-events';
+import { STORY_RENDERED } from '@storybook/core-events';
 // @ts-ignore
 import { Icons, IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 import { styled } from '@storybook/theming';
@@ -35,12 +35,13 @@ export class ThemeSwitcher extends React.Component<any, any> {
     };
 
     this.listener = () => {
-      const parameters = props.api.getCurrentStoryData().parameters;
-      let themes = (parameters.themeSwitcher && parameters.themeSwitcher.themes) || [];
+      const data = props.api.getCurrentStoryData();
+      const parameters = data ? data.parameters : null;
+      let themes = (parameters && parameters.themeSwitcher && parameters.themeSwitcher.themes) || [];
 
       themes = themes.map(({ label, value }: any) => createItem(value, label, this.change));
 
-      if (themes.length === 0) {
+      if (themes.length === 0 || this.state.selected) {
         return;
       }
 
@@ -59,7 +60,7 @@ export class ThemeSwitcher extends React.Component<any, any> {
 
   public componentDidMount() {
     const { api } = this.props;
-    api.on(SET_STORIES, this.listener);
+    api.on(STORY_RENDERED, this.listener);
   }
 
   public render() {
