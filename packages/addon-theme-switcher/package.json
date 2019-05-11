@@ -1,12 +1,14 @@
 {
-  "name": "@vuesion/addon-vuex-persist",
+  "name": "@vuesion/addon-theme-switcher",
   "version": "2.2.0",
-  "description": "vuesion vuex middleware to persist state + adapters",
+  "description": "vuesion Storybook addon for switching themes",
   "keywords": [
     "vue.js",
-    "vuex",
-    "persisting state",
-    "cookies",
+    "storybook",
+    "addon",
+    "storybook addon",
+    "theming",
+    "themes",
     "vuesion",
     "vue-starter"
   ],
@@ -19,7 +21,7 @@
   "files": [
     "dist"
   ],
-  "main": "dist/vuex-persist.js",
+  "main": "register.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vuesion/packages.git"
@@ -29,23 +31,26 @@
     "prebuild": "npm run clean",
     "build": "npm run compile",
     "clean": "rimraf ./dist ./build",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "lint": "tslint -c tslint.json './src/**/*.ts'"
   },
   "bugs": {
     "url": "https://github.com/vuesion/packages/issues"
   },
-  "dependencies": {
-    "js-cookie": "^2.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "deepmerge": "^3.2.0",
+    "@storybook/addons": "^5.0.11",
+    "@storybook/components": "^5.0.11",
+    "@storybook/theming": "^5.0.11",
+    "@storybook/vue": "^5.0.11",
+    "@types/react": "^16.4.7",
     "rimraf": "^2.6.3",
-    "typescript": "^3.4.5",
-    "vuex": "^3.1.0"
+    "typescript": "^3.4.5"
   },
   "peerDependencies": {
-    "deepmerge": ">=3",
-    "vuex": ">=3"
+    "@storybook/addons": ">=4",
+    "@storybook/vue": ">=4",
+    "react": "*"
   },
   "publishConfig": {
     "access": "public"
