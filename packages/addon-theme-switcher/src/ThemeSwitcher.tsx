@@ -35,9 +35,14 @@ export class ThemeSwitcher extends React.Component<any, any> {
     };
 
     this.listener = () => {
-      const themes = props.api
-        .getCurrentStoryData()
-        .parameters.themeSwitcher.themes.map(({ label, value }: any) => createItem(value, label, this.change));
+      const parameters = props.api.getCurrentStoryData().parameters;
+      let themes = (parameters.themeSwitcher && parameters.themeSwitcher.themes) || [];
+
+      themes = themes.map(({ label, value }: any) => createItem(value, label, this.change));
+
+      if (themes.length === 0) {
+        return;
+      }
 
       this.setState({
         themes,
