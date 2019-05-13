@@ -8,7 +8,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b9b3c6c006e51ee6e43f/test_coverage)](https://codeclimate.com/github/vuesion/packages/test_coverage)
 [![Dependencies](https://img.shields.io/david/vuesion/packages.svg)](https://david-dm.org/vuesion/packages)
 [![DevDependencies](https://img.shields.io/david/dev/vuesion/packages.svg)](https://david-dm.org/vuesion/packages?type=dev)
-[![GitHub issues-closed](https://img.shields.io/github/issues-closed/vuesion/packages/.svg)](https://GitHub.com/vuesion/packages/issues?q=is%3Aissue+is%3Aclosed)
+[![GitHub issues-closed](https://img.shields.io/github/issues-closed/vuesion/packages.svg)](https://GitHub.com/vuesion/packages/issues?q=is%3Aissue+is%3Aclosed)
 [![GitHub release](https://img.shields.io/github/release/vuesion/packages.svg)](https://GitHub.com/vuesion/packages/releases/)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
