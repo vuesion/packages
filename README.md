@@ -1,4 +1,4 @@
-# Vuesion
+# Vuesion Packages
 
 > Packages to support the [vuesion project](https://github.com/vuesion/vuesion)
 
