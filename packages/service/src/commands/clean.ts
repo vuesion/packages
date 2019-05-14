@@ -1,7 +1,7 @@
-import { Command, ICommandHandler, IRunOptions } from '../lib/command';
-import { logError, Spinner } from '../utils/ui';
+import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
+import { logError, Spinner } from '@vuesion/utils/dist/ui';
 import { sync } from 'rimraf';
-import { VuesionConfig } from '../models/VuesionConfig';
+import { VuesionConfig } from '@vuesion/models';
 
 @Command({
   name: 'clean',

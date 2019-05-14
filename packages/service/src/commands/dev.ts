@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { Command, ICommandHandler, IRunOptions } from '../lib/command';
-import { handleProcessError, runProcess } from '../utils/process';
-import { HeadLine, logInfo } from '../utils/ui';
-import { packageRoot } from '../utils/path';
+import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
+import { handleProcessError, runProcess } from '@vuesion/utils/dist/process';
+import { HeadLine, logInfo } from '@vuesion/utils/dist/ui';
+import { packagesRoot } from '@vuesion/utils/dist/path';
 import { sync } from 'rimraf';
 
 export const waitForApp = async (url: string) => {
@@ -59,13 +59,23 @@ export class Dev implements ICommandHandler {
 
       await runProcess(
         'node',
-        [packageRoot('dist/scripts/run-webpack.js'), 'dev-server', 'development', `${options.debug}`],
+        [
+          packagesRoot('webpack', 'dist/scripts/run-webpack.js'),
+          packagesRoot('webpack', 'dist/config/dev-server.js'),
+          'development',
+          `${options.debug}`,
+        ],
         options,
       );
 
       runProcess(
         'node',
-        [packageRoot('dist/scripts/run-webpack.js'), 'server', 'development', `${options.debug}`],
+        [
+          packagesRoot('webpack', 'dist/scripts/run-webpack.js'),
+          packagesRoot('webpack', 'dist/config/server.js'),
+          'development',
+          `${options.debug}`,
+        ],
         options,
       );
 

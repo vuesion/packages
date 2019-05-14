@@ -1,6 +1,7 @@
 import * as path from 'path';
-import { folderExists, runtimeRoot } from '../../utils/path';
-import { VuesionConfig } from '../../models/VuesionConfig';
+import { runtimeRoot } from '@vuesion/utils/dist/path';
+import { folderExists } from '@vuesion/utils/dist/fileSystem';
+import { VuesionConfig } from '@vuesion/models';
 
 export = {
   description: 'Add a single file component',

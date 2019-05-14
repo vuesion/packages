@@ -1,7 +1,7 @@
-import { Command, ICommandHandler, IRunOptions } from '../lib/command';
-import { Spinner } from '../utils/ui';
-import { runtimeRoot } from '../utils/path';
-import { handleProcessError, runProcess } from '../utils/process';
+import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
+import { Spinner } from '@vuesion/utils/dist/ui';
+import { runtimeRoot } from '@vuesion/utils/dist/path';
+import { handleProcessError, runProcess } from '@vuesion/utils/dist/process';
 import chalk from 'chalk';
 
 const download = require('download-git-repo');

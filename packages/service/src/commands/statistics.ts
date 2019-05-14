@@ -1,8 +1,8 @@
-import { Command, ICommandHandler } from '../lib/command';
+import { Command, ICommandHandler } from '../decorators/command';
 import { filter, where, equals } from 'ramda';
 import * as fs from 'fs';
-import { packageRoot } from '../utils/path';
-import { logErrorBold } from '../utils/ui';
+import { packagesRoot } from '@vuesion/utils/dist/path';
+import { logErrorBold } from '@vuesion/utils/dist/ui';
 
 const spawn = require('cross-spawn');
 const opn = require('open');
@@ -113,7 +113,7 @@ export class Statistics implements ICommandHandler {
     const types = [];
     const dates = [];
     const report: any = {};
-    const reportPath = packageRoot('dist/report.html');
+    const reportPath = packagesRoot('service', 'dist/report.html');
 
     childProcess.stdout.on('data', (data: any) => {
       data

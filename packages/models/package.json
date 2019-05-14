@@ -1,0 +1,42 @@
+{
+  "name": "@vuesion/models",
+  "version": "2.3.0",
+  "description": "models and AST tools for vuesion",
+  "keywords": [
+    "vue.js",
+    "vuesion",
+    "vue-starter"
+  ],
+  "author": "Johannes Werner <johannes.werner86@gmail.com>",
+  "homepage": "https://github.com/vuesion/packages#readme",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuesion/packages.git"
+  },
+  "scripts": {
+    "compile": "tsc",
+    "prebuild": "npm run clean",
+    "build": "npm run compile",
+    "clean": "rimraf ./dist",
+    "dev": "tsc --watch"
+  },
+  "bugs": {
+    "url": "https://github.com/vuesion/packages/issues"
+  },
+  "dependencies": {
+    "@vuesion/utils": "file:../utils",
+    "ramda": "^0.26.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.14.6",
+    "typescript": "^3.4.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

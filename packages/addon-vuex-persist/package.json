@@ -13,9 +13,6 @@
   "author": "Johannes Werner <johannes.werner86@gmail.com>",
   "homepage": "https://github.com/vuesion/packages#readme",
   "license": "MIT",
-  "directories": {
-    "dist": "dist"
-  },
   "files": [
     "dist"
   ],

@@ -13,14 +13,11 @@
   "author": "Johannes Werner <johannes.werner86@gmail.com>",
   "homepage": "https://github.com/vuesion/packages#readme",
   "license": "MIT",
-  "directories": {
-    "dist": "dist"
-  },
+  "main": "dist/ContentfulMiddleware.js",
   "files": [
     "dist",
     "template"
   ],
-  "main": "dist/ContentfulMiddleware.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vuesion/packages.git"

@@ -1,5 +1,5 @@
-import { Command, ICommandHandler } from '../lib/command';
-import { VuesionConfig } from '../models/VuesionConfig';
+import { Command, ICommandHandler } from '../decorators/command';
+import { VuesionConfig } from '@vuesion/models';
 
 @Command({
   name: 'prettier',

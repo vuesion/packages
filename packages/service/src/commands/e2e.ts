@@ -1,5 +1,5 @@
-import { Command, ICommandHandler } from '../lib/command';
-import { logError } from '../utils/ui';
+import { Command, ICommandHandler } from '../decorators/command';
+import { logError } from '@vuesion/utils/dist/ui';
 const cypress = require('cypress');
 
 @Command({

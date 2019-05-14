@@ -1,7 +1,8 @@
 import * as path from 'path';
 import { addModuleToRouter, addModuleToState } from '../ast';
-import { VuesionConfig } from '../../models/VuesionConfig';
-import { folderExists, runtimeRoot } from '../../utils/path';
+import { VuesionConfig } from '@vuesion/models';
+import { runtimeRoot } from '@vuesion/utils/dist/path';
+import { folderExists } from '@vuesion/utils/dist/fileSystem';
 
 export = {
   description: 'Add a module with VueX store and routes',

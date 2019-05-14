@@ -1,6 +1,6 @@
-import { Command, ICommandHandler } from '../lib/command';
+import { Command, ICommandHandler } from '../decorators/command';
 import { run } from '../scripts/update';
-import { logError } from '../utils/ui';
+import { logError } from '@vuesion/utils/dist/ui';
 
 @Command({
   name: 'update',
