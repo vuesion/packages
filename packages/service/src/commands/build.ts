@@ -5,8 +5,8 @@ import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { handleProcessError, runProcess } from '../utils/process';
 import { logInfo, logInfoBold, Spinner } from '../utils/ui';
 import { ensureDirectoryExists, packageRoot, runtimeRoot } from '../utils/path';
-import { Config } from '../models/Config';
 import { sync } from 'rimraf';
+import { VuesionConfig } from '../models/VuesionConfig';
 
 @Command({
   name: 'build',
@@ -105,8 +105,8 @@ const renderPage = async (renderer: BundleRenderer, route: string) => {
   return renderer.renderToString({
     url: route,
     cookies: {},
-    acceptLanguage: Config.i18n.defaultLocale,
-    htmlLang: Config.i18n.defaultLocale.substr(0, 2),
+    acceptLanguage: VuesionConfig.i18n.defaultLocale,
+    htmlLang: VuesionConfig.i18n.defaultLocale.substr(0, 2),
     appConfig: {},
     redirect: null,
   });
@@ -123,8 +123,8 @@ const renderPages = async (options: IRunOptions) => {
   const renderer: BundleRenderer = createBundleRenderer(runtimeRoot('dist/server/vue-ssr-bundle.json'), {
     template: fs.readFileSync(runtimeRoot('dist/index.html')).toString(),
   });
-  const appShellRoute: string = pathOr<string>('/', ['spa', 'appShellRoute'], Config);
-  const routes: string[] = pathOr<string[]>([], ['spa', 'additionalRoutes'], Config);
+  const appShellRoute: string = pathOr<string>('/', ['spa', 'appShellRoute'], VuesionConfig);
+  const routes: string[] = pathOr<string[]>([], ['spa', 'additionalRoutes'], VuesionConfig);
 
   routes.unshift(appShellRoute);
 

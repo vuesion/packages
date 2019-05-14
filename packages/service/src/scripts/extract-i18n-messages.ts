@@ -2,15 +2,15 @@ import * as glob from 'glob';
 import * as fs from 'fs';
 import * as path from 'path';
 import { getTranslationObject, getTranslationsFromString } from './Utils';
-import { Config } from '../models/Config';
+import { VuesionConfig } from '../models/VuesionConfig';
 import { HeadLine, log, Result } from '../utils/ui';
 import { ensureDirectoryExists } from '../utils/path';
 
 export const run = (): void => {
   glob('./src/app/**/*.vue', (err: any, files: string[]) => {
     const basePath: string = path.resolve(process.cwd());
-    const supportedLocales: string[] = Config.i18n.supportedLocales;
-    const defaultLocale: string = Config.i18n.defaultLocale;
+    const supportedLocales: string[] = VuesionConfig.i18n.supportedLocales;
+    const defaultLocale: string = VuesionConfig.i18n.defaultLocale;
     let translations: any = {};
 
     HeadLine('Scanning files in: ./src/app/**/*.vue.');

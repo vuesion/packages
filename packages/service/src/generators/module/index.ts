@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { addModuleToRouter, addModuleToState } from '../ast';
-import { Config } from '../../models/Config';
+import { VuesionConfig } from '../../models/VuesionConfig';
 import { folderExists, runtimeRoot } from '../../utils/path';
 
 export = {
@@ -15,7 +15,7 @@ export = {
           return 'name is required';
         }
 
-        return folderExists(runtimeRoot(path.join(Config.generators.outputDirectory, value)))
+        return folderExists(runtimeRoot(path.join(VuesionConfig.generators.outputDirectory, value)))
           ? `folder already exists (${value})`
           : true;
       },
@@ -38,19 +38,27 @@ export = {
 
     data.moduleName = filePath.pop();
     data.componentName = data.moduleName;
-    data.basePath = path.join(process.cwd(), Config.generators.outputDirectory, filePath.join('/'));
+    data.basePath = path.join(process.cwd(), VuesionConfig.generators.outputDirectory, filePath.join('/'));
 
     let actions: any[] = [
       {
         type: 'add',
         path: '{{basePath}}/{{camelCase moduleName}}/{{properCase componentName}}/{{properCase componentName}}.vue',
-        templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'connected/connected.vue.hbs'),
+        templateFile: path.join(
+          process.cwd(),
+          VuesionConfig.generators.blueprintDirectory,
+          'connected/connected.vue.hbs',
+        ),
         abortOnFail: true,
       },
       {
         type: 'add',
         path: '{{basePath}}/{{camelCase moduleName}}/{{properCase componentName}}/{{properCase componentName}}.spec.ts',
-        templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'connected/connected.spec.ts.hbs'),
+        templateFile: path.join(
+          process.cwd(),
+          VuesionConfig.generators.blueprintDirectory,
+          'connected/connected.spec.ts.hbs',
+        ),
         abortOnFail: true,
       },
     ];
@@ -59,11 +67,11 @@ export = {
       actions.push({
         type: 'add',
         path: '{{basePath}}/{{camelCase moduleName}}/routes.ts',
-        templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'module/routes.ts.hbs'),
+        templateFile: path.join(process.cwd(), VuesionConfig.generators.blueprintDirectory, 'module/routes.ts.hbs'),
         abortOnFail: true,
       });
 
-      addModuleToRouter(path.join(path.resolve(process.cwd()), Config.generators.routerFile), data.moduleName);
+      addModuleToRouter(path.join(path.resolve(process.cwd()), VuesionConfig.generators.routerFile), data.moduleName);
     }
 
     if (data.wantVuex) {
@@ -71,54 +79,70 @@ export = {
         {
           type: 'add',
           path: '{{basePath}}/{{camelCase moduleName}}/actions.spec.ts',
-          templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'module/actions.spec.ts.hbs'),
+          templateFile: path.join(
+            process.cwd(),
+            VuesionConfig.generators.blueprintDirectory,
+            'module/actions.spec.ts.hbs',
+          ),
           abortOnFail: true,
         },
         {
           type: 'add',
           path: '{{basePath}}/{{camelCase moduleName}}/actions.ts',
-          templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'module/actions.ts.hbs'),
+          templateFile: path.join(process.cwd(), VuesionConfig.generators.blueprintDirectory, 'module/actions.ts.hbs'),
           abortOnFail: true,
         },
         {
           type: 'add',
           path: '{{basePath}}/{{camelCase moduleName}}/getters.spec.ts',
-          templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'module/getters.spec.ts.hbs'),
+          templateFile: path.join(
+            process.cwd(),
+            VuesionConfig.generators.blueprintDirectory,
+            'module/getters.spec.ts.hbs',
+          ),
           abortOnFail: true,
         },
         {
           type: 'add',
           path: '{{basePath}}/{{camelCase moduleName}}/getters.ts',
-          templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'module/getters.ts.hbs'),
+          templateFile: path.join(process.cwd(), VuesionConfig.generators.blueprintDirectory, 'module/getters.ts.hbs'),
           abortOnFail: true,
         },
         {
           type: 'add',
           path: '{{basePath}}/{{camelCase moduleName}}/module.ts',
-          templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'module/module.ts.hbs'),
+          templateFile: path.join(process.cwd(), VuesionConfig.generators.blueprintDirectory, 'module/module.ts.hbs'),
           abortOnFail: true,
         },
         {
           type: 'add',
           path: '{{basePath}}/{{camelCase moduleName}}/mutations.spec.ts',
-          templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'module/mutations.spec.ts.hbs'),
+          templateFile: path.join(
+            process.cwd(),
+            VuesionConfig.generators.blueprintDirectory,
+            'module/mutations.spec.ts.hbs',
+          ),
           abortOnFail: true,
         },
         {
           type: 'add',
           path: '{{basePath}}/{{camelCase moduleName}}/mutations.ts',
-          templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'module/mutations.ts.hbs'),
+          templateFile: path.join(
+            process.cwd(),
+            VuesionConfig.generators.blueprintDirectory,
+            'module/mutations.ts.hbs',
+          ),
           abortOnFail: true,
         },
         {
           type: 'add',
           path: '{{basePath}}/{{camelCase moduleName}}/state.ts',
-          templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'module/state.ts.hbs'),
+          templateFile: path.join(process.cwd(), VuesionConfig.generators.blueprintDirectory, 'module/state.ts.hbs'),
           abortOnFail: true,
         },
       ]);
 
-      addModuleToState(path.join(path.resolve(process.cwd()), Config.generators.stateFile), data.moduleName);
+      addModuleToState(path.join(path.resolve(process.cwd()), VuesionConfig.generators.stateFile), data.moduleName);
     }
 
     return actions;

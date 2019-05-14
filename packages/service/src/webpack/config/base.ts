@@ -1,7 +1,7 @@
 import * as webpack from 'webpack';
 import { analyze, isDev, isProd, statsSettings } from './utils';
 import { packageRoot, runtimeRoot } from '../../utils/path';
-import { getWebpackAliases } from '../../models/Config';
+import { VuesionConfig } from '../../models/VuesionConfig';
 
 const { VueLoaderPlugin } = require('vue-loader');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -113,7 +113,7 @@ if (analyze) {
   base.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
 }
 
-const aliases = getWebpackAliases();
+const aliases = VuesionConfig.getWebpackAliases();
 
 if (aliases) {
   Object.keys(aliases).map((alias: string) => {

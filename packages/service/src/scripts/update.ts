@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import * as fs from 'fs';
 import * as https from 'https';
-import { Config, configPath } from '../models/Config';
 import { runtimeRoot, ensureDirectoryExists } from '../utils/path';
 import { log, logError, logErrorBold, logInfoBold, logSuccess, Result } from '../utils/ui';
+import { VuesionConfig } from '../models/VuesionConfig';
 
 interface IFile {
   filename: string;
@@ -79,7 +79,7 @@ export async function run() {
   try {
     const tagsResponse: AxiosResponse<any> = await axios.get(`${vuesionRepo}/tags`);
     const latestVersion: string = tagsResponse.data[0].name;
-    const currentVersion: string = Config.currentVersion;
+    const currentVersion: string = VuesionConfig.currentVersion;
 
     if (latestVersion === currentVersion) {
       Result(`Your project is up to date (Version: ${currentVersion}).`);
@@ -94,9 +94,10 @@ export async function run() {
 
     handleFiles(diffResponse.data.files);
 
-    Config.currentVersion = latestVersion;
-
-    fs.writeFileSync(configPath, JSON.stringify(Config, null, 2));
+    setTimeout(() => {
+      VuesionConfig.load();
+      VuesionConfig.updateCurrentVersion(latestVersion);
+    }, 200);
   } catch (e) {
     logErrorBold(e);
   }

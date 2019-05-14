@@ -1,8 +1,8 @@
 import * as Express from 'express';
 import { WebpackDevMiddleware } from 'webpack-dev-middleware';
 import { statsSettings } from '../config/utils';
-import { Config } from '../../models/Config';
 import { logError, logWarning } from '../../utils/ui';
+import { VuesionConfig } from '../../models/VuesionConfig';
 
 const path = require('path');
 const webpack = require('webpack');
@@ -42,7 +42,7 @@ export default (app: Express.Application, callback: any): void => {
   devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
     stats: statsSettings,
-    watchOptions: (Config.devServer && Config.devServer.watchOptions) || {
+    watchOptions: (VuesionConfig.devServer && VuesionConfig.devServer.watchOptions) || {
       aggregateTimeout: 300,
       poll: false,
     },
