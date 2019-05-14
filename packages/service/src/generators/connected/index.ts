@@ -30,6 +30,7 @@ export = {
     data.componentName = filePath.pop();
     data.moduleName = filePath.pop();
     data.basePath = path.join(process.cwd(), Config.generators.outputDirectory, filePath.join('/'));
+    data.wantVuex = true;
 
     return [
       {
