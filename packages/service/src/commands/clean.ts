@@ -1,7 +1,7 @@
 import { Command, ICommandHandler, IRunOptions } from '../lib/command';
 import { logError, Spinner } from '../utils/ui';
-import { Config } from '../models/Config';
 import { sync } from 'rimraf';
+import { VuesionConfig } from '../models/VuesionConfig';
 
 @Command({
   name: 'clean',
@@ -15,7 +15,7 @@ export class Clean implements ICommandHandler {
     spinner.start(options.debug);
 
     try {
-      Config.clean.forEach((glob) => sync(glob));
+      VuesionConfig.clean.forEach((glob) => sync(glob));
       spinner.message = 'Directories cleaned';
       spinner.stop();
     } catch (e) {

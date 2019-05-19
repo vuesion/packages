@@ -1,5 +1,5 @@
 import { Command, ICommandHandler } from '../lib/command';
-import { Config } from '../models/Config';
+import { VuesionConfig } from '../models/VuesionConfig';
 
 @Command({
   name: 'prettier',
@@ -29,7 +29,7 @@ const prettier = (args: string[], pattern: string) => {
     '--ignore-path',
     '.prettierignore',
     '--write',
-    pattern ? pattern : `./**/*.{${Config.prettier.extensions}}`,
+    pattern ? pattern : `./**/*.{${VuesionConfig.prettier.extensions}}`,
   ];
 
   process.argv = process.argv.concat(args);

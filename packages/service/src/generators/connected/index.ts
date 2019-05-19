@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { Config } from '../../models/Config';
+import { VuesionConfig } from '../../models/VuesionConfig';
 import { folderExists, runtimeRoot } from '../../utils/path';
 
 export = {
@@ -18,7 +18,7 @@ export = {
           return 'a connected component has to live in a module';
         }
 
-        return folderExists(runtimeRoot(path.join(Config.generators.outputDirectory, value)))
+        return folderExists(runtimeRoot(path.join(VuesionConfig.generators.outputDirectory, value)))
           ? `folder already exists (${value})`
           : true;
       },
@@ -29,20 +29,28 @@ export = {
 
     data.componentName = filePath.pop();
     data.moduleName = filePath.pop();
-    data.basePath = path.join(process.cwd(), Config.generators.outputDirectory, filePath.join('/'));
+    data.basePath = path.join(process.cwd(), VuesionConfig.generators.outputDirectory, filePath.join('/'));
     data.wantVuex = true;
 
     return [
       {
         type: 'add',
         path: '{{basePath}}/{{camelCase moduleName}}/{{properCase componentName}}/{{properCase componentName}}.vue',
-        templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'connected/connected.vue.hbs'),
+        templateFile: path.join(
+          process.cwd(),
+          VuesionConfig.generators.blueprintDirectory,
+          'connected/connected.vue.hbs',
+        ),
         abortOnFail: true,
       },
       {
         type: 'add',
         path: '{{basePath}}/{{camelCase moduleName}}/{{properCase componentName}}/{{properCase componentName}}.spec.ts',
-        templateFile: path.join(process.cwd(), Config.generators.blueprintDirectory, 'connected/connected.spec.ts.hbs'),
+        templateFile: path.join(
+          process.cwd(),
+          VuesionConfig.generators.blueprintDirectory,
+          'connected/connected.spec.ts.hbs',
+        ),
         abortOnFail: true,
       },
     ];
