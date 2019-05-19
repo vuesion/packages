@@ -43,14 +43,16 @@ class Model extends JSONModel<IVuesionConfig> implements IVuesionConfig {
   constructor() {
     super(runtimeRoot('.vuesion/config.json'));
 
-    this.clean = this.model.clean;
-    this.currentVersion = this.model.currentVersion;
-    this.devServer = this.model.devServer;
-    this.generators = this.model.generators;
-    this.i18n = this.model.i18n;
-    this.prettier = this.model.prettier;
-    this.spa = this.model.spa;
-    this.webpack = this.model.webpack;
+    if (this.model !== null) {
+      this.clean = this.model.clean;
+      this.currentVersion = this.model.currentVersion;
+      this.devServer = this.model.devServer;
+      this.generators = this.model.generators;
+      this.i18n = this.model.i18n;
+      this.prettier = this.model.prettier;
+      this.spa = this.model.spa;
+      this.webpack = this.model.webpack;
+    }
   }
 
   public getWebpackAliases() {

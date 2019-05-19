@@ -24,8 +24,8 @@ or a link to a ticket system...
 
 ### New Feature / Bug Fix
 
-- [ ] Run unit tests to ensure all existing tests are still passing
-- [ ] Add new passing unit tests to cover the code introduced by your PR
+- [ ] Run unit tests **AND E2E TESTS** to ensure all existing tests are still passing
+- [ ] Add new passing unit **AND E2E TESTS** tests to cover the code introduced by your PR
 
 <!--
 Thanks for contributing!
