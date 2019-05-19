@@ -4,6 +4,7 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "build": "lerna run build",
+    "clean": "lerna run clean",
     "test": "jest --coverage",
     "e2e": "lerna run e2e",
     "lint": "tslint -c tslint.json './packages/**/src/**/*.ts'",

@@ -3,7 +3,21 @@ import { format } from 'prettier';
 import { runtimeRoot } from '../utils/path';
 import { logError, logInfo } from '../utils/ui';
 
-const prettierConfig = JSON.parse(fs.readFileSync(runtimeRoot('.prettierrc')).toString());
+let prettierConfig;
+
+try {
+  prettierConfig = JSON.parse(fs.readFileSync(runtimeRoot('.prettierrc')).toString());
+} catch (e) {
+  prettierConfig = {
+    singleQuote: true,
+    bracketSpacing: true,
+    arrowParens: 'always',
+    trailingComma: 'all',
+    tabWidth: 2,
+    printWidth: 120,
+    endOfLine: 'lf',
+  };
+}
 
 export class JSONModel<T> {
   protected path: string = null;
@@ -15,30 +29,30 @@ export class JSONModel<T> {
   }
 
   public load() {
-    try {
-      this.model = JSON.parse(fs.readFileSync(this.path).toString());
-    } catch (e) {
-      logError(e);
-      logInfo(fs.readFileSync(this.path).toString());
+    if (fs.existsSync(this.path)) {
+      try {
+        this.model = JSON.parse(fs.readFileSync(this.path).toString());
+      } catch (e) {
+        logError(e);
+      }
     }
   }
 
   public save(prettier: boolean = true) {
     let jsonString = '';
     try {
-      jsonString = JSON.stringify(this.model, null, (prettierConfig && prettierConfig.tabWidth) || 2) + '\n';
+      jsonString = JSON.stringify(this.model, null, prettierConfig.tabWidth) + '\n';
+
+      const data = prettier
+        ? format(jsonString, {
+            ...prettierConfig,
+            parser: 'json',
+          })
+        : jsonString;
+
+      fs.writeFileSync(this.path, data);
     } catch (e) {
       logError(e);
-      logInfo(this.model);
     }
-
-    const data = prettier
-      ? format(jsonString, {
-          ...prettierConfig,
-          parser: 'json',
-        })
-      : jsonString;
-
-    fs.writeFileSync(this.path, data);
   }
 }
