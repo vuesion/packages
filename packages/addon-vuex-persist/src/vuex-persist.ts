@@ -62,13 +62,11 @@ const processStorage = (storage: IVuexPersistStorage, vuexStore: Store<any>): vo
 
 export const VuexPersist = (storages: IVuexPersistStorage[]): Plugin<any> => {
   return (vuexStore: Store<any>) => {
-    storages.forEach(
-      (storage: IVuexPersistStorage): void => {
-        if (canWriteStorage(storage)) {
-          processStorage(storage, vuexStore);
-        }
-      },
-    );
+    storages.forEach((storage: IVuexPersistStorage): void => {
+      if (canWriteStorage(storage)) {
+        processStorage(storage, vuexStore);
+      }
+    });
 
     vuexStore.replaceState(vuexStore.state);
   };
