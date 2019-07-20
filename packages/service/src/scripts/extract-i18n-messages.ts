@@ -2,9 +2,9 @@ import * as glob from 'glob';
 import * as fs from 'fs';
 import * as path from 'path';
 import { getTranslationObject, getTranslationsFromString } from './Utils';
-import { VuesionConfig } from '../models/VuesionConfig';
-import { HeadLine, log, Result } from '../utils/ui';
-import { ensureDirectoryExists } from '../utils/path';
+import { VuesionConfig } from '@vuesion/models';
+import { HeadLine, log, Result } from '@vuesion/utils/dist/ui';
+import { ensureDirectoryExists } from '@vuesion/utils/dist/fileSystem';
 
 export const run = (): void => {
   glob('./src/app/**/*.vue', (err: any, files: string[]) => {

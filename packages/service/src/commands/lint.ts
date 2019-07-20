@@ -1,6 +1,6 @@
-import { Command, ICommandHandler, IRunOptions } from '../lib/command';
-import { handleProcessError } from '../utils/process';
-import { Spinner } from '../utils/ui';
+import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
+import { handleProcessError } from '@vuesion/utils/dist/process';
+import { Spinner } from '@vuesion/utils/dist/ui';
 
 @Command({
   name: 'lint',

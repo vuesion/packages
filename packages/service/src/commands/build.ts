@@ -1,12 +1,13 @@
 import * as fs from 'fs';
 import { BundleRenderer, createBundleRenderer } from 'vue-server-renderer';
 import { pathOr } from 'ramda';
-import { Command, ICommandHandler, IRunOptions } from '../lib/command';
-import { handleProcessError, runProcess } from '../utils/process';
-import { logInfo, logInfoBold, Spinner } from '../utils/ui';
-import { ensureDirectoryExists, packageRoot, runtimeRoot } from '../utils/path';
+import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
+import { handleProcessError, runProcess } from '@vuesion/utils/dist/process';
+import { logInfo, logInfoBold, Spinner } from '@vuesion/utils/dist/ui';
+import { packagesRoot, runtimeRoot } from '@vuesion/utils/dist/path';
+import { ensureDirectoryExists } from '@vuesion/utils/dist/fileSystem';
 import { sync } from 'rimraf';
-import { VuesionConfig } from '../models/VuesionConfig';
+import { VuesionConfig } from '@vuesion/models';
 
 @Command({
   name: 'build',
@@ -37,9 +38,11 @@ export class Build implements ICommandHandler {
 }
 
 const runWebpack = (configName: string, options: IRunOptions) => {
+  const configPath = packagesRoot('webpack', `dist/config/${configName}.js`);
+
   return runProcess(
     'node',
-    [packageRoot('dist/scripts/run-webpack.js'), configName, 'production', `${options.debug}`],
+    [packagesRoot('webpack', 'dist/scripts/run-webpack.js'), configPath, 'production', `${options.debug}`],
     { silent: true, ...options },
   );
 };

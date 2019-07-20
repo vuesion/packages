@@ -1,4 +1,4 @@
-import { Command, ICommandHandler } from '../lib/command';
+import { Command, ICommandHandler } from '../decorators/command';
 
 @Command({
   name: 'test',

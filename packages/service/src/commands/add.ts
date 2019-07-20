@@ -1,10 +1,10 @@
 import * as fs from 'fs-extra';
 import chalk from 'chalk';
-import { Command, ICommandHandler, IRunOptions } from '../lib/command';
+import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
 import { prompt, Question } from 'inquirer';
-import { logErrorBold, Spinner } from '../utils/ui';
-import { handleProcessError, runProcess } from '../utils/process';
-import { runtimeRoot } from '../utils/path';
+import { logErrorBold, Spinner } from '@vuesion/utils/dist/ui';
+import { handleProcessError, runProcess } from '@vuesion/utils/dist/process';
+import { runtimeRoot } from '@vuesion/utils/dist/path';
 const opn = require('open');
 
 @Command({

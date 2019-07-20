@@ -20,10 +20,14 @@ Contributions are always welcome! Please read the [contribution guidelines](http
 
 - clone repo
 - run `npm install`
+- run `npm run dev`
+- clone or create a new vuesion project
+- npm link necessary @vuesion packages to test locally e.g. `npm link @vuesion/service`
 
 ## Testing
 
 - run `npm test`
+- run `npm run e2e`
 
 # License
 

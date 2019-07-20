@@ -1,9 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
 import * as fs from 'fs';
 import * as https from 'https';
-import { runtimeRoot, ensureDirectoryExists } from '../utils/path';
-import { log, logError, logErrorBold, logInfoBold, logSuccess, Result } from '../utils/ui';
-import { VuesionConfig } from '../models/VuesionConfig';
+import { runtimeRoot } from '@vuesion/utils/dist/path';
+import { ensureDirectoryExists } from '@vuesion/utils/dist/fileSystem';
+import { log, logError, logErrorBold, logInfoBold, logSuccess, Result } from '@vuesion/utils/dist/ui';
+import { VuesionConfig } from '@vuesion/models';
 
 interface IFile {
   filename: string;

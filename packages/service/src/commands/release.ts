@@ -1,6 +1,6 @@
-import { Command, ICommandHandler, IRunOptions } from '../lib/command';
-import { handleProcessError, runProcess } from '../utils/process';
-import { log, logInfo, Result } from '../utils/ui';
+import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
+import { handleProcessError, runProcess } from '@vuesion/utils/dist/process';
+import { log, logInfo, Result } from '@vuesion/utils/dist/ui';
 
 @Command({
   name: 'release',

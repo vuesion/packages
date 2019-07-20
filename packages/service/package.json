@@ -18,9 +18,6 @@
   "bin": {
     "vuesion": "bin/cli"
   },
-  "directories": {
-    "dist": "dist"
-  },
   "files": [
     "dist",
     "bin"
@@ -60,6 +57,9 @@
     "@types/webpack": "4.4.29",
     "@types/webpack-dev-middleware": "2.0.2",
     "@types/webpack-merge": "4.1.5",
+    "@vuesion/utils": "file:../utils",
+    "@vuesion/models": "file:../models",
+    "@vuesion/webpack": "file:../webpack",
     "autoprefixer": "9.5.1",
     "axios": "^0.18.0",
     "babel-core": "6.26.3",
@@ -118,8 +118,13 @@
     "webpack-node-externals": "1.7.2"
   },
   "devDependencies": {
+    "@types/node": "^10.14.6",
     "@types/jest": "^24.0.12",
     "@types/rimraf": "^2.0.2",
+    "node-sass": "^4.12.0",
+    "typescript": "^3.4.5"
+  },
+  "peerDependencies": {
     "node-sass": "^4.12.0",
     "typescript": "^3.4.5"
   },

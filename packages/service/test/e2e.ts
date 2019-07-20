@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import { runProcess } from '../src/utils/process';
+import { runProcess } from '@vuesion/utils';
 
 const rimraf = require('rimraf');
 
@@ -17,7 +17,7 @@ describe('e2e tests for vuesion', () => {
   });
 
   it('should create a new project', async () => {
-    await runProcess('node', ['cli', 'create', 'tmp'], { cwd });
+    await runProcess('node', ['cli', 'create', 'tmp', '--debug'], { cwd });
     expect(fs.existsSync(cwd + '/tmp')).toBeTruthy();
 
     await runProcess('npm', ['link', '@vuesion/service'], { cwd: testProject });
