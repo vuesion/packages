@@ -62,7 +62,7 @@ export let base: webpack.Configuration = {
             options: {
               ident: 'postcss',
               plugins: () => [
-                require('autoprefixer')({ browsers: ['last 2 versions', 'ie >= 11'] }),
+                require('autoprefixer')({ overrideBrowserslist: ['last 2 versions', 'ie >= 11'] }),
                 require('css-mqpacker')(),
                 require('cssnano')({
                   preset: [

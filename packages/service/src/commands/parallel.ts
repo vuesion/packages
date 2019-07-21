@@ -11,7 +11,7 @@ const concurrently = require('concurrently');
 export class Add implements ICommandHandler {
   public async run(args: string[]) {
     try {
-      await concurrently(args);
+      await concurrently(args, { killOthers: ['failure'], prefix: '[{command}]', prefixLength: 28 });
     } catch (e) {
       logError(e);
     }
