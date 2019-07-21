@@ -1,5 +1,11 @@
 #### 2019-07-21
 
+##### New Features
+
+* **webpack:**  add support for scoped (s)css ([54a4de6f](https://github.com/vuesion/packages/commit/54a4de6f61e27bbb1f27a112bb3b87f4d10f150b))
+
+#### 2019-07-21
+
 ##### Chores
 
 *  update dependencies ([#42](https://github.com/vuesion/packages/pull/42)) ([bf796299](https://github.com/vuesion/packages/commit/bf79629911504505b63a4a1bb243b3ceaa570ab9))
