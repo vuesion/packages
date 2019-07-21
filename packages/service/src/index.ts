@@ -6,18 +6,16 @@ import { VuesionPackage, ServicePackage } from '@vuesion/models';
 
 sync(`${packagesRoot('service')}/dist/commands/*.js`).forEach((file: string) => require(file));
 
-commander.name('vuesion').option('-d, --debug', 'Show debugging output.', false);
+commander
+  .name('vuesion')
+  .version(ServicePackage.version, '-v, --version')
+  .option('-d, --debug', 'Show debugging output.', false)
+  .description(ServicePackage.description);
 
 /**
- * not available during npx execution
+ * update tsconfig with latest aliases
  */
-if (ServicePackage) {
-  commander.version(ServicePackage.version, '-v, --version').description(ServicePackage.description);
-  /**
-   * update tsconfig with latest aliases
-   */
-  TSConfig.updateCompilerOptionsPaths();
-  VuesionPackage.updateModuleNameMapper();
-}
+TSConfig.updateCompilerOptionsPaths();
+VuesionPackage.updateModuleNameMapper();
 
 commander.parse(process.argv);

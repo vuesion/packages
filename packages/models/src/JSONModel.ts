@@ -34,6 +34,8 @@ export class JSONModel<T> {
       } catch (e) {
         logError(e);
       }
+    } else {
+      logError(`File: ${this.path} doesn't exist.`);
     }
   }
 

@@ -15,9 +15,9 @@ class Model extends JSONModel<IServicePackage> implements IServicePackage {
   constructor() {
     super(packagesRoot('service', 'package.json'));
 
-    this.description = this.model.description;
-    this.name = this.model.name;
-    this.version = this.model.version;
+    this.description = this.model ? this.model.description : '';
+    this.name = this.model ? this.model.name : '';
+    this.version = this.model ? this.model.version : '';
   }
 }
 
