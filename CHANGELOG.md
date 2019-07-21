@@ -1,5 +1,11 @@
 #### 2019-07-21
 
+##### Bug Fixes
+
+*  npx usage ([a7ac0226](https://github.com/vuesion/packages/commit/a7ac02260ba5e10f29da8268febd702aea6293d0))
+
+#### 2019-07-21
+
 ##### New Features
 
 * **webpack:**  add support for scoped (s)css ([54a4de6f](https://github.com/vuesion/packages/commit/54a4de6f61e27bbb1f27a112bb3b87f4d10f150b))
