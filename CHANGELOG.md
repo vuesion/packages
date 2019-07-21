@@ -2,6 +2,12 @@
 
 ##### Bug Fixes
 
+*  npx usage ([0b102c42](https://github.com/vuesion/packages/commit/0b102c424d9082b176dfc5dfbdb567555c2f7aa8))
+
+#### 2019-07-21
+
+##### Bug Fixes
+
 *  npx usage ([a7ac0226](https://github.com/vuesion/packages/commit/a7ac02260ba5e10f29da8268febd702aea6293d0))
 
 #### 2019-07-21
