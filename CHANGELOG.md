@@ -1,3 +1,13 @@
+#### 2019-07-21
+
+##### Chores
+
+*  update dependencies ([#42](https://github.com/vuesion/packages/pull/42)) ([bf796299](https://github.com/vuesion/packages/commit/bf79629911504505b63a4a1bb243b3ceaa570ab9))
+
+##### Refactors
+
+*  extract separate packages ([#35](https://github.com/vuesion/packages/pull/35)) ([abc706b0](https://github.com/vuesion/packages/commit/abc706b0cc9dac1df9c99cbe3e47e31ca9734bb5))
+
 #### 2019-06-09
 
 ##### Chores
