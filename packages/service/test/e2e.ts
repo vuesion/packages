@@ -10,6 +10,7 @@ describe('e2e tests for vuesion', () => {
 
   beforeAll(async () => {
     await runProcess('npm', ['link'], { cwd: path.resolve(__dirname, '..') });
+    await runProcess('lerna', ['bootstrap'], { cwd: path.resolve(__dirname, '..') });
   }, 30000);
 
   afterAll(() => {

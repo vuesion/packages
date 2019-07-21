@@ -42,45 +42,70 @@ export let base: webpack.Configuration = {
       },
       {
         test: /\.scss$/,
-        rules: [
-          { loader: 'vue-style-loader' },
+        oneOf: [
           {
-            loader: 'css-loader',
-            exclude: [/global\.scss/],
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: '[local]_[hash:base64:8]',
-            },
-          },
-          {
-            loader: 'css-loader',
-            include: [/global\.scss/],
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: () => [
-                require('autoprefixer')({ overrideBrowserslist: ['last 2 versions', 'ie >= 11'] }),
-                require('css-mqpacker')(),
-                require('cssnano')({
-                  preset: [
-                    'default',
-                    {
-                      discardComments: {
-                        removeAll: true,
-                      },
-                      zindex: false,
-                      normalizeWhitespace: isProd,
-                    },
+            resourceQuery: /module/,
+            use: [
+              'vue-style-loader',
+              {
+                loader: 'css-loader',
+                options: {
+                  modules: true,
+                },
+              },
+              {
+                loader: 'postcss-loader',
+                options: {
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('autoprefixer')(),
+                    require('css-mqpacker')(),
+                    require('cssnano')({
+                      preset: [
+                        'default',
+                        {
+                          discardComments: {
+                            removeAll: true,
+                          },
+                          zindex: false,
+                          normalizeWhitespace: isProd,
+                        },
+                      ],
+                    }),
                   ],
-                }),
-              ],
-            },
+                },
+              },
+              'sass-loader',
+            ],
           },
           {
-            loader: 'sass-loader',
+            use: [
+              'vue-style-loader',
+              'css-loader',
+              {
+                loader: 'postcss-loader',
+                options: {
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('autoprefixer')(),
+                    require('css-mqpacker')(),
+                    require('cssnano')({
+                      preset: [
+                        'default',
+                        {
+                          discardComments: {
+                            removeAll: true,
+                          },
+                          zindex: false,
+                          normalizeWhitespace: isProd,
+                        },
+                      ],
+                    }),
+                  ],
+                },
+              },
+              'sass-loader',
+            ],
           },
         ],
       },
