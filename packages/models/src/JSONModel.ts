@@ -27,15 +27,15 @@ export class JSONModel<T> {
     this.load();
   }
 
-  public load() {
-    if (fs.existsSync(this.path)) {
+  public load(path: string = this.path) {
+    this.path = path;
+
+    if (fs.existsSync(path)) {
       try {
-        this.model = JSON.parse(fs.readFileSync(this.path).toString());
+        this.model = JSON.parse(fs.readFileSync(path).toString());
       } catch (e) {
         logError(e);
       }
-    } else {
-      logError(`File: ${this.path} doesn't exist.`);
     }
   }
 

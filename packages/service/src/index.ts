@@ -1,10 +1,12 @@
 import * as commander from 'commander';
 import { sync } from 'glob';
 import { packagesRoot } from '@vuesion/utils/dist/path';
-import { TSConfig } from '@vuesion/models';
-import { VuesionPackage, ServicePackage } from '@vuesion/models';
+import { TSConfig, VuesionPackage, ServicePackage } from '@vuesion/models';
+import * as path from 'path';
 
 sync(`${packagesRoot('service')}/dist/commands/*.js`).forEach((file: string) => require(file));
+
+ServicePackage.load(path.join(__dirname, '../package.json'));
 
 commander
   .name('vuesion')
