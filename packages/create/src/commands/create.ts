@@ -1,5 +1,5 @@
-import { Command, ICommandHandler, IRunOptions } from '../../../service/src/decorators/command';
 import chalk from 'chalk';
+import { Command, ICommandHandler, IRunOptions } from '../../../service/src/decorators/command';
 import { handleProcessError, runProcess, runtimeRoot, Spinner } from '../../../utils/src';
 
 const download = require('download-git-repo');
@@ -8,7 +8,7 @@ const download = require('download-git-repo');
   description: 'Create a new vuesion project.',
   arguments: [{ name: 'name', required: true }],
   options: [
-    { flags: '-n, --next', description: 'Download latest version.' },
+    { flags: '-n, --next', description: 'Download latest version.', defaultValue: false },
     { flags: '-d, --debug', description: 'Show debugging output.', defaultValue: false },
   ],
 })
@@ -33,7 +33,30 @@ export class Create implements ICommandHandler {
       spinner.message = 'Installing dependencies...';
 
       try {
-        await runProcess('npm', ['install'], { cwd: destination, silent: true, ...options });
+        /**
+         * change CWD to new project directory
+         */
+        process.chdir(destination);
+
+        /**
+         * install dependencies with npm
+         */
+        await runProcess('npm', ['install'], { silent: true, ...options });
+
+        /**
+         * Run vuesion post-install task
+         */
+
+        spinner.message = 'Running post-install...';
+
+        await runProcess(
+          destination + '/node_modules/.bin/vuesion',
+          ['post-install', JSON.stringify({ name: this.name, branch: this.next ? 'next' : 'master' })],
+          {
+            silent: true,
+            ...options,
+          },
+        );
 
         spinner.message = `Project ${chalk.bold(this.name)} successfully created`;
         spinner.stop();
