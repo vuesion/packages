@@ -44,51 +44,14 @@ class Model extends JSONModel<IVuesionConfig> implements IVuesionConfig {
     super(runtimeRoot('.vuesion/config.json'));
 
     if (this.model !== null) {
-      this.clean = this.model ? this.model.clean : [];
-      this.currentVersion = this.model ? this.model.currentVersion : '';
-      this.devServer = this.model
-        ? this.model.devServer
-        : {
-            watchOptions: {
-              aggregateTimeout: 300,
-              poll: false,
-            },
-          };
-      this.generators = this.model
-        ? this.model.generators
-        : {
-            blueprintDirectory: './.vuesion/generators',
-            outputDirectory: './src/app',
-            routerFile: './src/app/router.ts',
-            stateFile: './src/app/state.ts',
-          };
-      this.i18n = this.model
-        ? this.model.i18n
-        : {
-            defaultLocale: 'en',
-            supportedLocales: ['en', 'de', 'pt', 'zh-cn'],
-          };
-      this.prettier = this.model
-        ? this.model.prettier
-        : {
-            extensions: 'ts,vue,js,json,scss,sass,css,yaml,yml',
-          };
-      this.spa = this.model
-        ? this.model.spa
-        : {
-            appShellRoute: '/',
-            additionalRoutes: ['/form'],
-          };
-      this.webpack = this.model
-        ? this.model.webpack
-        : {
-            aliases: {
-              '@': 'src',
-              '@shared': 'src/app/shared',
-              '@components': 'src/app/shared/components',
-              '@static': 'src/static',
-            },
-          };
+      this.clean = this.model.clean;
+      this.currentVersion = this.model.currentVersion;
+      this.devServer = this.model.devServer;
+      this.generators = this.model.generators;
+      this.i18n = this.model.i18n;
+      this.prettier = this.model.prettier;
+      this.spa = this.model.spa;
+      this.webpack = this.model.webpack;
     }
   }
 

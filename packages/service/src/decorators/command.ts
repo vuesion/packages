@@ -3,8 +3,8 @@ import * as commander from 'commander';
 import * as _ from 'lodash';
 
 export interface ICommandMetadata {
-  name: string;
-  description: string;
+  name?: string;
+  description?: string;
   alias?: string;
   options?: IOption[];
   arguments?: IArgument[];
@@ -64,11 +64,18 @@ export function Command(meta: ICommandMetadata): any {
 
   return (Target) => {
     const target: ICommandHandler = new Target();
-    const command = commander.command(meta.name);
+    const isChildCommand = meta.name !== undefined;
+    const command = isChildCommand ? commander.command(meta.name) : commander;
 
     command.allowUnknownOption();
-    command.alias(meta.alias);
-    command.description(meta.description);
+
+    if (meta.alias) {
+      command.alias(meta.alias);
+    }
+
+    if (meta.description) {
+      command.description(meta.description);
+    }
 
     meta.options.forEach((option: IOption) => {
       if (option.formatter) {
@@ -88,9 +95,10 @@ export function Command(meta: ICommandMetadata): any {
 
     command.action(function() {
       const hasArgs = meta.arguments.length > 0;
-      const localCommand = getCommand(arguments);
+      const localCommand = isChildCommand ? getCommand(arguments) : command;
       const options = getOptions(localCommand);
-      const args = localCommand.parent.rawArgs.splice(3);
+      const args = isChildCommand ? localCommand.parent.rawArgs.splice(3) : localCommand.rawArgs.splice(3);
+      const debug = localCommand.parent ? !!localCommand.parent.debug : !!localCommand.debug;
 
       options.forEach((option: string) => (target[option] = localCommand[option]));
 
@@ -100,7 +108,7 @@ export function Command(meta: ICommandMetadata): any {
         });
       }
 
-      target.run(args.filter((arg: string) => ['--debug'].indexOf(arg) === -1), { debug: !!localCommand.parent.debug });
+      target.run(args.filter((arg: string) => ['--debug'].indexOf(arg) === -1), { debug });
     });
 
     return target;

@@ -1,21 +1,21 @@
-import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
-import { Spinner } from '@vuesion/utils/dist/ui';
-import { runtimeRoot } from '@vuesion/utils/dist/path';
-import { handleProcessError, runProcess } from '@vuesion/utils/dist/process';
+import { Command, ICommandHandler, IRunOptions } from '../../../service/src/decorators/command';
 import chalk from 'chalk';
+import { handleProcessError, runProcess, runtimeRoot, Spinner } from '../../../utils/src';
 
 const download = require('download-git-repo');
 
 @Command({
-  name: 'create',
-  alias: 'c',
   description: 'Create a new vuesion project.',
-  arguments: [{ name: 'name', defaultValue: 'my-app' }],
-  options: [{ flags: '-n, --next', description: 'Download latest version.' }],
+  arguments: [{ name: 'name', required: true }],
+  options: [
+    { flags: '-n, --next', description: 'Download latest version.' },
+    { flags: '-d, --debug', description: 'Show debugging output.', defaultValue: false },
+  ],
 })
 export class Create implements ICommandHandler {
   public name: string;
   public next: boolean;
+  public debug: boolean;
 
   public async run(args: string[], options: IRunOptions) {
     const destination = runtimeRoot(this.name);

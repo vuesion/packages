@@ -27,12 +27,10 @@ export class JSONModel<T> {
     this.load();
   }
 
-  public load(path: string = this.path) {
-    this.path = path;
-
-    if (fs.existsSync(path)) {
+  public load() {
+    if (fs.existsSync(this.path)) {
       try {
-        this.model = JSON.parse(fs.readFileSync(path).toString());
+        this.model = JSON.parse(fs.readFileSync(this.path).toString());
       } catch (e) {
         logError(e);
       }

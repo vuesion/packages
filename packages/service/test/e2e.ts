@@ -5,36 +5,37 @@ import { runProcess } from '@vuesion/utils';
 const rimraf = require('rimraf');
 
 describe('e2e tests for vuesion', () => {
-  const cwd: string = path.resolve(__dirname, '../bin');
-  const testProject: string = path.resolve(__dirname, '../bin/tmp');
+  const cwd: string = path.resolve(__dirname, '../../create/bin');
+  const testProject: string = path.resolve(__dirname, '../../create/bin/tmp');
 
   beforeAll(async () => {
     await runProcess('npm', ['link'], { cwd: path.resolve(__dirname, '..') });
+    await runProcess('npm', ['link'], { cwd: path.resolve(__dirname, '../../create') });
     await runProcess('lerna', ['bootstrap'], { cwd: path.resolve(__dirname, '..') });
   }, 30000);
 
   afterAll(() => {
-    rimraf.sync(cwd + '/tmp');
+    rimraf.sync(testProject);
   });
 
   it('should create a new project', async () => {
-    await runProcess('node', ['cli', 'create', 'tmp', '--debug'], { cwd });
-    expect(fs.existsSync(cwd + '/tmp')).toBeTruthy();
+    await runProcess('node', ['cli', 'tmp', '--debug'], { cwd });
+    expect(fs.existsSync(testProject)).toBeTruthy();
 
     await runProcess('npm', ['link', '@vuesion/service'], { cwd: testProject });
 
     await runProcess('npm', ['run', 'build', '--', '--debug'], { cwd: testProject });
-    expect(fs.existsSync(cwd + '/tmp/dist')).toBeTruthy();
+    expect(fs.existsSync(testProject + '/dist')).toBeTruthy();
 
     await runProcess('npm', ['run', 'storybook:build'], { cwd: testProject });
-    expect(fs.existsSync(cwd + '/tmp/storybook-static')).toBeTruthy();
+    expect(fs.existsSync(testProject + '/storybook-static')).toBeTruthy();
 
     await runProcess('npm', ['run', 'test'], { cwd: testProject });
-    expect(fs.existsSync(cwd + '/tmp/coverage')).toBeTruthy();
+    expect(fs.existsSync(testProject + '/coverage')).toBeTruthy();
 
     await runProcess('npm', ['run', 'clean'], { cwd: testProject });
-    expect(fs.existsSync(cwd + '/tmp/dist')).toBeFalsy();
-    expect(fs.existsSync(cwd + '/tmp/storybook-static')).toBeFalsy();
-    expect(fs.existsSync(cwd + '/tmp/coverage')).toBeFalsy();
+    expect(fs.existsSync(testProject + '/dist')).toBeFalsy();
+    expect(fs.existsSync(testProject + '/storybook-static')).toBeFalsy();
+    expect(fs.existsSync(testProject + '/coverage')).toBeFalsy();
   }, 3000000);
 });

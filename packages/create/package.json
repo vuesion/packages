@@ -1,0 +1,54 @@
+{
+  "name": "@vuesion/create",
+  "version": "3.0.0-alpha.4",
+  "description": "vuesion cli for creating vuesion applications",
+  "keywords": [
+    "vue.js",
+    "isomorphic",
+    "universal",
+    "server-side-rendering",
+    "SSR",
+    "vuesion",
+    "vue-starter"
+  ],
+  "author": "Johannes Werner <johannes.werner86@gmail.com>",
+  "homepage": "https://github.com/vuesion/packages#readme",
+  "license": "MIT",
+  "main": "dist/create/src/index.js",
+  "bin": {
+    "create-vuesion-app": "bin/cli"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuesion/packages.git"
+  },
+  "scripts": {
+    "compile": "tsc",
+    "prebuild": "npm run clean",
+    "build": "npm run compile",
+    "clean": "rimraf ./dist ./build",
+    "dev": "tsc --watch"
+  },
+  "bugs": {
+    "url": "https://github.com/vuesion/packages/issues"
+  },
+  "dependencies": {
+    "@types/glob": "7.1.1",
+    "@types/inquirer": "6.0.3",
+    "chalk": "2.4.2",
+    "commander": "2.20.0",
+    "download-git-repo": "2.0.0",
+    "glob": "7.1.4"
+  },
+  "devDependencies": {
+    "@types/node": "^10.14.6",
+    "typescript": "^3.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

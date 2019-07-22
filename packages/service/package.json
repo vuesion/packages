@@ -77,7 +77,6 @@
     "css-mqpacker": "7.0.0",
     "cssnano": "4.1.10",
     "cypress": "3.4.0",
-    "download-git-repo": "2.0.0",
     "file-loader": "4.1.0",
     "fork-ts-checker-webpack-plugin": "1.4.3",
     "fs-extra": "8.1.0",
