@@ -11,24 +11,17 @@ export class PostInstall implements ICommandHandler {
   private optionsObject: { name: string; branch: string };
   public options: string;
 
-  public async run(args: string[], options: IRunOptions) {
-    this.optionsObject = JSON.parse(this.options);
-
-    /**
-     * Delete directories that are not important for the general public
-     */
+  private deleteDirectories() {
     ['./.git', './.circleci', './.all-contributorsrc', './CHANGELOG.md', './CODE_OF_CONDUCT.md', './LICENSE'].forEach(
       (glob) => sync(glob),
     );
+  }
 
-    /**
-     * update vuesion config
-     */
+  private updateVuesionConfig() {
     VuesionConfig.updateCurrentVersion(`v${VuesionPackage.version}`);
+  }
 
-    /**
-     * Update package.json
-     */
+  private updateVuesionPackage() {
     VuesionPackage.name = this.optionsObject.name;
     VuesionPackage.version = '0.0.0';
     VuesionPackage.description = 'Created with vuesion.';
@@ -39,5 +32,13 @@ export class PostInstall implements ICommandHandler {
     VuesionPackage.bugs = { url: '' };
 
     VuesionPackage.save(true);
+  }
+
+  public async run(args: string[], options: IRunOptions) {
+    this.optionsObject = JSON.parse(this.options);
+
+    this.deleteDirectories();
+    this.updateVuesionConfig();
+    this.updateVuesionPackage();
   }
 }
