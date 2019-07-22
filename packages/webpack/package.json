@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/webpack",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0-alpha.6",
   "description": "webpack configs and dev-server for vuesion",
   "keywords": [
     "vue.js",
@@ -30,8 +30,8 @@
     "url": "https://github.com/vuesion/packages/issues"
   },
   "dependencies": {
-    "@vuesion/utils": "^3.0.0-alpha.5",
-    "@vuesion/models": "^3.0.0-alpha.5"
+    "@vuesion/utils": "^3.0.0-alpha.6",
+    "@vuesion/models": "^3.0.0-alpha.6"
   },
   "devDependencies": {
     "@types/node": "^10.14.6",

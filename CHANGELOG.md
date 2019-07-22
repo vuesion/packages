@@ -1,5 +1,11 @@
 #### 2019-07-22
 
+##### Bug Fixes
+
+* **create:**  add cross-spawn dependency ([8399b815](https://github.com/vuesion/packages/commit/8399b81539804cf3ce8880b49a470860ef83f194))
+
+#### 2019-07-22
+
 ##### New Features
 
 *  add vuesion/create package ([c3e05cac](https://github.com/vuesion/packages/commit/c3e05cac2a846a93a6c5bc7506cc7ef5a1e58510))
