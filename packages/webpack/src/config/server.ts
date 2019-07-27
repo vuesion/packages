@@ -2,6 +2,7 @@ import * as webpack from 'webpack';
 import { isDev, merge } from './utils';
 import { baseServer } from './base-server';
 import { runtimeRoot } from '@vuesion/utils/dist/path';
+import { getIntInRange } from '@vuesion/utils/dist/randomGenerator';
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const StartServerPlugin = require('start-server-webpack-plugin');
@@ -27,7 +28,7 @@ if (isDev) {
     plugins: [
       new StartServerPlugin({
         name: 'server.js',
-        nodeArgs: ['--inspect'],
+        nodeArgs: [`--inspect=${getIntInRange(9000, 9999)}`],
       }),
       new webpack.HotModuleReplacementPlugin(),
     ],
