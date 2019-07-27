@@ -43,10 +43,12 @@
     "commander": "2.20.0",
     "cross-spawn": "^6.0.5",
     "download-git-repo": "2.0.0",
-    "glob": "7.1.4"
+    "glob": "7.1.4",
+    "rimraf": "^2.6.3"
   },
   "devDependencies": {
     "@types/node": "^10.14.6",
+    "@types/rimraf": "^2.0.2",
     "typescript": "^3.5.3"
   },
   "publishConfig": {
