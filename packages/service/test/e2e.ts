@@ -25,17 +25,17 @@ describe('e2e tests for vuesion', () => {
     await runProcess('npm', ['link', '@vuesion/service'], { cwd: testProject });
 
     await runProcess('npm', ['run', 'build', '--', '--debug'], { cwd: testProject });
-    expect(fs.existsSync(testProject + '/dist')).toBeTruthy();
+    expect(fs.existsSync(`${testProject}/dist`)).toBeTruthy();
 
     await runProcess('npm', ['run', 'storybook:build'], { cwd: testProject });
-    expect(fs.existsSync(testProject + '/storybook-static')).toBeTruthy();
+    expect(fs.existsSync(`${testProject}/storybook-static`)).toBeTruthy();
 
     await runProcess('npm', ['run', 'test'], { cwd: testProject });
-    expect(fs.existsSync(testProject + '/coverage')).toBeTruthy();
+    expect(fs.existsSync(`${testProject}/coverage`)).toBeTruthy();
 
     await runProcess('npm', ['run', 'clean'], { cwd: testProject });
-    expect(fs.existsSync(testProject + '/dist')).toBeFalsy();
-    expect(fs.existsSync(testProject + '/storybook-static')).toBeFalsy();
-    expect(fs.existsSync(testProject + '/coverage')).toBeFalsy();
+    expect(fs.existsSync(`${testProject}/dist`)).toBeFalsy();
+    expect(fs.existsSync(`${testProject}/storybook-static`)).toBeFalsy();
+    expect(fs.existsSync(`${testProject}/coverage`)).toBeFalsy();
   }, 3000000);
 });
