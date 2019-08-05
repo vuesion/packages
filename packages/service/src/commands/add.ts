@@ -1,7 +1,7 @@
 import * as fs from 'fs-extra';
 import chalk from 'chalk';
 import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
-import { prompt, Question } from 'inquirer';
+import { prompt, QuestionCollection } from 'inquirer';
 import { logErrorBold, Spinner } from '@vuesion/utils/dist/ui';
 import { handleProcessError, runProcess } from '@vuesion/utils/dist/process';
 import { runtimeRoot } from '@vuesion/utils/dist/path';
@@ -13,7 +13,7 @@ const opn = require('open');
   description: 'Add a vuesion package to your project.',
 })
 export class Add implements ICommandHandler {
-  private questions: Question[] = [
+  private questions: QuestionCollection = [
     {
       type: 'list',
       name: 'package',
