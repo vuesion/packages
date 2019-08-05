@@ -1,3 +1,17 @@
+#### 2019-08-05
+
+##### Chores
+
+*  update dependencies ([69ae2791](https://github.com/vuesion/packages/commit/69ae27910a76115349f955d4cbcb07af8425f253))
+
+##### New Features
+
+* **create:**  add post-install hook ([#44](https://github.com/vuesion/packages/pull/44)) ([08adfa6b](https://github.com/vuesion/packages/commit/08adfa6be35543427708651656ed2e119c05bb70))
+
+##### Bug Fixes
+
+* **webpack:**  add random port to node inspector ([#43](https://github.com/vuesion/packages/pull/43)) ([7f5c377e](https://github.com/vuesion/packages/commit/7f5c377e64245687060ec195165575833e0a66bf))
+
 #### 2019-07-22
 
 ##### Bug Fixes
