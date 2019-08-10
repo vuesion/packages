@@ -7,7 +7,7 @@ import { sync } from 'rimraf';
 
 export const waitForApp = async (url: string) => {
   const interval = 500;
-  const timeout = 30000;
+  const timeout = 120000;
   let elapsedTime = 0;
   let instance;
 

@@ -55,7 +55,7 @@ export const runProcess = (name: string, args: string[] = [], options?: IProcess
 
     const localOptions: SpawnOptions = Object.assign(
       {
-        detached: true,
+        detached: false,
         cwd: options.cwd,
         env: process.env,
       },
