@@ -1,3 +1,18 @@
+#### 2019-08-10
+
+##### Chores
+
+*  update dependencies ([#45](https://github.com/vuesion/packages/pull/45)) ([43295492](https://github.com/vuesion/packages/commit/432954921890358a98b64ee7d1f29f146e269178))
+
+##### New Features
+
+* **create:**  add post-install hook ([#44](https://github.com/vuesion/packages/pull/44)) ([08adfa6b](https://github.com/vuesion/packages/commit/08adfa6be35543427708651656ed2e119c05bb70))
+
+##### Bug Fixes
+
+* **utils:**  set detached to false for windows ([695bd62e](https://github.com/vuesion/packages/commit/695bd62e374b7dce5c52117b1e036fdb778cdbb1))
+* **webpack:**  add random port to node inspector ([#43](https://github.com/vuesion/packages/pull/43)) ([7f5c377e](https://github.com/vuesion/packages/commit/7f5c377e64245687060ec195165575833e0a66bf))
+
 #### 2019-07-22
 
 ##### Bug Fixes
