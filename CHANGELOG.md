@@ -2,6 +2,12 @@
 
 ##### Chores
 
+* **service:**  remove deprecated typings ([1aacf279](https://github.com/vuesion/packages/commit/1aacf279d22e604af6f3e73ad35995ab595de831))
+
+#### 2019-08-10
+
+##### Chores
+
 *  update dependencies ([#45](https://github.com/vuesion/packages/pull/45)) ([43295492](https://github.com/vuesion/packages/commit/432954921890358a98b64ee7d1f29f146e269178))
 
 ##### New Features
