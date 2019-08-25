@@ -1,5 +1,5 @@
 import { Command, ICommandHandler } from '../decorators/command';
-import { logError } from '@vuesion/utils/dist/ui';
+import { handleProcessError } from '@vuesion/utils/dist';
 
 const concurrently = require('concurrently');
 
@@ -13,7 +13,7 @@ export class Add implements ICommandHandler {
     try {
       await concurrently(args, { killOthers: ['failure'], prefix: '[{command}]', prefixLength: 28 });
     } catch (e) {
-      logError(e);
+      handleProcessError({ code: 1, trace: 'Please see the console output above for a detailed error description.' });
     }
   }
 }
