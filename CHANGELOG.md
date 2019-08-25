@@ -1,3 +1,10 @@
+#### 2019-08-25
+
+##### Bug Fixes
+
+* **create:**  force npm naming convention ([05014f30](https://github.com/vuesion/packages/commit/05014f309c5cfba72204ec05785e74dbcab657f2))
+* **service:**  exit code 1 for parallel task ([20e99971](https://github.com/vuesion/packages/commit/20e99971ef9c9848606213bde138a33027c4d8c7))
+
 #### 2019-08-10
 
 ##### Chores
