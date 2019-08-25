@@ -1,6 +1,7 @@
 import { sync } from 'rimraf';
 import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
 import { VuesionConfig, VuesionPackage } from '@vuesion/models/dist';
+import { lowerCase, kebabCase } from 'lodash';
 
 @Command({
   name: 'post-install',
@@ -22,7 +23,7 @@ export class PostInstall implements ICommandHandler {
   }
 
   private updateVuesionPackage() {
-    VuesionPackage.name = this.optionsObject.name;
+    VuesionPackage.name = kebabCase(lowerCase(this.optionsObject.name));
     VuesionPackage.version = '0.0.0';
     VuesionPackage.description = 'Created with vuesion.';
     VuesionPackage.repository = { type: '', url: '' };

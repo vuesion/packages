@@ -6,7 +6,7 @@ const rimraf = require('rimraf');
 
 describe('e2e tests for vuesion', () => {
   const cwd: string = path.resolve(__dirname, '../../create/bin');
-  const testProject: string = path.resolve(__dirname, '../../create/bin/tmp');
+  const testProject: string = path.resolve(__dirname, '../../create/bin/my-app');
 
   beforeAll(async () => {
     await runProcess('npm', ['link'], { cwd: path.resolve(__dirname, '..') });
@@ -19,7 +19,7 @@ describe('e2e tests for vuesion', () => {
   });
 
   it('should create a new project', async () => {
-    await runProcess('node', ['cli', 'tmp', '--debug'], { cwd });
+    await runProcess('node', ['cli', 'MY_APP', '--debug'], { cwd });
     expect(fs.existsSync(testProject)).toBeTruthy();
 
     await runProcess('npm', ['link', '@vuesion/service'], { cwd: testProject });

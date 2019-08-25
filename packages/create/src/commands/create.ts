@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { Command, ICommandHandler, IRunOptions } from '../../../service/src/decorators/command';
 import { handleProcessError, runProcess, runtimeRoot, Spinner } from '../../../utils/src';
+import { lowerCase, kebabCase } from 'lodash';
 
 const download = require('download-git-repo');
 
@@ -50,6 +51,8 @@ export class Create implements ICommandHandler {
   }
 
   public async run(args: string[], options: IRunOptions) {
+    this.name = kebabCase(lowerCase(this.name));
+
     const destination = runtimeRoot(this.name);
     const branch = this.next ? 'github:vuesion/vuesion#next' : 'github:vuesion/vuesion';
 
