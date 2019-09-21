@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/models",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "models and AST tools for vuesion",
   "keywords": [
     "vue.js",
@@ -29,7 +29,7 @@
     "url": "https://github.com/vuesion/packages/issues"
   },
   "dependencies": {
-    "@vuesion/utils": "^3.0.3",
+    "@vuesion/utils": "^3.0.4",
     "ramda": "^0.26.1"
   },
   "devDependencies": {

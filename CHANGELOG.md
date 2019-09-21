@@ -1,3 +1,9 @@
+#### 2019-09-21
+
+##### Bug Fixes
+
+* **create:**  add lodash to dependencies ([6c1376e5](https://github.com/vuesion/packages/commit/6c1376e550419cd90883f0ee167670a8bf9f6f58))
+
 #### 2019-08-25
 
 ##### Bug Fixes
