@@ -1,11 +1,11 @@
 import * as fs from 'fs';
 import * as ts from 'typescript';
-import { lowerFirst, upperFirst } from 'lodash';
+import { lowerFirst, upperFirst, camelCase } from 'lodash';
 
 let sourceFile: ts.SourceFile;
 
 const insertAt = (file: string, index: number, insert: string): string => {
-  return file.substr(0, index) + insert + file.substr(index);
+  return file.substring(0, index) + insert + file.substring(index);
 };
 const getAST = (file: string): void => {
   sourceFile = ts.createSourceFile('ast', file, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
@@ -47,7 +47,9 @@ const findAstNodes = (
   return arr;
 };
 
-export const addModuleToRouter = (pathToAppRouter: string, moduleName: string): void => {
+export const addModuleToRouter = (pathToAppRouter: string, moduleName: string, modulePath: string = ''): void => {
+  moduleName = camelCase(moduleName);
+
   try {
     let file = fs.readFileSync(pathToAppRouter, 'utf-8');
 
@@ -62,7 +64,9 @@ export const addModuleToRouter = (pathToAppRouter: string, moduleName: string): 
     file = insertAt(
       file,
       findAstNodes(sourceFile, ts.SyntaxKind.ImportDeclaration, true).pop().end,
-      `\nimport { ${upperFirst(moduleName)}Routes } from './${lowerFirst(moduleName)}/routes';`,
+      `\nimport { ${upperFirst(moduleName)}Routes } from './${
+        modulePath.length > 0 ? `${modulePath}/` : ''
+      }${lowerFirst(moduleName)}/routes';`,
     );
 
     fs.writeFileSync(pathToAppRouter, file, { encoding: 'utf-8' });
@@ -71,7 +75,9 @@ export const addModuleToRouter = (pathToAppRouter: string, moduleName: string): 
   }
 };
 
-export const addModuleToState = (pathToAppState: string, moduleName: string): void => {
+export const addModuleToState = (pathToAppState: string, moduleName: string, modulePath: string = ''): void => {
+  moduleName = camelCase(moduleName);
+
   try {
     let file = fs.readFileSync(pathToAppState, 'utf-8');
 
@@ -88,7 +94,9 @@ export const addModuleToState = (pathToAppState: string, moduleName: string): vo
     file = insertAt(
       file,
       findAstNodes(sourceFile, ts.SyntaxKind.ImportDeclaration, true).pop().end,
-      `\nimport { I${upperFirst(moduleName)}State } from './${lowerFirst(moduleName)}/state';`,
+      `\nimport { I${upperFirst(moduleName)}State } from './${
+        modulePath.length > 0 ? `${modulePath}/` : ''
+      }${lowerFirst(moduleName)}/state';`,
     );
 
     fs.writeFileSync(pathToAppState, file, { encoding: 'utf-8' });

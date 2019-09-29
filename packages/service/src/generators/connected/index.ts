@@ -3,6 +3,8 @@ import { VuesionConfig } from '@vuesion/models';
 import { runtimeRoot } from '@vuesion/utils/dist/path';
 import { folderExists } from '@vuesion/utils/dist/fileSystem';
 
+const pluralize = require('pluralize');
+
 export = {
   description: 'Add a VueX connected component',
   prompts: [
@@ -27,9 +29,17 @@ export = {
   ],
   actions: (data: any) => {
     const filePath: string[] = data.name.split('/');
+    const componentName = filePath.pop();
+    const moduleName = filePath.pop();
+    const singularName = moduleName.slice(-1).toLocaleLowerCase() === 's' ? moduleName.slice(0, -1) : moduleName;
+    const pluralName = pluralize(singularName);
 
-    data.componentName = filePath.pop();
-    data.moduleName = filePath.pop();
+    data.moduleName = singularName;
+    data.singularName = singularName;
+    data.pluralName = pluralName;
+    data.modulePath = filePath.join('/');
+
+    data.componentName = componentName;
     data.basePath = path.join(process.cwd(), VuesionConfig.generators.outputDirectory, filePath.join('/'));
     data.wantVuex = true;
 
