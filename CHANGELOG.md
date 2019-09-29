@@ -1,3 +1,9 @@
+#### 2019-09-29
+
+##### New Features
+
+* **generators:**  add support for CRUD module ([#47](https://github.com/vuesion/packages/pull/47)) ([31202ba3](https://github.com/vuesion/packages/commit/31202ba30c0c4d3d238332db8903f1366ed5f72e))
+
 #### 2019-09-21
 
 ##### Bug Fixes
