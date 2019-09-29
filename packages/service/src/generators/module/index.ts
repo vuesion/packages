@@ -4,6 +4,8 @@ import { VuesionConfig } from '@vuesion/models';
 import { runtimeRoot } from '@vuesion/utils/dist/path';
 import { folderExists } from '@vuesion/utils/dist/fileSystem';
 
+const pluralize = require('pluralize');
+
 export = {
   description: 'Add a module with VueX store and routes',
   prompts: [
@@ -15,6 +17,8 @@ export = {
         if (!value || value.length === 0) {
           return 'name is required';
         }
+
+        value = value.slice(-1).toLocaleLowerCase() === 's' ? value.slice(0, -1) : value;
 
         return folderExists(runtimeRoot(path.join(VuesionConfig.generators.outputDirectory, value)))
           ? `folder already exists (${value})`
@@ -36,15 +40,21 @@ export = {
   ],
   actions: (data: any) => {
     const filePath: string[] = data.name.split('/');
+    const moduleName = filePath.pop();
+    const singularName = moduleName.slice(-1).toLocaleLowerCase() === 's' ? moduleName.slice(0, -1) : moduleName;
+    const pluralName = pluralize(singularName);
 
-    data.moduleName = filePath.pop();
-    data.componentName = data.moduleName;
+    data.moduleName = singularName;
+    data.singularName = singularName;
+    data.pluralName = pluralName;
+    data.modulePath = filePath.join('/');
+    data.componentName = data.singularName;
     data.basePath = path.join(process.cwd(), VuesionConfig.generators.outputDirectory, filePath.join('/'));
 
     let actions: any[] = [
       {
         type: 'add',
-        path: '{{basePath}}/{{camelCase moduleName}}/{{properCase componentName}}/{{properCase componentName}}.vue',
+        path: '{{basePath}}/{{camelCase singularName}}/{{properCase componentName}}/{{properCase componentName}}.vue',
         templateFile: path.join(
           process.cwd(),
           VuesionConfig.generators.blueprintDirectory,
@@ -54,7 +64,8 @@ export = {
       },
       {
         type: 'add',
-        path: '{{basePath}}/{{camelCase moduleName}}/{{properCase componentName}}/{{properCase componentName}}.spec.ts',
+        path:
+          '{{basePath}}/{{camelCase singularName}}/{{properCase componentName}}/{{properCase componentName}}.spec.ts',
         templateFile: path.join(
           process.cwd(),
           VuesionConfig.generators.blueprintDirectory,
@@ -67,19 +78,23 @@ export = {
     if (data.wantRoutes) {
       actions.push({
         type: 'add',
-        path: '{{basePath}}/{{camelCase moduleName}}/routes.ts',
+        path: '{{basePath}}/{{camelCase singularName}}/routes.ts',
         templateFile: path.join(process.cwd(), VuesionConfig.generators.blueprintDirectory, 'module/routes.ts.hbs'),
         abortOnFail: true,
       });
 
-      addModuleToRouter(path.join(path.resolve(process.cwd()), VuesionConfig.generators.routerFile), data.moduleName);
+      addModuleToRouter(
+        path.join(path.resolve(process.cwd()), VuesionConfig.generators.routerFile),
+        data.singularName,
+        data.modulePath,
+      );
     }
 
     if (data.wantVuex) {
       actions = actions.concat([
         {
           type: 'add',
-          path: '{{basePath}}/{{camelCase moduleName}}/actions.spec.ts',
+          path: '{{basePath}}/{{camelCase singularName}}/actions.spec.ts',
           templateFile: path.join(
             process.cwd(),
             VuesionConfig.generators.blueprintDirectory,
@@ -89,13 +104,13 @@ export = {
         },
         {
           type: 'add',
-          path: '{{basePath}}/{{camelCase moduleName}}/actions.ts',
+          path: '{{basePath}}/{{camelCase singularName}}/actions.ts',
           templateFile: path.join(process.cwd(), VuesionConfig.generators.blueprintDirectory, 'module/actions.ts.hbs'),
           abortOnFail: true,
         },
         {
           type: 'add',
-          path: '{{basePath}}/{{camelCase moduleName}}/getters.spec.ts',
+          path: '{{basePath}}/{{camelCase singularName}}/getters.spec.ts',
           templateFile: path.join(
             process.cwd(),
             VuesionConfig.generators.blueprintDirectory,
@@ -105,19 +120,19 @@ export = {
         },
         {
           type: 'add',
-          path: '{{basePath}}/{{camelCase moduleName}}/getters.ts',
+          path: '{{basePath}}/{{camelCase singularName}}/getters.ts',
           templateFile: path.join(process.cwd(), VuesionConfig.generators.blueprintDirectory, 'module/getters.ts.hbs'),
           abortOnFail: true,
         },
         {
           type: 'add',
-          path: '{{basePath}}/{{camelCase moduleName}}/module.ts',
+          path: '{{basePath}}/{{camelCase singularName}}/module.ts',
           templateFile: path.join(process.cwd(), VuesionConfig.generators.blueprintDirectory, 'module/module.ts.hbs'),
           abortOnFail: true,
         },
         {
           type: 'add',
-          path: '{{basePath}}/{{camelCase moduleName}}/mutations.spec.ts',
+          path: '{{basePath}}/{{camelCase singularName}}/mutations.spec.ts',
           templateFile: path.join(
             process.cwd(),
             VuesionConfig.generators.blueprintDirectory,
@@ -127,7 +142,7 @@ export = {
         },
         {
           type: 'add',
-          path: '{{basePath}}/{{camelCase moduleName}}/mutations.ts',
+          path: '{{basePath}}/{{camelCase singularName}}/mutations.ts',
           templateFile: path.join(
             process.cwd(),
             VuesionConfig.generators.blueprintDirectory,
@@ -137,13 +152,17 @@ export = {
         },
         {
           type: 'add',
-          path: '{{basePath}}/{{camelCase moduleName}}/state.ts',
+          path: '{{basePath}}/{{camelCase singularName}}/state.ts',
           templateFile: path.join(process.cwd(), VuesionConfig.generators.blueprintDirectory, 'module/state.ts.hbs'),
           abortOnFail: true,
         },
       ]);
 
-      addModuleToState(path.join(path.resolve(process.cwd()), VuesionConfig.generators.stateFile), data.moduleName);
+      addModuleToState(
+        path.join(path.resolve(process.cwd()), VuesionConfig.generators.stateFile),
+        data.singularName,
+        data.modulePath,
+      );
     }
 
     return actions;
