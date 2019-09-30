@@ -1,11 +1,13 @@
+import { kebabCase, snakeCase as _snakeCase } from 'lodash';
+
 export const dashCase = (text: string) => {
-  return text.replace(/([a-zA-Z])(?=[A-Z])/g, '$1-').toLowerCase();
+  return kebabCase(text);
 };
 
 export const snakeCase = (text: string) => {
-  return text.replace(/([a-zA-Z])(?=[A-Z])/g, '$1_').toLowerCase();
+  return _snakeCase(text);
 };
 
 export const constantCase = (text: string) => {
-  return text.replace(/([a-zA-Z])(?=[A-Z])/g, '$1_').toUpperCase();
+  return _snakeCase(text).toUpperCase();
 };
