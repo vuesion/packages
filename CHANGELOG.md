@@ -1,3 +1,9 @@
+#### 2019-09-30
+
+##### Refactors
+
+* **generators:**  use lodash as handlebars helpers ([#48](https://github.com/vuesion/packages/pull/48)) ([96d52fff](https://github.com/vuesion/packages/commit/96d52fffd4e0186483d429aa2dce87abf80234f4))
+
 #### 2019-09-29
 
 ##### New Features
