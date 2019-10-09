@@ -1,3 +1,9 @@
+#### 2019-10-09
+
+##### Bug Fixes
+
+* **service:**  remove storybook stub typings ([#50](https://github.com/vuesion/packages/pull/50)) ([682dd8be](https://github.com/vuesion/packages/commit/682dd8be39a848f29ae39833d48cb4f014c01c2d))
+
 #### 2019-09-30
 
 ##### Refactors
