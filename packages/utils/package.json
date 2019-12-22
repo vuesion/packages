@@ -30,12 +30,12 @@
     "url": "https://github.com/vuesion/packages/issues"
   },
   "dependencies": {
-    "chalk": "^2.4.2",
-    "cross-spawn": "6.0.5"
+    "chalk": "^3.0.0",
+    "cross-spawn": "7.0.1"
   },
   "devDependencies": {
-    "@types/node": "^10.14.6",
-    "typescript": "^3.5.3"
+    "@types/node": "^12.12.21",
+    "typescript": "^3.7.4"
   },
   "publishConfig": {
     "access": "public"

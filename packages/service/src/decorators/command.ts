@@ -108,7 +108,10 @@ export function Command(meta: ICommandMetadata): any {
         });
       }
 
-      target.run(args.filter((arg: string) => ['--debug'].indexOf(arg) === -1), { debug });
+      target.run(
+        args.filter((arg: string) => ['--debug'].indexOf(arg) === -1),
+        { debug },
+      );
     });
 
     return target;

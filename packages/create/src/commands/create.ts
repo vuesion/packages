@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import { Command, ICommandHandler, IRunOptions } from '../../../service/src/decorators/command';
 import { handleProcessError, runProcess, runtimeRoot, Spinner } from '../../../utils/src';
 import { lowerCase, kebabCase } from 'lodash';
