@@ -3,7 +3,7 @@ import { BundleRenderer, createBundleRenderer } from 'vue-server-renderer';
 import { pathOr } from 'ramda';
 import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
 import { handleProcessError, runProcess } from '@vuesion/utils/dist/process';
-import { logInfo, logInfoBold, Spinner } from '@vuesion/utils/dist/ui';
+import { logError, logErrorBold, Spinner } from '@vuesion/utils/dist/ui';
 import { packagesRoot, runtimeRoot } from '@vuesion/utils/dist/path';
 import { ensureDirectoryExists } from '@vuesion/utils/dist/fileSystem';
 import { sync } from 'rimraf';
@@ -152,14 +152,14 @@ const renderPages = async (options: IRunOptions) => {
 const handleRenderError = (e: any, spinner: Spinner) => {
   spinner.stop(true);
 
-  logInfoBold(`Error during rendering ${e.route}`);
+  logErrorBold(`Error during rendering ${e.route}`);
 
   if (e.code && e.code === 302) {
-    logInfo('This route probably has a route guard and can not be rendered to static HTML.');
+    logError('This route probably has a route guard and can not be rendered to static HTML.');
   } else if (e.code && e.code === 404) {
-    logInfo('This route does not exist and can not be rendered to static HTML.');
+    logError('This route does not exist and can not be rendered to static HTML.');
   } else {
-    logInfo(e.message);
+    logError(e.message);
   }
 };
 
@@ -182,6 +182,7 @@ const spa = async (options: IRunOptions) => {
     await renderPages(options);
   } catch (e) {
     handleRenderError(e, spinner);
+    process.exit(1);
     return;
   }
 

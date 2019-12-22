@@ -39,18 +39,18 @@
   "dependencies": {
     "@types/glob": "7.1.1",
     "@types/inquirer": "6.5.0",
-    "chalk": "2.4.2",
-    "commander": "2.20.0",
-    "cross-spawn": "^6.0.5",
-    "download-git-repo": "2.0.0",
-    "glob": "7.1.4",
+    "chalk": "3.0.0",
+    "commander": "4.0.1",
+    "cross-spawn": "^7.0.1",
+    "download-git-repo": "3.0.2",
+    "glob": "7.1.6",
     "lodash": "^4.17.15",
-    "rimraf": "^2.6.3"
+    "rimraf": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^10.14.6",
-    "@types/rimraf": "^2.0.2",
-    "typescript": "^3.5.3"
+    "@types/node": "^12.12.21",
+    "@types/rimraf": "^2.0.3",
+    "typescript": "^3.7.4"
   },
   "publishConfig": {
     "access": "public"

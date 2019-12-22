@@ -1,5 +1,5 @@
 /* tslint:disable:no-console */
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import { format } from 'util';
 
 export const log = (message) => console.log(chalk.white(message));

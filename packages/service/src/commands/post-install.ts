@@ -13,9 +13,14 @@ export class PostInstall implements ICommandHandler {
   public options: string;
 
   private deleteDirectories() {
-    ['./.git', './.circleci', './.all-contributorsrc', './CHANGELOG.md', './CODE_OF_CONDUCT.md', './LICENSE'].forEach(
-      (glob) => sync(glob),
-    );
+    [
+      './.git',
+      './.circleci',
+      './.all-contributorsrc',
+      './CHANGELOG.md',
+      './CODE_OF_CONDUCT.md',
+      './LICENSE',
+    ].forEach((glob) => sync(glob));
   }
 
   private updateVuesionConfig() {

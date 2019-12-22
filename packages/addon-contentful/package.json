@@ -34,14 +34,14 @@
     "url": "https://github.com/vuesion/packages/issues"
   },
   "dependencies": {
-    "@contentful/rich-text-html-renderer": "^13.1.0",
-    "contentful": "^7.9.0"
+    "@contentful/rich-text-html-renderer": "^13.4.0",
+    "contentful": "^7.11.3"
   },
   "devDependencies": {
     "express": "^4.16.4",
     "lodash": "^4.17.15",
-    "rimraf": "^2.6.3",
-    "typescript": "^3.5.3"
+    "rimraf": "^3.0.0",
+    "typescript": "^3.7.4"
   },
   "peerDependencies": {
     "express": ">=4",

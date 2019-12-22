@@ -1,5 +1,5 @@
 import * as fs from 'fs-extra';
-import chalk from 'chalk';
+import * as chalk from 'chalk';
 import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
 import { prompt, QuestionCollection } from 'inquirer';
 import { logErrorBold, Spinner } from '@vuesion/utils/dist/ui';
