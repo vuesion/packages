@@ -1,3 +1,13 @@
+#### 2019-12-22
+
+##### Chores
+
+*  update storybook-addon-vue-info + others ([#51](https://github.com/vuesion/packages/pull/51)) ([dde5ec4f](https://github.com/vuesion/packages/commit/dde5ec4f12d698b7c9bc26c4451dd9636b6af82f))
+
+##### Bug Fixes
+
+* **release:**  change lerna version --force-publish argument ([afa78be2](https://github.com/vuesion/packages/commit/afa78be2bb1549a4d116ce72ce5ef87786730693))
+
 #### 2019-10-09
 
 ##### Bug Fixes

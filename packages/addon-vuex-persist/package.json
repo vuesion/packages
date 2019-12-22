@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/addon-vuex-persist",
-  "version": "3.1.2",
+  "version": "4.0.0-alpha.0",
   "description": "vuesion vuex middleware to persist state + adapters",
   "keywords": [
     "vue.js",
