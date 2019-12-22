@@ -5,7 +5,7 @@ import { getPackages, IPackage } from './Packages';
 import { getGraph, INode } from './Graph';
 
 const run = async () => {
-  await runProcess('lerna', ['version', '--no-git-tag-version', '--no-push', '--force-publish "*"'], {
+  await runProcess('lerna', ['version', '--no-git-tag-version', '--no-push', '--force-publish'], {
     silent: false,
   });
 
