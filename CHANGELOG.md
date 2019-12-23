@@ -1,3 +1,9 @@
+#### 2019-12-23
+
+##### Refactors
+
+* **lint:**  use eslint instead of tslint ([#52](https://github.com/vuesion/packages/pull/52)) ([5af726f3](https://github.com/vuesion/packages/commit/5af726f3bbc9c138b8f0e05ca97ba9a260a9f4e1))
+
 #### 2019-12-22
 
 ##### Chores
