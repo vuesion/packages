@@ -10,12 +10,7 @@ const insertAt = (file: string, index: number, insert: string): string => {
 const getAST = (file: string): void => {
   sourceFile = ts.createSourceFile('ast', file, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 };
-const findAstNodes = (
-  node: ts.Node,
-  kind: ts.SyntaxKind,
-  recursive: boolean = false,
-  max: number = Infinity,
-): ts.Node[] => {
+const findAstNodes = (node: ts.Node, kind: ts.SyntaxKind, recursive = false, max = Infinity): ts.Node[] => {
   if (max === 0) {
     return [];
   }
@@ -47,7 +42,7 @@ const findAstNodes = (
   return arr;
 };
 
-export const addModuleToRouter = (pathToAppRouter: string, moduleName: string, modulePath: string = ''): void => {
+export const addModuleToRouter = (pathToAppRouter: string, moduleName: string, modulePath = ''): void => {
   moduleName = camelCase(moduleName);
 
   try {
@@ -75,7 +70,7 @@ export const addModuleToRouter = (pathToAppRouter: string, moduleName: string, m
   }
 };
 
-export const addModuleToState = (pathToAppState: string, moduleName: string, modulePath: string = ''): void => {
+export const addModuleToState = (pathToAppState: string, moduleName: string, modulePath = ''): void => {
   moduleName = camelCase(moduleName);
 
   try {

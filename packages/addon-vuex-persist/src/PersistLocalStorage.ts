@@ -9,7 +9,7 @@ export class PersistLocalStorage implements IVuexPersistStorage {
   [key: string]: any;
   [index: number]: string;
 
-  constructor(modules: string[] = [], beforePersist?: (state: any) => any, prefix: string = 'vuexpersist') {
+  constructor(modules: string[] = [], beforePersist?: (state: any) => any, prefix = 'vuexpersist') {
     this.modules = modules;
     this.prefix = prefix;
     this.localBeforePersist = beforePersist;

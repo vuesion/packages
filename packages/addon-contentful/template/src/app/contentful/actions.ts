@@ -12,10 +12,7 @@ export interface IContentfulActions {
 }
 
 export const ContentfulActions: IContentfulActions = {
-  async getContent(
-    { commit, state }: ActionContext<IContentfulState, IState>,
-    params: { slug: string; locale: string },
-  ) {
+  async getContent({ commit }: ActionContext<IContentfulState, IState>, params: { slug: string; locale: string }) {
     try {
       const res = await HttpService.get<IContentfulResponse>('/cms', { params });
 

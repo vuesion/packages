@@ -65,7 +65,7 @@ class Model extends JSONModel<IVuesionPackage> implements IVuesionPackage {
     }
   }
 
-  public save(prettier: boolean = true) {
+  public save(prettier = true) {
     if (this.model !== null) {
       this.model.name = this.name;
       this.model.version = this.version;

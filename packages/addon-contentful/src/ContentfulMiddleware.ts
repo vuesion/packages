@@ -21,7 +21,7 @@ export const ContentfulMiddleware = (options: IContentfulMiddlewareOptions) => {
   options.defaultLocale = options.defaultLocale || 'en';
 
   if (!options.accessToken || !options.space) {
-    console.warn('You have to provide "accessToken" and "space". Contentful middleware not applied.'); // tslint:disable-line
+    console.warn('You have to provide "accessToken" and "space". Contentful middleware not applied.');
 
     return (req: Request, res: Response, next: any) => {
       next();
@@ -36,7 +36,7 @@ export const ContentfulMiddleware = (options: IContentfulMiddlewareOptions) => {
     client
       .getEntries({ content_type: 'page', include: 6, locale: '*' })
       .then((contentTypes: EntryCollection<any>) => (entries = contentTypes.items))
-      .catch((e: Error) => console.error(e)); // tslint:disable-line
+      .catch((e: Error) => console.error(e));
   };
 
   sync();
@@ -52,15 +52,15 @@ export const ContentfulMiddleware = (options: IContentfulMiddlewareOptions) => {
   };
   const getProperties = (fields: any, locale: string = options.defaultLocale, result: any = {}) => {
     Object.keys(fields).map((key) => {
-      if (fields[key].hasOwnProperty(locale)) {
+      if (Object.prototype.hasOwnProperty.call(fields[key], locale)) {
         const item = fields[key][locale];
         let property: any;
 
         if (typeof item !== 'object') {
           property = result[key] = item;
-        } else if (item.hasOwnProperty('fields')) {
+        } else if (Object.prototype.hasOwnProperty.call(item, 'fields')) {
           property = result[key] = getProperties(item.fields, locale);
-        } else if (item.hasOwnProperty('nodeType') && item.nodeType === 'document') {
+        } else if (Object.prototype.hasOwnProperty.call(item, 'nodeType') && item.nodeType === 'document') {
           property = result[key] = documentToHtmlString(item);
         } else if (Array.isArray(item)) {
           property = result[key] = item.map((e) => getProperties(e, locale));

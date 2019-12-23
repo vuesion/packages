@@ -9,7 +9,7 @@ interface IPersistCookieStorageConfig {
 }
 
 export class PersistCookieStorage implements IVuexPersistStorage {
-  private static indexKey: string = 'vuexpersistcookie';
+  private static indexKey = 'vuexpersistcookie';
   public modules: string[];
   public prefix: string;
   public length: number;
@@ -68,7 +68,7 @@ export class PersistCookieStorage implements IVuexPersistStorage {
   constructor(
     modules: string[] = [],
     options: IPersistCookieStorageConfig = { cookieOptions: {} },
-    prefix: string = 'vuexpersist',
+    prefix = 'vuexpersist',
   ) {
     this.modules = modules;
     this.prefix = prefix;
@@ -115,7 +115,7 @@ export class PersistCookieStorage implements IVuexPersistStorage {
   }
 
   public key(index: number): string | null {
-    return undefined;
+    return index ? null : null;
   }
 
   public removeItem(key: string): void {

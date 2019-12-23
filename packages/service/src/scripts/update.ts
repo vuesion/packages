@@ -12,7 +12,7 @@ interface IFile {
   previous_filename: string;
 }
 
-const vuesionRepo: string = 'https://api.github.com/repos/vuesion/vuesion';
+const vuesionRepo = 'https://api.github.com/repos/vuesion/vuesion';
 const deleteFile = (status: string, filePath: string) => {
   try {
     fs.unlinkSync(filePath);
@@ -64,7 +64,7 @@ const downloadFile = (status: string, filePath: string, url: string) => {
 const handleFiles = (diffFiles: IFile[]) => {
   diffFiles.forEach((diffFile: IFile) => {
     const dest: string = runtimeRoot(diffFile.filename);
-    const url: string = `https://raw.githubusercontent.com/vuesion/vuesion/master/${diffFile.filename}`;
+    const url = `https://raw.githubusercontent.com/vuesion/vuesion/master/${diffFile.filename}`;
 
     if (diffFile.status === 'removed') {
       deleteFile(diffFile.status, dest);

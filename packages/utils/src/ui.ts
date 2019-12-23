@@ -1,4 +1,3 @@
-/* tslint:disable:no-console */
 import * as chalk from 'chalk';
 import { format } from 'util';
 
@@ -25,9 +24,9 @@ export const Result = (message: string) => {
 export class Spinner {
   private spinner: string[] = ['◜', '◠', '◝', '◞', '◡', '◟'];
   private timer = null;
-  public message: string = '';
+  public message = '';
 
-  public start = (debug: boolean = false) => {
+  public start = (debug = false) => {
     if (debug) {
       return;
     }
@@ -51,7 +50,7 @@ export class Spinner {
     play(frames);
   };
 
-  public stop = (err: boolean = false) => {
+  public stop = (err = false) => {
     if (err) {
       process.stdout.write('\u001b[0G\u001b[2K' + chalk.red(`✗ An error occurred.`));
     } else {

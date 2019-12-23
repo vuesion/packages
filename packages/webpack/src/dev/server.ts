@@ -10,7 +10,7 @@ const MFS = require('memory-fs');
 const clientConfig = nodeRequire('@vuesion/webpack/dist/config/client').default;
 const isomorphicConfig = nodeRequire('@vuesion/webpack/dist/config/isomorphic').default;
 
-let initialized: boolean = false;
+let initialized = false;
 let devMiddleware: WebpackDevMiddleware;
 let clientCompiler: any;
 let bundle: string;

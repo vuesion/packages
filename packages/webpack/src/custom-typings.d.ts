@@ -1,1 +1,1 @@
-declare var nodeRequire: any;
+declare let nodeRequire: any;

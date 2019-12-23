@@ -40,7 +40,7 @@ const testContent = `<div>
 
 describe('Utils', () => {
   test('should remove comments, line breaks and double white spaces', () => {
-    const message: string = `/*
+    const message = `/*
     test \\n test
     test
 
@@ -51,13 +51,13 @@ describe('Utils', () => {
   });
 
   test('should escape double quotes', () => {
-    const message: string = `/* "foo" */`;
+    const message = `/* "foo" */`;
 
     expect(sanitizeMessage(message)).toBe('\\"foo\\"');
   });
 
   test('should replace <> with []', () => {
-    const message: string = `/* [a]test[/a] */`;
+    const message = `/* [a]test[/a] */`;
 
     expect(sanitizeMessage(message)).toBe('<a>test</a>');
   });

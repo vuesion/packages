@@ -1,5 +1,5 @@
 import { sync } from 'rimraf';
-import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
+import { Command, ICommandHandler } from '../decorators/command';
 import { VuesionConfig, VuesionPackage } from '@vuesion/models/dist';
 import { lowerCase, kebabCase } from 'lodash';
 
@@ -40,7 +40,7 @@ export class PostInstall implements ICommandHandler {
     VuesionPackage.save(true);
   }
 
-  public async run(args: string[], options: IRunOptions) {
+  public async run() {
     this.optionsObject = JSON.parse(this.options);
 
     this.deleteDirectories();

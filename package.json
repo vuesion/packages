@@ -18,8 +18,9 @@
     "build": "lerna run build",
     "clean": "lerna run clean",
     "test": "jest --coverage",
+    "pree2e": "npm run build && lerna bootstrap",
     "e2e": "lerna run e2e",
-    "lint": "tslint -c tslint.json './packages/**/src/**/*.ts' --fix",
+    "lint": "eslint . --ext ts,vue --fix --cache",
     "release": "ts-node ./scripts/release.ts"
   },
   "devDependencies": {
@@ -27,6 +28,12 @@
     "@commitlint/config-conventional": "^8.2.0",
     "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.24",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-vue": "^6.0.1",
     "generate-changelog": "^1.8.0",
     "glob": "^7.1.6",
     "husky": "^3.1.0",
@@ -36,9 +43,6 @@
     "pretty-quick": "^2.0.1",
     "ts-jest": "^24.2.0",
     "ts-node": "^8.5.4",
-    "tslint": "^5.20.1",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.1.0",
     "typescript": "^3.7.4"
   },
   "husky": {

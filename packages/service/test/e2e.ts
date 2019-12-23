@@ -11,6 +11,9 @@ describe('e2e tests for vuesion', () => {
   beforeAll(async () => {
     await runProcess('npm', ['link'], { cwd: path.resolve(__dirname, '..') });
     await runProcess('npm', ['link'], { cwd: path.resolve(__dirname, '../../create') });
+    await runProcess('npm', ['link'], { cwd: path.resolve(__dirname, '../../webpack') });
+    await runProcess('npm', ['link'], { cwd: path.resolve(__dirname, '../../utils') });
+    await runProcess('npm', ['link'], { cwd: path.resolve(__dirname, '../../models') });
     await runProcess('lerna', ['bootstrap'], { cwd: path.resolve(__dirname, '..') });
   }, 30000);
 
@@ -23,6 +26,9 @@ describe('e2e tests for vuesion', () => {
     expect(fs.existsSync(testProject)).toBeTruthy();
 
     await runProcess('npm', ['link', '@vuesion/service'], { cwd: testProject });
+    await runProcess('npm', ['link', '@vuesion/webpack'], { cwd: testProject });
+    await runProcess('npm', ['link', '@vuesion/utils'], { cwd: testProject });
+    await runProcess('npm', ['link', '@vuesion/models'], { cwd: testProject });
 
     await runProcess('npm', ['run', 'build', '--', '--debug'], { cwd: testProject });
     expect(fs.existsSync(`${testProject}/dist`)).toBeTruthy();

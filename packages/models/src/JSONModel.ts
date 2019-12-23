@@ -37,7 +37,7 @@ export class JSONModel<T> {
     }
   }
 
-  public save(prettier: boolean = true) {
+  public save(prettier = true) {
     let jsonString = '';
     try {
       jsonString = JSON.stringify(this.model, null, prettierConfig.tabWidth) + '\n';

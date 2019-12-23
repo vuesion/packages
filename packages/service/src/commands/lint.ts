@@ -1,6 +1,6 @@
 import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
 import { handleProcessError } from '@vuesion/utils/dist/process';
-import { Spinner } from '@vuesion/utils/dist/ui';
+import { logInfo, logSuccessBold } from '@vuesion/utils/dist/ui';
 
 @Command({
   name: 'lint',
@@ -9,20 +9,22 @@ import { Spinner } from '@vuesion/utils/dist/ui';
 })
 export class Lint implements ICommandHandler {
   public async run(args: string[], options: IRunOptions) {
-    const spinner = new Spinner();
+    const cli = require('eslint/lib/cli');
 
-    spinner.message = 'Linting files...';
-    spinner.start(options.debug);
+    logInfo('Linting files...');
 
-    process.argv = [process.argv[0], null, '--fix', '-c', 'tslint.json', '-p', 'tsconfig.json', ...args];
+    process.argv = [process.argv[0], null, '.', '--ext', 'ts,vue', '--fix', ...args];
 
-    try {
-      require('tslint/lib/tslintCli.js');
+    if (options.debug) {
+      process.argv.push('--debug');
+    }
 
-      spinner.message = 'All files passed linting';
-      spinner.stop();
-    } catch (e) {
-      handleProcessError(e, spinner);
+    const exitCode = cli.execute(process.argv);
+
+    if (exitCode === 0) {
+      logSuccessBold('✓ All files passed linting');
+    } else {
+      handleProcessError({ code: exitCode, trace: null });
     }
   }
 }
