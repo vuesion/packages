@@ -10,7 +10,7 @@ class PersistMockStorage implements IVuexPersistStorage {
   [key: string]: any;
   [index: number]: string;
 
-  constructor(modules: string[] = [], beforePersist?: <T>(state: T) => T, prefix: string = 'vuexpersist') {
+  constructor(modules: string[] = [], beforePersist?: <T>(state: T) => T, prefix = 'vuexpersist') {
     this.modules = modules;
     this.prefix = prefix;
     this.localBeforePersist = beforePersist;
@@ -110,13 +110,12 @@ describe('vuex-persist', () => {
 
     const plugin: Plugin<any> = VuexPersist([new PersistMockStorage(['initial'])]);
     let mergedState: any = null;
-    let updateHandler: any = null;
     const mockStore: any = {
       state: {
         initial: ['TEST'],
       },
-      subscribe: (handler: any) => {
-        updateHandler = handler;
+      subscribe: () => {
+        return;
       },
       replaceState: (newState: any) => {
         mergedState = newState;
@@ -143,13 +142,12 @@ describe('vuex-persist', () => {
 
     const plugin: Plugin<any> = VuexPersist([new PersistMockStorage(['initial'])]);
     let mergedState: any = null;
-    let updateHandler: any = null;
     const mockStore: any = {
       state: {
         initial: ['TEST'],
       },
-      subscribe: (handler: any) => {
-        updateHandler = handler;
+      subscribe: () => {
+        return;
       },
       replaceState: (newState: any) => {
         mergedState = newState;

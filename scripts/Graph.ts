@@ -1,5 +1,3 @@
-// tslint:disable-next-line:prefer-for-of
-
 import { getPackages, IPackage } from './Packages';
 
 export interface INode {

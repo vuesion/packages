@@ -45,4 +45,4 @@ const run = async () => {
   await runProcess('lerna', ['publish', 'from-git'], { silent: false });
 };
 
-run().catch((e) => console.log(e)); // tslint:disable-line
+run().catch((e) => console.log(e));

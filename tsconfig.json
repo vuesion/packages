@@ -9,5 +9,6 @@
     "target": "esnext",
     "skipLibCheck": true
   },
-  "exclude": ["/node_modules/", "**/*.spec.ts", "dist"]
+  "include": ["./packages/**/*", "./packages/**/*.vue", "./scripts/*.ts"],
+  "exclude": ["/node_modules/", "dist"]
 }

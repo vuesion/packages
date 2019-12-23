@@ -86,7 +86,13 @@ export const handleProcessError = (err: IProcessError, spinner: Spinner = null) 
     spinner.stop(true);
   }
 
-  logError(`Exit with error code: ${err.code}\n\nTrace:\n${err.trace}`);
+  if (err.code) {
+    logError(`Exit with error code: ${err.code}`);
+  }
+
+  if (err.trace) {
+    logError(`Trace:\n${err.trace}`);
+  }
 
   killProcesses();
 

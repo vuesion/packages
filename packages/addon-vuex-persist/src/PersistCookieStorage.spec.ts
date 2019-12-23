@@ -30,8 +30,9 @@ describe('PersistCookieStorage', () => {
     expect(document.cookie).toBe('');
   });
 
-  test('key should return undefined', () => {
-    expect(storage.key(1)).toBe(undefined);
+  test('key should return null', () => {
+    expect(storage.key(1)).toBe(null);
+    expect(storage.key(null)).toBe(null);
   });
 
   test('should merge server context if index cookie is not present', () => {

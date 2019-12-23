@@ -8,7 +8,7 @@ const HTMLPlugin = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
-export let client: webpack.Configuration = merge(base, {
+export const client: webpack.Configuration = merge(base, {
   name: 'client',
   entry: {
     app: runtimeRoot('src/client/index'),

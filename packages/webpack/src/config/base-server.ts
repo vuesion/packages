@@ -4,7 +4,7 @@ import { base } from './base';
 import { runtimeRoot } from '@vuesion/utils/dist/path';
 import { VuesionConfig } from '@vuesion/models';
 
-export let baseServer: webpack.Configuration = merge(base, {
+export const baseServer: webpack.Configuration = merge(base, {
   target: 'node',
   output: {
     path: runtimeRoot('dist/server'),

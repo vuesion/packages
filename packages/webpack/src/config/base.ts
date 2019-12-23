@@ -7,7 +7,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
-export let base: webpack.Configuration = {
+export const base: webpack.Configuration = {
   stats: statsSettings,
   devtool: isProd ? false : '#eval-source-map',
   resolve: {
@@ -126,10 +126,9 @@ export let base: webpack.Configuration = {
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({ PRODUCTION: isProd, DEVELOPMENT: isDev, TEST: false, SPA: false }),
     new ForkTsCheckerWebpackPlugin({
-      tsconfig: runtimeRoot('tsconfig.json'),
-      tslint: runtimeRoot('tslint.json'),
+      eslint: true,
       vue: true,
-      silent: true,
+      silent: isProd,
     }),
   ],
 };

@@ -28,8 +28,7 @@
     "prebuild": "npm run clean",
     "build": "npm run compile",
     "clean": "rimraf ./dist ./build",
-    "dev": "tsc --watch",
-    "lint": "tslint -c tslint.json './src/**/*.ts'"
+    "dev": "tsc --watch"
   },
   "bugs": {
     "url": "https://github.com/vuesion/packages/issues"

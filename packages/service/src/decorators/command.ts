@@ -1,6 +1,4 @@
-/* tslint:disable:only-arrow-functions */
 import * as commander from 'commander';
-import * as _ from 'lodash';
 
 export interface ICommandMetadata {
   name?: string;
@@ -49,7 +47,7 @@ const getOptions = (obj: any): string[] => {
   const result = [];
   for (const property in obj) {
     if (
-      obj.hasOwnProperty(property) &&
+      Object.prototype.hasOwnProperty.call(obj, property) &&
       !property.startsWith('_') &&
       ['commands', 'options', 'parent'].indexOf(property) === -1
     ) {
@@ -93,9 +91,9 @@ export function Command(meta: ICommandMetadata): any {
       }
     });
 
-    command.action(function() {
+    command.action(function(...argsLocal) {
       const hasArgs = meta.arguments.length > 0;
-      const localCommand = isChildCommand ? getCommand(arguments) : command;
+      const localCommand = isChildCommand ? getCommand(argsLocal) : command;
       const options = getOptions(localCommand);
       const args = isChildCommand ? localCommand.parent.rawArgs.splice(3) : localCommand.rawArgs.splice(3);
       const debug = localCommand.parent ? !!localCommand.parent.debug : !!localCommand.debug;
@@ -104,7 +102,7 @@ export function Command(meta: ICommandMetadata): any {
 
       if (hasArgs) {
         meta.arguments.forEach((arg: IArgument, idx: number) => {
-          target[arg.name] = arguments[idx] ? arguments[idx] : arg.defaultValue;
+          target[arg.name] = argsLocal[idx] ? argsLocal[idx] : arg.defaultValue;
         });
       }
 
