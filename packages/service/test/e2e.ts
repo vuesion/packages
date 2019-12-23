@@ -22,7 +22,7 @@ describe('e2e tests for vuesion', () => {
   });
 
   it('should create a new project', async () => {
-    await runProcess('node', ['cli', 'MY_APP', '--debug'], { cwd });
+    await runProcess('node', ['cli', 'MY_APP', '--debug', '--next'], { cwd });
     expect(fs.existsSync(testProject)).toBeTruthy();
 
     await runProcess('npm', ['link', '@vuesion/service'], { cwd: testProject });
