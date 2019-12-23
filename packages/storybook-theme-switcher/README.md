@@ -1,4 +1,4 @@
-# `@vuesion/addon-theme-switcher`
+# `@vuesion/storybook-theme-switcher`
 
 > storybook addon to switch themes in the [vuesion project](https://github.com/vuesion/vuesion)
 
@@ -6,7 +6,7 @@
 
 `addons.js`
 ```
-import '@vuesion/addon-theme-switcher/register'
+import '@vuesion/storybook-theme-switcher/register'
 ```
 
 `config.js`
