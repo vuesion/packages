@@ -34,7 +34,7 @@ const getCommand = (args: any) => {
   let command = null;
 
   for (let i = 0; i < max; i++) {
-    if (args[i].parent) {
+    if (args[i] && args[i].parent) {
       command = args[i];
       break;
     }
