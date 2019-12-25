@@ -44,7 +44,7 @@ export class Add implements ICommandHandler {
 
   private async install(options: IRunOptions) {
     try {
-      await runProcess('npm', ['link', '--save', this.package], { silent: true, ...options });
+      await runProcess('npm', ['install', '--save', this.package], { silent: true, ...options });
     } catch (e) {
       this.spinner.stop();
       handleProcessError(e);
