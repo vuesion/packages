@@ -1,8 +1,8 @@
 import * as path from 'path';
-import { addModuleToRouter, addModuleToState } from '../ast';
 import { VuesionConfig } from '@vuesion/models';
 import { runtimeRoot } from '@vuesion/utils/dist/path';
 import { folderExists } from '@vuesion/utils/dist/fileSystem';
+import { AppRouter, AppState } from '@vuesion/models';
 
 const pluralize = require('pluralize');
 
@@ -83,11 +83,7 @@ export = {
         abortOnFail: true,
       });
 
-      addModuleToRouter(
-        path.join(path.resolve(process.cwd()), VuesionConfig.generators.routerFile),
-        data.singularName,
-        data.modulePath,
-      );
+      AppRouter.addModule(`${data.modulePath}/${data.singularName}`);
     }
 
     if (data.wantVuex) {
@@ -158,11 +154,7 @@ export = {
         },
       ]);
 
-      addModuleToState(
-        path.join(path.resolve(process.cwd()), VuesionConfig.generators.stateFile),
-        data.singularName,
-        data.modulePath,
-      );
+      AppState.addModule(`${data.modulePath}/${data.singularName}`);
     }
 
     return actions;

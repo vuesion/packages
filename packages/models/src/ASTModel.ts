@@ -1,30 +1,16 @@
 import * as fs from 'fs';
 import { format } from 'prettier';
-import { logError, runtimeRoot } from '@vuesion/utils';
+import { logError } from '@vuesion/utils';
 import { project } from './ast';
 import { SourceFile } from 'ts-morph';
+import { Model } from './AbstractModel';
 
-let prettierConfig;
-
-try {
-  prettierConfig = JSON.parse(fs.readFileSync(runtimeRoot('.prettierrc')).toString());
-} catch (e) {
-  prettierConfig = {
-    singleQuote: true,
-    bracketSpacing: true,
-    arrowParens: 'always',
-    trailingComma: 'all',
-    tabWidth: 2,
-    printWidth: 120,
-    endOfLine: 'lf',
-  };
-}
-
-export class ASTModel {
+export class ASTModel extends Model {
   protected path: string = null;
   protected sourceFile: SourceFile = null;
 
   constructor(path: string) {
+    super();
     this.path = path;
     this.load();
   }
@@ -45,7 +31,7 @@ export class ASTModel {
 
       const data = prettier
         ? format(this.sourceFile.getText(), {
-            ...prettierConfig,
+            ...this.prettierConfig,
             parser: 'typescript',
           })
         : this.sourceFile.getText();

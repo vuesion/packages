@@ -1,3 +1,4 @@
+export * from './AbstractModel';
 export * from './AppRouter';
 export * from './AppState';
 export * from './ast';
