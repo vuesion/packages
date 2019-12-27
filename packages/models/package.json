@@ -30,10 +30,12 @@
   },
   "dependencies": {
     "@vuesion/utils": "^4.0.0-alpha.2",
-    "ramda": "^0.26.1"
+    "ramda": "^0.26.1",
+    "ts-morph": "^6.0.2"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",
+    "rimraf": "^3.0.0",
     "typescript": "^3.7.4"
   },
   "publishConfig": {
