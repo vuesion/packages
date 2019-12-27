@@ -7,7 +7,7 @@ import { VuesionConfig } from '@vuesion/models';
 export const baseServer: webpack.Configuration = merge(base, {
   target: 'node',
   output: {
-    path: runtimeRoot('dist/server'),
+    path: runtimeRoot(`${VuesionConfig.outputDirectory}/server`),
     libraryTarget: 'commonjs',
   },
   externals: [
