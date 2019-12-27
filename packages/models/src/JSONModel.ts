@@ -5,7 +5,7 @@ import { Model } from './AbstractModel';
 
 export class JSONModel<T> extends Model {
   protected path: string = null;
-  protected model: T = null;
+  public model: T = null;
 
   constructor(path: string) {
     super();

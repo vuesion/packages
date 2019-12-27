@@ -3,6 +3,8 @@ import { runtimeRoot } from '@vuesion/utils';
 import { pathOr } from 'ramda';
 
 interface IVuesionConfig extends Object {
+  [key: string]: any;
+  outputDirectory: string;
   currentVersion: string;
   generators: {
     blueprintDirectory: string;
@@ -32,6 +34,7 @@ interface IVuesionConfig extends Object {
 
 class Model extends JSONModel<IVuesionConfig> implements IVuesionConfig {
   public clean: string[];
+  public outputDirectory: string;
   public currentVersion: string;
   public devServer: { watchOptions: any };
   public generators: { blueprintDirectory: string; outputDirectory: string; routerFile: string; stateFile: string };
@@ -45,6 +48,7 @@ class Model extends JSONModel<IVuesionConfig> implements IVuesionConfig {
 
     if (this.model !== null) {
       this.clean = this.model.clean;
+      this.outputDirectory = this.model.outputDirectory || './dist';
       this.currentVersion = this.model.currentVersion;
       this.devServer = this.model.devServer;
       this.generators = this.model.generators;

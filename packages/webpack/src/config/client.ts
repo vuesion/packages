@@ -14,7 +14,7 @@ export const client: webpack.Configuration = merge(base, {
     app: runtimeRoot('src/client/index'),
   },
   output: {
-    path: runtimeRoot('dist/client'),
+    path: runtimeRoot(`${VuesionConfig.outputDirectory}/client`),
     filename: '[name].[chunkHash].js',
     publicPath: '/client/',
     chunkFilename: '[name].[id].[chunkhash].js',
