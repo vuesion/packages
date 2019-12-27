@@ -1,3 +1,10 @@
+#### 2019-12-27
+
+##### New Features
+
+* **service:**  add outputDirectory to VuesionConfig ([#54](https://github.com/vuesion/packages/pull/54)) ([96016645](https://github.com/vuesion/packages/commit/96016645e597bf60c12d3e0a709d6b5c452ea516))
+*  add-on system ([#53](https://github.com/vuesion/packages/pull/53)) ([ff4bfdc3](https://github.com/vuesion/packages/commit/ff4bfdc357c074c8fa357c037d7e59c737b77210))
+
 #### 2019-12-23
 
 ##### Refactors
