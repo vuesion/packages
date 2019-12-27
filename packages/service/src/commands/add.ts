@@ -11,6 +11,7 @@ import { runtimeRoot } from '@vuesion/utils/dist/path';
   alias: 'a',
   description: 'Add a vuesion package to your project.',
   arguments: [{ name: 'package' }],
+  options: [{ flags: '-l, --link', description: 'Use npm link instead of npm install.', defaultValue: false }],
 })
 export class Add implements ICommandHandler {
   private questions: QuestionCollection = [
@@ -23,6 +24,7 @@ export class Add implements ICommandHandler {
   ];
 
   public package: string;
+  public link: boolean;
   public templateSource: string;
   public templateDestination: string;
   public addonIndex: string;
@@ -44,7 +46,7 @@ export class Add implements ICommandHandler {
 
   private async install(options: IRunOptions) {
     try {
-      await runProcess('npm', ['install', '--save', this.package], { silent: true, ...options });
+      await runProcess('npm', [this.link ? 'link' : 'install', '--save', this.package], { silent: true, ...options });
     } catch (e) {
       this.spinner.stop();
       handleProcessError(e);
@@ -63,7 +65,12 @@ export class Add implements ICommandHandler {
   }
 
   private async runAddOn() {
-    return await require(this.addonIndex).default();
+    try {
+      await require(this.addonIndex).default();
+    } catch (e) {
+      this.spinner.stop();
+      handleProcessError(e);
+    }
   }
 
   public async run(args: string[], options: IRunOptions) {

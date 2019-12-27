@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import { format } from 'prettier';
 import { logError } from '@vuesion/utils';
 import { project } from './ast';
-import { SourceFile } from 'ts-morph';
+import { SourceFile, SyntaxKind } from 'ts-morph';
 import { Model } from './AbstractModel';
 
 export class ASTModel extends Model {
@@ -23,6 +23,11 @@ export class ASTModel extends Model {
         logError(e);
       }
     }
+  }
+
+  protected addImportDeclaration(importDeclaration: string) {
+    const importCount = this.sourceFile.getChildrenOfKind(SyntaxKind.ImportDeclaration).length;
+    this.sourceFile.insertStatements(importCount, importDeclaration);
   }
 
   public save(prettier = true) {

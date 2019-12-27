@@ -30,6 +30,7 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/no-use-before-define': 0,
     'no-async-promise-executor': 0,
+    'no-prototype-builtins': 0,
     '@typescript-eslint/camelcase': ['error', { allow: ['content_type'] }],
     'vue/max-attributes-per-line': 0,
     'vue/no-v-html': 0,

@@ -17,9 +17,7 @@ class Model extends ASTModel {
 
     const modulePath = parts.join('/');
 
-    const importCount = this.sourceFile.getChildrenOfKind(SyntaxKind.ImportDeclaration).length;
-    this.sourceFile.insertStatements(
-      importCount,
+    this.addImportDeclaration(
       `import { ${upperFirst(moduleName)}Routes } from './${modulePath.length > 0 ? `${modulePath}/` : ''}${lowerFirst(
         moduleName,
       )}/routes';`,

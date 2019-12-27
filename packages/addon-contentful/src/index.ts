@@ -7,11 +7,8 @@ export default async () => {
 
   const appRoutes = new ModuleRoutes('app');
 
-  try {
-    appRoutes.removeRoute('/not-found');
-    appRoutes.removeRoute('*');
-    // eslint-disable-next-line no-empty
-  } catch (e) {}
+  appRoutes.removeRoute('/not-found');
+  appRoutes.removeRoute('*');
 
   ExpressMiddlewares.addImport("import { ContentfulMiddleware } from '@vuesion/addon-contentful';");
   ExpressMiddlewares.addMiddleware(`app.use(
