@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import * as chalk from 'chalk';
 import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
 import { prompt, QuestionCollection } from 'inquirer';
-import { logErrorBold, Spinner } from '@vuesion/utils/dist/ui';
+import { logErrorBold, logInfo, logSuccessBold } from '@vuesion/utils/dist/ui';
 import { handleProcessError, runProcess } from '@vuesion/utils/dist/process';
 import { runtimeRoot } from '@vuesion/utils/dist/path';
 
@@ -28,7 +28,6 @@ export class Add implements ICommandHandler {
   public templateSource: string;
   public templateDestination: string;
   public addonIndex: string;
-  public spinner = new Spinner();
 
   private async init() {
     let result: any = null;
@@ -46,18 +45,20 @@ export class Add implements ICommandHandler {
 
   private async install(options: IRunOptions) {
     try {
+      logInfo(`Installing ${chalk.bold(this.package)} into your project...`);
+
       await runProcess('npm', [this.link ? 'link' : 'install', '--save', this.package], { silent: true, ...options });
     } catch (e) {
-      this.spinner.stop();
       handleProcessError(e);
     }
   }
 
   private copyTemplate() {
     if (fs.existsSync(this.templateSource)) {
+      logInfo(`Copying template into your project...`);
+
       fs.copy(this.templateSource, this.templateDestination, async (e) => {
         if (e) {
-          this.spinner.stop();
           logErrorBold(e);
         }
       });
@@ -66,24 +67,20 @@ export class Add implements ICommandHandler {
 
   private async runAddOn() {
     try {
+      logInfo(`Running add-on...`);
+
       await require(this.addonIndex).default();
     } catch (e) {
-      this.spinner.stop();
       handleProcessError(e);
     }
   }
 
   public async run(args: string[], options: IRunOptions) {
     await this.init();
-
-    this.spinner.message = `Installing ${chalk.bold(this.package)} into your project...`;
-    this.spinner.start();
-
     await this.install(options);
     await this.copyTemplate();
     await this.runAddOn();
 
-    this.spinner.message = `Package ${chalk.bold(this.package)} successfully installed`;
-    this.spinner.stop();
+    logSuccessBold(`✓ Package ${chalk.bold(this.package)} successfully installed`);
   }
 }

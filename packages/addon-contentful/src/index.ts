@@ -16,7 +16,7 @@ export default async () => {
   ContentfulMiddleware({
     space: process.env.CONTENTFUL_SPACE_ID,
     accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-    preview: true,
+    preview: process.env.CONTENTFUL_PREVIEW === 'true',
     syncIntervalInSeconds: 30,
   }),
 );`);
