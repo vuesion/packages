@@ -11,7 +11,10 @@ import { runtimeRoot } from '@vuesion/utils/dist/path';
   alias: 'a',
   description: 'Add a vuesion package to your project.',
   arguments: [{ name: 'package' }],
-  options: [{ flags: '-l, --link', description: 'Use npm link instead of npm install.', defaultValue: false }],
+  options: [
+    { flags: '-l, --link', description: 'Use npm link instead of npm install.', defaultValue: false },
+    { flags: '-lo, --local', description: 'Install a local package relative to root folder.', defaultValue: false },
+  ],
 })
 export class Add implements ICommandHandler {
   private questions: QuestionCollection = [
@@ -19,12 +22,13 @@ export class Add implements ICommandHandler {
       type: 'list',
       name: 'package',
       message: 'Which package do you want to add to your project?',
-      choices: ['@vuesion/addon-contentful'],
+      choices: ['@vuesion/addon-contentful', '@vuesion/addon-firebase'],
     },
   ];
 
   public package: string;
   public link: boolean;
+  public local: boolean;
   public templateSource: string;
   public templateDestination: string;
   public addonIndex: string;
@@ -41,6 +45,11 @@ export class Add implements ICommandHandler {
     this.templateSource = runtimeRoot(`node_modules/${this.package}/template`);
     this.addonIndex = runtimeRoot(`node_modules/${this.package}/dist/index.js`);
     this.templateDestination = runtimeRoot();
+
+    if (this.local) {
+      this.templateSource = runtimeRoot(`${this.package}/template`);
+      this.addonIndex = runtimeRoot(`${this.package}/dist/index.js`);
+    }
   }
 
   private async install(options: IRunOptions) {
@@ -77,7 +86,10 @@ export class Add implements ICommandHandler {
 
   public async run(args: string[], options: IRunOptions) {
     await this.init();
-    await this.install(options);
+    if (this.local === false) {
+      await this.install(options);
+    }
+
     await this.copyTemplate();
     await this.runAddOn();
 
