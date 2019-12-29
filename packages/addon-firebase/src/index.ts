@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import { prompt } from 'inquirer';
 import * as hasBin from 'hasbin';
 import * as client from 'firebase-tools';
+import { sync } from 'rimraf';
 import { runProcess, runtimeRoot, logError, logSuccessBold } from '@vuesion/utils';
 import { VuesionConfig, VuesionPackage } from '@vuesion/models';
 import { FireBaseRc } from './FirebaseRc';
@@ -39,15 +40,7 @@ const fireBaseCreateProject = async () => {
   }
 };
 
-const setup = async () => {
-  const hasFirebase = hasBin.sync('firebase');
-
-  if (hasFirebase === false) {
-    await fireBasePrompt();
-  }
-
-  await runProcess('firebase', ['login'], { silent: false });
-
+const getProject = async () => {
   let projects: string[] = [];
 
   try {
@@ -69,6 +62,10 @@ const setup = async () => {
     },
   ]);
 
+  return project.project;
+};
+
+const getDeployment = async () => {
   const deployment = await prompt([
     {
       type: 'list',
@@ -82,10 +79,29 @@ const setup = async () => {
     },
   ]);
 
+  return deployment.deployment;
+};
+
+const addToGitIgnore = () => {
   fs.appendFileSync(runtimeRoot('.gitignore'), '.firebase/\n');
   fs.appendFileSync(runtimeRoot('.gitignore'), 'firebase-debug.log');
+};
 
-  return { project: project.project, deployment: deployment.deployment };
+const setup = async () => {
+  const hasFirebase = hasBin.sync('firebase');
+
+  if (hasFirebase === false) {
+    await fireBasePrompt();
+  }
+
+  await runProcess('firebase', ['login'], { silent: false });
+
+  const project = await getProject();
+  const deployment = await getDeployment();
+
+  addToGitIgnore();
+
+  return { project, deployment };
 };
 
 const ssr = async () => {
@@ -106,7 +122,6 @@ const ssr = async () => {
 
   VuesionPackage.model.scripts.build = 'vuesion build && cd ./functions && npm run build';
   VuesionPackage.model.scripts.postinstall = 'cd ./functions && npm i';
-  VuesionPackage.model.scripts['firebase:serve'] = 'firebase serve -p 3000';
   VuesionPackage.save(true);
 
   TsConfig.model.include.push('./functions/**/*');
@@ -114,6 +129,9 @@ const ssr = async () => {
 };
 
 const spa = async () => {
+  sync(runtimeRoot('./functions'));
+
+  delete FireBaseJSON.model.functions;
   FireBaseJSON.model.hosting.public = VuesionConfig.outputDirectory;
   FireBaseJSON.model.hosting.rewrites = [
     {
@@ -124,23 +142,57 @@ const spa = async () => {
   FireBaseJSON.save(true);
 };
 
-export default async () => {
-  const { project, deployment } = await setup();
-
+const loadFiles = () => {
   FireBaseRc.load();
   FireBaseJSON.load();
   ProductionConfig.load();
   FunctionsPackage.load();
   TsConfig.load();
+};
 
+const setProjectToFirebaseRc = (project: string) => {
   FireBaseRc.model.projects.default = project;
   FireBaseRc.save(true);
+};
 
+const setProductionUrl = (project: string) => {
   ProductionConfig.model.api.baseUrl = `https://${project}.firebaseio.com/`;
   ProductionConfig.save(true);
+};
 
-  VuesionPackage.scripts.deploy = 'firebase deploy';
+const addFirebaseScripts = (deployment: string) => {
+  VuesionPackage.model.scripts['prefirebase:serve'] = `npm run build${deployment === 'spa' ? ':spa' : ''}`;
+  VuesionPackage.model.scripts['firebase:serve'] = 'firebase serve -p 5000';
+  VuesionPackage.model.scripts.deploy = 'firebase deploy';
   VuesionPackage.save(true);
+};
+
+const cleanUp = async () => {
+  await runProcess('npm', ['uninstall', '--save', '@vuesion/addon-firebase'], { silent: true });
+  await runProcess('npm', ['install'], { silent: true });
+};
+
+const askForTesting = async () => {
+  const result = await prompt([
+    {
+      type: 'confirm',
+      name: 'test',
+      message: `Do you want to test Firebase locally?`,
+    },
+  ]);
+
+  if (result.test) {
+    await runProcess('npm', ['run', 'firebase:serve'], { silent: false });
+  }
+};
+
+export default async () => {
+  const { project, deployment } = await setup();
+
+  loadFiles();
+  setProjectToFirebaseRc(project);
+  setProductionUrl(project);
+  addFirebaseScripts(deployment);
 
   if (deployment === 'ssr') {
     await ssr();
@@ -148,26 +200,7 @@ export default async () => {
     await spa();
   }
 
-  await runProcess('npm', ['uninstall', '--save', '@vuesion/addon-firebase'], { silent: true });
-  await runProcess('npm', ['install'], { silent: true });
+  await cleanUp();
 
-  const result = await prompt([
-    {
-      type: 'confirm',
-      name: 'test',
-      message: `To you want to test Firebase locally?`,
-    },
-  ]);
-
-  if (result.test) {
-    if (deployment === 'ssr') {
-      await runProcess('npm', ['run', 'build'], { silent: false });
-      return await runProcess('npm', ['run', 'firebase:serve'], { silent: false });
-    } else {
-      await runProcess('npm', ['run', 'build:spa'], { silent: false });
-      return await runProcess('firebase', ['serve'], { silent: false });
-    }
-  }
-
-  return Promise.resolve();
+  await askForTesting();
 };

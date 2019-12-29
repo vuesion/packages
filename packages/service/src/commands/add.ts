@@ -86,9 +86,7 @@ export class Add implements ICommandHandler {
 
   public async run(args: string[], options: IRunOptions) {
     await this.init();
-    if (this.local === false) {
-      await this.install(options);
-    }
+    await this.install(options);
 
     await this.copyTemplate();
     await this.runAddOn();
