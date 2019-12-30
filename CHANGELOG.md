@@ -1,5 +1,11 @@
 #### 2019-12-30
 
+##### Bug Fixes
+
+* **addon-firebase:**  include .gitignore in package ([e3c1a506](https://github.com/vuesion/packages/commit/e3c1a506a61788e05eb6d95d428324013e69c78c))
+
+#### 2019-12-30
+
 ##### New Features
 
 *  add addon-vuetify ([#56](https://github.com/vuesion/packages/pull/56)) ([b968f647](https://github.com/vuesion/packages/commit/b968f647e79ec4faf5fcd8583a4d5859030dda1a))

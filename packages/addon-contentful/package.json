@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/addon-contentful",
-  "version": "4.0.0-alpha.4",
+  "version": "4.0.0-alpha.5",
   "description": "vuesion contentful integration",
   "keywords": [
     "vue.js",
@@ -33,8 +33,8 @@
     "url": "https://github.com/vuesion/packages/issues"
   },
   "dependencies": {
-    "@vuesion/models": "^4.0.0-alpha.4",
-    "@vuesion/utils": "^4.0.0-alpha.4",
+    "@vuesion/models": "^4.0.0-alpha.5",
+    "@vuesion/utils": "^4.0.0-alpha.5",
     "contentful": "^7.11.3"
   },
   "devDependencies": {
