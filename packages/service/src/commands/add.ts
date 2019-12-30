@@ -22,7 +22,7 @@ export class Add implements ICommandHandler {
       type: 'list',
       name: 'package',
       message: 'Which package do you want to add to your project?',
-      choices: ['@vuesion/addon-contentful', '@vuesion/addon-firebase'],
+      choices: ['@vuesion/addon-contentful', '@vuesion/addon-firebase', '@vuesion/addon-vuetify'],
     },
   ];
 
