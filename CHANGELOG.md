@@ -1,3 +1,11 @@
+#### 2019-12-30
+
+##### New Features
+
+*  add addon-vuetify ([#56](https://github.com/vuesion/packages/pull/56)) ([b968f647](https://github.com/vuesion/packages/commit/b968f647e79ec4faf5fcd8583a4d5859030dda1a))
+*  add addon-firebase ([#55](https://github.com/vuesion/packages/pull/55)) ([c7954f5f](https://github.com/vuesion/packages/commit/c7954f5fb824089df42f3be55ef19c593b55418c))
+* **addon-contentful:**  add preview as env variable ([bf66b38e](https://github.com/vuesion/packages/commit/bf66b38e0713f45c48e0ef84edb5ce8edd68200f))
+
 #### 2019-12-27
 
 ##### New Features
