@@ -2,6 +2,12 @@
 
 ##### Bug Fixes
 
+* **addon-firebase:**  create .gitignore manually ([be57aa1c](https://github.com/vuesion/packages/commit/be57aa1c495d88928ce00e72a127224411349ea5))
+
+#### 2019-12-30
+
+##### Bug Fixes
+
 * **addon-firebase:**  include .gitignore in package ([e3c1a506](https://github.com/vuesion/packages/commit/e3c1a506a61788e05eb6d95d428324013e69c78c))
 
 #### 2019-12-30
