@@ -104,6 +104,25 @@ const setup = async () => {
   return { project, deployment };
 };
 
+const addGitIgnore = () => {
+  fs.writeFileSync(
+    runtimeRoot('./functions/.gitignore'),
+    `## Compiled JavaScript files
+**/*.js
+**/*.js.map
+
+# Typescript v1 declaration files
+typings/
+
+node_modules/
+.vuesion/
+dist/
+i18n/
+`,
+    'utf-8',
+  );
+};
+
 const ssr = async () => {
   FireBaseJSON.model.hosting.public = VuesionConfig.outputDirectory;
   FireBaseJSON.model.hosting.rewrites = [
@@ -118,11 +137,14 @@ const ssr = async () => {
     ...FunctionsPackage.model.dependencies,
     ...VuesionPackage.model.dependencies,
   };
+  delete FunctionsPackage.model.dependencies['@vuesion/addon-firebase'];
   FunctionsPackage.save(true);
 
   VuesionPackage.model.scripts.build = 'vuesion build && cd ./functions && npm run build';
   VuesionPackage.model.scripts.postinstall = 'cd ./functions && npm i';
   VuesionPackage.save(true);
+
+  addGitIgnore();
 
   TsConfig.model.include.push('./functions/**/*');
   TsConfig.save(true);

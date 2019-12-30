@@ -14,8 +14,7 @@
   "main": "dist/index.js",
   "files": [
     "dist",
-    "template",
-    "template/functions/.gitignore"
+    "template"
   ],
   "repository": {
     "type": "git",
