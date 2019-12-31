@@ -22,9 +22,6 @@ const askForTesting = async () => {
 
 export default async () => {
   await runProcess('npm', ['install', '--save', 'vuetify'], { silent: true });
-  await runProcess('npm', ['install', '--save-dev', '@mdi/font'], {
-    silent: true,
-  });
 
   const app = new App();
   app.transform();

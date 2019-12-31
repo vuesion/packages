@@ -26,11 +26,7 @@ export class App extends ASTModel {
       .getFirstChildByKind(SyntaxKind.NewExpression)
       .getFirstChildByKind(SyntaxKind.ObjectLiteralExpression);
     const pluginIndex = options.getChildrenOfKind(SyntaxKind.ShorthandPropertyAssignment).length;
-    const vuetify = `vuetify: new Vuetify({
-  icons: {
-    iconfont: 'mdi',
-  },
-}),`;
+    const vuetify = `vuetify: new Vuetify(),`;
 
     options.insertProperty(pluginIndex, vuetify);
 
