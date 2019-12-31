@@ -26,22 +26,8 @@ const fireBasePrompt = async () => {
   }
 };
 
-const fireBaseCreateProject = async () => {
-  const result = await prompt([
-    {
-      type: 'confirm',
-      name: 'create',
-      message: `You don't have any Firebase Projects, do you want to create one?`,
-    },
-  ]);
-
-  if (result.create) {
-    await runProcess('firebase', ['projects:create'], { silent: false });
-  }
-};
-
 const getProject = async () => {
-  let projects: string[] = [];
+  let projects: any[] = [];
 
   try {
     projects = await client.list();
@@ -49,20 +35,24 @@ const getProject = async () => {
     logError(e);
   }
 
-  if (projects.length === 0) {
-    await fireBaseCreateProject();
-  }
+  projects = projects.map((p: any) => p.id);
+  projects.unshift({ name: 'Create new Firebase project', value: 'new' });
 
   const project = await prompt([
     {
       type: 'list',
       name: 'project',
       message: `Please select a project?`,
-      choices: projects.map((p: any) => p.id),
+      choices: projects,
     },
   ]);
 
-  return project.project;
+  if (project.project === 'new') {
+    await runProcess('firebase', ['projects:create'], { silent: false });
+    return await getProject();
+  } else {
+    return project.project;
+  }
 };
 
 const getDeployment = async () => {
