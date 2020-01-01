@@ -1,3 +1,10 @@
+#### 2020-01-01
+
+##### Bug Fixes
+
+* **addon-firebase:**  add create new project to CLI ([fd76092a](https://github.com/vuesion/packages/commit/fd76092a4303d61282bac3b96f8671a709e7c2d8))
+* **addon-vuetify:**  use cdn for external css ([b3220a55](https://github.com/vuesion/packages/commit/b3220a558f21cba21de54c6c5cd2581ea5559ff5))
+
 #### 2019-12-30
 
 ##### Bug Fixes
