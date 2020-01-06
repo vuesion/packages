@@ -14,47 +14,57 @@ interface IFile {
 }
 
 const vuesionRepo = 'https://api.github.com/repos/vuesion/vuesion';
-const deleteFile = (status: string, filePath: string) => {
-  fs.unlinkSync(filePath);
-  logError(`${status}: ${filePath}`);
-};
-const renameFile = (status: string, oldPath: string, newPath: string) => {
-  try {
-    fs.renameSync(oldPath, newPath);
-    logInfo(`${status}: ${oldPath} --> ${newPath}`);
-  } catch (e) {
-    logErrorBold(`error: ${oldPath} --> ${newPath}`);
-  }
-};
-const downloadFile = (status: string, filePath: string, url: string) => {
-  ensureDirectoryExists(filePath);
-  const file = fs.createWriteStream(filePath);
+const deleteFile = (status: string, filePath: string, idx: number) => {
+  return new Promise((resolve) => {
+    fs.unlink(filePath, (err) => {
+      logError(`${idx} - ${status}: ${filePath}`);
 
-  const done = () => {
-    switch (status) {
-      case 'added':
-        logSuccess(`${status}: ${filePath}`);
-        break;
-      case 'modified':
-        log(`${status}: ${filePath}`);
-        break;
-      default:
-        log(`${status}: ${filePath}`);
-    }
-  };
-
-  https
-    .get(url, (response: any) => {
-      response.pipe(file);
-
-      file.on('finish', () => {
-        file.close();
-        done();
-      });
-    })
-    .on('error', () => {
-      deleteFile(status, filePath);
+      resolve();
     });
+  });
+};
+const renameFile = (status: string, oldPath: string, newPath: string, idx: number) => {
+  return new Promise((resolve) => {
+    fs.rename(oldPath, newPath, (err) => {
+      logInfo(`${idx} - ${status}: ${oldPath} --> ${newPath}`);
+
+      resolve();
+    });
+  });
+};
+const downloadFile = async (status: string, filePath: string, url: string, idx: number) => {
+  return new Promise((resolve) => {
+    ensureDirectoryExists(filePath);
+    const file = fs.createWriteStream(filePath);
+
+    const done = () => {
+      switch (status) {
+        case 'added':
+          logSuccess(`${idx} - ${status}: ${filePath}`);
+          break;
+        case 'modified':
+          console.log(`${idx} - ${status}: ${filePath}`);
+          break;
+        default:
+          log(`${idx} - ${status}: ${filePath}`);
+      }
+    };
+
+    https
+      .get(url, (response: any) => {
+        response.pipe(file);
+
+        file.on('finish', () => {
+          file.close();
+          done();
+          resolve();
+        });
+      })
+      .on('error', () => {
+        deleteFile(status, filePath, idx);
+        resolve();
+      });
+  });
 };
 const shouldProcessFile = (diffFile: IFile) => {
   const foldersToNotSync = [
@@ -84,21 +94,28 @@ const shouldProcessFile = (diffFile: IFile) => {
 
   return process;
 };
-const handleFiles = (diffFiles: IFile[], branch: string) => {
-  diffFiles.forEach((diffFile: IFile) => {
-    if (shouldProcessFile(diffFile)) {
-      const dest: string = runtimeRoot(diffFile.filename);
-      const url = `https://raw.githubusercontent.com/vuesion/vuesion/${branch}/${diffFile.filename}`;
+const handleFile = async (diffFile: IFile, dest: string, url: string, idx: number) => {
+  if (diffFile.status === 'removed') {
+    await deleteFile(diffFile.status, dest, idx);
+  } else if (diffFile.status === 'renamed') {
+    await renameFile(diffFile.status, runtimeRoot(diffFile.previous_filename), dest, idx);
+  } else {
+    await downloadFile(diffFile.status, dest, url, idx);
+  }
+};
+const handleFiles = async (diffFiles: IFile[], branch: string) => {
+  for (let i = 0; i < diffFiles.length; i++) {
+    const idx = i + 1;
+    const diffFile = diffFiles[i];
+    const dest: string = runtimeRoot(diffFile.filename);
+    const url = `https://raw.githubusercontent.com/vuesion/vuesion/${branch}/${diffFile.filename}`;
 
-      if (diffFile.status === 'removed') {
-        deleteFile(diffFile.status, dest);
-      } else if (diffFile.status === 'renamed') {
-        renameFile(diffFile.status, runtimeRoot(diffFile.previous_filename), dest);
-      } else {
-        downloadFile(diffFile.status, dest, url);
-      }
+    if (shouldProcessFile(diffFile)) {
+      await handleFile(diffFile, dest, url, idx);
+    } else {
+      log(`${idx} - skipping: ${dest}`);
     }
-  });
+  }
 };
 
 export async function run(next = false) {
@@ -120,12 +137,14 @@ export async function run(next = false) {
 
     const diffResponse: AxiosResponse = await axios.get<any>(diffUrl);
 
-    handleFiles(diffResponse.data.files, next ? 'next' : 'master');
+    logInfo(`Processing ${diffResponse.data.files.length} files...`);
 
-    setTimeout(() => {
+    await handleFiles(diffResponse.data.files, next ? 'next' : 'master');
+
+    if (next === false) {
       VuesionConfig.load();
       VuesionConfig.updateCurrentVersion(latestVersion);
-    }, 1000);
+    }
   } catch (e) {
     logErrorBold(e);
   }
