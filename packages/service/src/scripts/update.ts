@@ -32,23 +32,22 @@ const renameFile = (status: string, oldPath: string, newPath: string, idx: numbe
     });
   });
 };
+const downloadFinished = (status: string, filePath: string, idx: number) => {
+  switch (status) {
+    case 'added':
+      logSuccess(`${idx} - ${status}: ${filePath}`);
+      break;
+    case 'modified':
+      console.log(`${idx} - ${status}: ${filePath}`);
+      break;
+    default:
+      log(`${idx} - ${status}: ${filePath}`);
+  }
+};
 const downloadFile = async (status: string, filePath: string, url: string, idx: number) => {
   return new Promise((resolve) => {
     ensureDirectoryExists(filePath);
     const file = fs.createWriteStream(filePath);
-
-    const done = () => {
-      switch (status) {
-        case 'added':
-          logSuccess(`${idx} - ${status}: ${filePath}`);
-          break;
-        case 'modified':
-          console.log(`${idx} - ${status}: ${filePath}`);
-          break;
-        default:
-          log(`${idx} - ${status}: ${filePath}`);
-      }
-    };
 
     https
       .get(url, (response: any) => {
@@ -56,7 +55,7 @@ const downloadFile = async (status: string, filePath: string, url: string, idx: 
 
         file.on('finish', () => {
           file.close();
-          done();
+          downloadFinished(status, filePath, idx);
           resolve();
         });
       })
@@ -117,6 +116,12 @@ const handleFiles = async (diffFiles: IFile[], branch: string) => {
     }
   }
 };
+const updateVersion = (next: boolean, latestVersion: string) => {
+  if (next === false) {
+    VuesionConfig.load();
+    VuesionConfig.updateCurrentVersion(latestVersion);
+  }
+};
 
 export async function run(next = false) {
   try {
@@ -141,10 +146,7 @@ export async function run(next = false) {
 
     await handleFiles(diffResponse.data.files, next ? 'next' : 'master');
 
-    if (next === false) {
-      VuesionConfig.load();
-      VuesionConfig.updateCurrentVersion(latestVersion);
-    }
+    updateVersion(next, latestVersion);
   } catch (e) {
     logErrorBold(e);
   }
