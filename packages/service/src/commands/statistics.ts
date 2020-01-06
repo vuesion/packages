@@ -104,7 +104,7 @@ const getColor = (type: string) => {
 @Command({
   name: 'statistics',
   alias: 's',
-  description: 'Generates a report for certain project management KPIs.',
+  description: 'Generate a report for certain project management KPIs.',
 })
 export class Statistics implements ICommandHandler {
   public async run() {
