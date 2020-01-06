@@ -1,3 +1,9 @@
+#### 2020-01-06
+
+##### New Features
+
+* **service:**  add --next option to update command ([#57](https://github.com/vuesion/packages/pull/57)) ([bb31bb9b](https://github.com/vuesion/packages/commit/bb31bb9bfd12f8754e36cc07eb86a4361915f2e4))
+
 #### 2020-01-01
 
 ##### Bug Fixes

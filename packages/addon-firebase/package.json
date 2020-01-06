@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/addon-firebase",
-  "version": "4.0.0-alpha.7",
+  "version": "4.0.0-alpha.8",
   "description": "vuesion firebase integration",
   "keywords": [
     "vue.js",
@@ -31,8 +31,8 @@
     "url": "https://github.com/vuesion/packages/issues"
   },
   "dependencies": {
-    "@vuesion/models": "^4.0.0-alpha.7",
-    "@vuesion/utils": "^4.0.0-alpha.7",
+    "@vuesion/models": "^4.0.0-alpha.8",
+    "@vuesion/utils": "^4.0.0-alpha.8",
     "firebase-tools": "^7.11.0",
     "hasbin": "^1.2.3"
   },
