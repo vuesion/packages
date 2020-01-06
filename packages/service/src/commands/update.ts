@@ -6,11 +6,14 @@ import { logError } from '@vuesion/utils/dist/ui';
   name: 'update',
   alias: 'u',
   description: 'Update your local copy of vuesion.',
+  options: [{ flags: '-n, --next', description: 'update to the latest version', defaultValue: false }],
 })
 export class Update implements ICommandHandler {
+  public next: boolean;
+
   public async run() {
     try {
-      await run();
+      await run(this.next);
     } catch (e) {
       logError(e);
     }

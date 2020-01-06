@@ -18,12 +18,12 @@ Usage: vuesion [options] [command]
 vuesion service for development tasks
 
 Options:
-  -v, --version              output the version number
-  -d, --debug                Show debugging output.
-  -h, --help                 output usage information
+  -v, --version              Output the version number.
+  -d, --debug                Show debugging output. (default: false)
+  -h, --help                 Output usage information.
 
 Commands:
-  add|a                      Add a vuesion package to your project.
+  add|a [options] [package]  Add a vuesion package to your project.
   build|b [options]          Build project for production.
   clean                      Clean up the project directory.
   dev|d [options]            Serve application for development.
@@ -32,11 +32,12 @@ Commands:
   generate|g                 Generate Components, Connected Components or Modules.
   lint|l                     Lint project files.
   parallel|p [commands...]   Run commands in parallel.
+  post-install <options>     Separate steps that run after creating a new vuesion app.
   prettier [options]         Format project files.
   release|r [options]        Generate changelog, release new npm version add new git tag.
-  statistics|s               Generates a report for certain project management KPIs.
+  statistics|s               Generate a report for certain project management KPIs.
   storybook [options]        Run Storybook.
   test|t [options]           Run unit-tests with jest. All Jest CLI options are supported.
-  update|u                   Update your local copy of vuesion.
+  update|u [options]         Update your local copy of vuesion.
 
 ```
