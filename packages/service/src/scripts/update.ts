@@ -16,7 +16,7 @@ interface IFile {
 const vuesionRepo = 'https://api.github.com/repos/vuesion/vuesion';
 const deleteFile = (status: string, filePath: string, idx: number) => {
   return new Promise((resolve) => {
-    fs.unlink(filePath, (err) => {
+    fs.unlink(filePath, () => {
       logError(`${idx} - ${status}: ${filePath}`);
 
       resolve();
@@ -25,7 +25,7 @@ const deleteFile = (status: string, filePath: string, idx: number) => {
 };
 const renameFile = (status: string, oldPath: string, newPath: string, idx: number) => {
   return new Promise((resolve) => {
-    fs.rename(oldPath, newPath, (err) => {
+    fs.rename(oldPath, newPath, () => {
       logInfo(`${idx} - ${status}: ${oldPath} --> ${newPath}`);
 
       resolve();
