@@ -32,7 +32,7 @@ export default async () => {
         }),
       ],
     };
-    const scssRuleIndex = config.module.rules.findIndex((rule) => rule.test.toString() === '/\\\\.scss$/');
+    const scssRuleIndex = config.module.rules.findIndex((rule) => rule.test.toString() === '/\\.scss$/');
     const scssRule = config.module.rules[scssRuleIndex];
 
     scssRule.oneOf.forEach((ruleConfig) => {
