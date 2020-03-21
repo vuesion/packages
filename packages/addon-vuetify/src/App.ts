@@ -1,4 +1,4 @@
-import { ObjectLiteralExpression, SyntaxKind } from 'ts-morph';
+import { SyntaxKind } from 'ts-morph';
 import { runtimeRoot } from '@vuesion/utils';
 import { ASTModel } from '@vuesion/models';
 
@@ -14,7 +14,7 @@ export class App extends ASTModel {
     this.sourceFile.insertStatements(importCount, `import Vuetify from 'vuetify';`);
     this.sourceFile.insertStatements(importCount + 1, `\nVue.use(Vuetify);`);
 
-    const options: ObjectLiteralExpression = this.sourceFile
+    const options = this.sourceFile
       .getFirstChildByKind(SyntaxKind.VariableStatement)
       .getFirstChildByKind(SyntaxKind.VariableDeclarationList)
       .getFirstChildByKind(SyntaxKind.VariableDeclaration)

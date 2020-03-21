@@ -33,14 +33,14 @@
   "dependencies": {
     "@vuesion/models": "^4.0.0-alpha.8",
     "@vuesion/utils": "^4.0.0-alpha.8",
-    "firebase-tools": "^7.11.0",
+    "firebase-tools": "^7.15.1",
     "hasbin": "^1.2.3"
   },
   "devDependencies": {
     "inquirer": "7.0.1",
     "lodash": "^4.17.15",
-    "rimraf": "^3.0.0",
-    "typescript": "^3.7.4",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.3",
     "ts-morph": "^6.0.2"
   },
   "peerDependencies": {

@@ -7,7 +7,7 @@ sync(`${packagesRoot('service')}/dist/commands/*.js`).forEach((file: string) => 
 
 commander
   .name('vuesion')
-  .version(ServicePackage.version, '-v, --version', 'Output the version number.')
+  .version(ServicePackage.version, '-v, --version')
   .helpOption('-h, --help', 'Output usage information.')
   .option('-d, --debug', 'Show debugging output.', false)
   .description(ServicePackage.description);

@@ -45,12 +45,12 @@
     "download-git-repo": "3.0.2",
     "glob": "7.1.6",
     "lodash": "^4.17.15",
-    "rimraf": "^3.0.0"
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",
-    "@types/rimraf": "^2.0.3",
-    "typescript": "^3.7.4"
+    "@types/rimraf": "^3.0.0",
+    "typescript": "^3.8.3"
   },
   "publishConfig": {
     "access": "public"
