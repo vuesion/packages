@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/storybook-theme-switcher",
-  "version": "4.0.0-alpha.8",
+  "version": "4.0.0-alpha.9",
   "description": "vuesion Storybook addon for switching themes",
   "keywords": [
     "vue.js",

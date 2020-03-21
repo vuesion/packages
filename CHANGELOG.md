@@ -1,3 +1,17 @@
+#### 2020-03-21
+
+##### Chores
+
+*  update dependencies ([#60](https://github.com/vuesion/packages/pull/60)) ([0775134e](https://github.com/vuesion/packages/commit/0775134e07f58cad324159c8c1745edbe910d3a0))
+
+##### New Features
+
+*  add addon-tailwindcss ([#58](https://github.com/vuesion/packages/pull/58)) ([6195ebf2](https://github.com/vuesion/packages/commit/6195ebf2467abe6e469187929f56b683a37b1b38))
+
+##### Bug Fixes
+
+* **addon-tailwindcss:**  change scssRuleIndex selector ([#59](https://github.com/vuesion/packages/pull/59)) ([7ee0e713](https://github.com/vuesion/packages/commit/7ee0e713deaf9aeb2ef3523fbaa7599836f542df))
+
 #### 2020-01-06
 
 ##### New Features
