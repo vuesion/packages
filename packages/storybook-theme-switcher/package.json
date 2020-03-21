@@ -35,12 +35,12 @@
   },
   "devDependencies": {
     "@storybook/addons": "^5.0.11",
-    "@storybook/components": "^5.2.8",
-    "@storybook/theming": "^5.2.8",
+    "@storybook/components": "^5.3.17",
+    "@storybook/theming": "^5.3.17",
     "@storybook/vue": "^5.0.11",
-    "@types/react": "^16.9.17",
-    "rimraf": "^3.0.0",
-    "typescript": "^3.7.4"
+    "@types/react": "^16.9.25",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "@storybook/addons": ">=5",
