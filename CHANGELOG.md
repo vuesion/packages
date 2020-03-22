@@ -1,3 +1,9 @@
+#### 2020-03-22
+
+##### New Features
+
+*  upgrade prettier to v2 ([38c2571d](https://github.com/vuesion/packages/commit/38c2571d97b323ef715ce8152cf97339c181c091))
+
 #### 2020-03-21
 
 ##### Chores

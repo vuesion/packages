@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/addon-tailwindcss",
-  "version": "4.0.0-alpha.9",
+  "version": "4.0.0-alpha.10",
   "description": "vuesion tailwindcss integration",
   "keywords": [
     "vue.js",
@@ -31,8 +31,8 @@
     "url": "https://github.com/vuesion/packages/issues"
   },
   "dependencies": {
-    "@vuesion/models": "^4.0.0-alpha.9",
-    "@vuesion/utils": "^4.0.0-alpha.9"
+    "@vuesion/models": "^4.0.0-alpha.10",
+    "@vuesion/utils": "^4.0.0-alpha.10"
   },
   "devDependencies": {
     "glob": "^7.1.6",
