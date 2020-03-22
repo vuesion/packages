@@ -21,7 +21,8 @@
     "pree2e": "npm run build && lerna bootstrap",
     "e2e": "lerna run e2e",
     "lint": "eslint . --ext ts,vue --fix --cache",
-    "release": "ts-node ./scripts/release.ts"
+    "release": "ts-node ./scripts/release.ts",
+    "prettier": "prettier --config .prettierrc --ignore-path .prettierignore ./packages/**/*.{ts,vue,js,json}"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
@@ -31,7 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^2.24.0",
     "@typescript-eslint/parser": "^2.24.0",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.0",
+    "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-vue": "^6.2.2",
     "generate-changelog": "^1.8.0",
@@ -39,10 +40,10 @@
     "husky": "^4.2.3",
     "jest": "^25.1.0",
     "lerna": "^3.20.2",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.1",
     "pretty-quick": "^2.0.1",
     "ts-jest": "^25.2.1",
-    "ts-node": "^8.7.0",
+    "ts-node": "^8.8.1",
     "typescript": "^3.8.3"
   },
   "husky": {

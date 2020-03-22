@@ -32,6 +32,8 @@ const prettier = (args: string[], pattern: string) => {
     pattern ? pattern : `./**/*.{${VuesionConfig.prettier.extensions}}`,
   ];
 
+  process.argv.pop();
+
   process.argv = process.argv.concat(args);
 
   require('prettier/bin-prettier.js');
