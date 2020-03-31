@@ -1,3 +1,9 @@
+#### 2020-03-31
+
+##### Bug Fixes
+
+* **generate:**  update call to plop ([4191a686](https://github.com/vuesion/packages/commit/4191a686d78a00c7bc5b159ff96c50a8728e46d6))
+
 #### 2020-03-22
 
 ##### New Features
