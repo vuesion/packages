@@ -9,7 +9,7 @@ import { lowerCase, kebabCase } from 'lodash';
   arguments: [{ name: 'options', required: true }],
 })
 export class PostInstall implements ICommandHandler {
-  private optionsObject: { name: string; branch: string };
+  private optionsObject: { name: string };
   public options: string;
 
   private deleteDirectories() {

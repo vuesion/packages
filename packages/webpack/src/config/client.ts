@@ -44,4 +44,4 @@ if (isProd) {
   ]);
 }
 
-export default VuesionConfig.getCustomWebpackConfig(client, 'client');
+export default client;

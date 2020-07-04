@@ -10,6 +10,7 @@ const download = require('download-git-repo');
   arguments: [{ name: 'name', required: true }],
   options: [
     { flags: '-n, --next', description: 'Download latest version.', defaultValue: false },
+    { flags: '-nu, --nuxt', description: 'Download latest version based on nuxt.js.', defaultValue: false },
     { flags: '-d, --debug', description: 'Show debugging output.', defaultValue: false },
   ],
 })
@@ -18,6 +19,7 @@ export class Create implements ICommandHandler {
 
   public name: string;
   public next: boolean;
+  public nuxt: boolean;
   public debug: boolean;
 
   private download(branch, destination) {
@@ -42,7 +44,7 @@ export class Create implements ICommandHandler {
 
     await runProcess(
       destination + '/node_modules/.bin/vuesion',
-      ['post-install', JSON.stringify({ name: this.name, branch: this.next ? 'next' : 'master' })],
+      ['post-install', JSON.stringify({ name: this.name })],
       {
         silent: true,
         ...options,
@@ -54,7 +56,15 @@ export class Create implements ICommandHandler {
     this.name = kebabCase(lowerCase(this.name));
 
     const destination = runtimeRoot(this.name);
-    const branch = this.next ? 'github:vuesion/vuesion#next' : 'github:vuesion/vuesion';
+    let branch = 'github:vuesion/vuesion';
+
+    if (this.next) {
+      branch = 'github:vuesion/vuesion#next';
+    }
+
+    if (this.nuxt) {
+      branch = 'github:vuesion/vuesion#nuxt';
+    }
 
     this.spinner.message = 'Downloading project...';
     this.spinner.start(options.debug);

@@ -1,8 +1,7 @@
 import * as fs from 'fs';
-import moduleGenerator = require('./module');
-import crudModuleGenerator = require('./crud-module');
 import componentGenerator = require('./component');
-import connectedGenerator = require('./connected');
+import pageGenerator = require('./page');
+import vuexModuleGenerator = require('./vuex-module');
 
 import { dashCase, snakeCase, constantCase } from './helpers';
 import { runtimeRoot } from '@vuesion/utils/dist/path';
@@ -16,15 +15,11 @@ export = (plop: any) => {
     plop.setGenerator('Simple Component', componentGenerator);
   }
 
-  if (fs.existsSync(runtimeRoot('/.vuesion/generators/connected'))) {
-    plop.setGenerator('Connected Component', connectedGenerator);
+  if (fs.existsSync(runtimeRoot('/.vuesion/generators/page'))) {
+    plop.setGenerator('Page', pageGenerator);
   }
 
-  if (fs.existsSync(runtimeRoot('/.vuesion/generators/module'))) {
-    plop.setGenerator('Empty Module', moduleGenerator);
-  }
-
-  if (fs.existsSync(runtimeRoot('/.vuesion/generators/crud-module'))) {
-    plop.setGenerator('CRUD Module', crudModuleGenerator);
+  if (fs.existsSync(runtimeRoot('/.vuesion/generators/vuex-module'))) {
+    plop.setGenerator('Vuex Module', vuexModuleGenerator);
   }
 };
