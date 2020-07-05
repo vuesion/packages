@@ -145,4 +145,4 @@ if (aliases) {
   });
 }
 
-export default VuesionConfig.getCustomWebpackConfig(base);
+export default base;

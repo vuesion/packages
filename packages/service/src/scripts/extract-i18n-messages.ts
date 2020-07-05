@@ -1,19 +1,37 @@
 import * as glob from 'glob';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as ts from 'typescript';
 import { getTranslationObject, getTranslationsFromString } from './Utils';
-import { VuesionConfig } from '@vuesion/models';
+import { runtimeRoot } from '@vuesion/utils';
 import { HeadLine, log, Result } from '@vuesion/utils/dist/ui';
 import { ensureDirectoryExists } from '@vuesion/utils/dist/fileSystem';
+import { sync } from 'rimraf';
+
+function compile(fileNames: string[], options: ts.CompilerOptions): void {
+  const program = ts.createProgram(fileNames, options);
+  const emitResult = program.emit();
+  const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
+
+  allDiagnostics.forEach(() => null);
+}
 
 export const run = (): void => {
-  glob('./src/app/**/*.vue', (err: any, files: string[]) => {
+  compile([runtimeRoot('nuxt.config.ts')], {
+    noEmitOnError: true,
+    noImplicitAny: true,
+    target: ts.ScriptTarget.ES5,
+    module: ts.ModuleKind.CommonJS,
+  });
+  const NuxtConfig: any = require(runtimeRoot('nuxt.config.js')).default;
+
+  glob('./src/**/*.vue', (err: any, files: string[]) => {
     const basePath: string = path.resolve(process.cwd());
-    const supportedLocales: string[] = VuesionConfig.i18n.supportedLocales;
-    const defaultLocale: string = VuesionConfig.i18n.defaultLocale;
+    const supportedLocales: string[] = NuxtConfig.i18n.locales.map((l: any) => l.code);
+    const defaultLocale = NuxtConfig.i18n.defaultLocale;
     let translations: any = {};
 
-    HeadLine('Scanning files in: ./src/app/**/*.vue.');
+    HeadLine('Scanning files in: ./src/**/*.vue.');
 
     log('');
 
@@ -64,5 +82,7 @@ export const run = (): void => {
     log('');
 
     Result('I18n extraction finished.');
+
+    sync(runtimeRoot('nuxt.config.js'));
   });
 };

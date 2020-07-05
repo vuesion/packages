@@ -16,9 +16,8 @@
     "predev": "lerna bootstrap && npm run build",
     "dev": "lerna run dev --parallel",
     "build": "lerna run build",
-    "clean": "lerna run clean",
+    "clean": "lerna run clean && lerna clean",
     "test": "jest --coverage",
-    "pree2e": "npm run build && lerna bootstrap",
     "e2e": "lerna run e2e",
     "lint": "eslint . --ext ts,vue --fix --cache",
     "release": "ts-node ./scripts/release.ts",
@@ -71,7 +70,8 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/tmp/",
-      "/template/"
+      "/template/",
+      "/dist/"
     ],
     "coverageThreshold": {
       "global": {

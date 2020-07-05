@@ -28,4 +28,4 @@ export const baseServer: webpack.Configuration = merge(base, {
   },
 }) as any;
 
-export default VuesionConfig.getCustomWebpackConfig(baseServer, 'server');
+export default baseServer;

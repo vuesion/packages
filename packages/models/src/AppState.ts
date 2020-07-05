@@ -2,10 +2,11 @@ import { SyntaxKind } from 'ts-morph';
 import { lowerFirst, upperFirst, camelCase } from 'lodash';
 import { runtimeRoot } from '@vuesion/utils';
 import { ASTModel } from './ASTModel';
+import { VuesionConfig } from './VuesionConfig';
 
 class Model extends ASTModel {
   constructor() {
-    super(runtimeRoot('src/app/state.ts'));
+    super(runtimeRoot(VuesionConfig.generators.stateFile));
   }
 
   public addModule(moduleName: string) {
@@ -18,15 +19,15 @@ class Model extends ASTModel {
     const modulePath = parts.join('/');
 
     this.addImportDeclaration(
-      `import { I${upperFirst(moduleName)}State } from './${modulePath.length > 0 ? `${modulePath}/` : ''}${lowerFirst(
-        moduleName,
-      )}/state';`,
+      `import { I${upperFirst(moduleName)}State } from '@/store/${
+        modulePath.length > 0 ? `${modulePath}/` : ''
+      }${lowerFirst(moduleName)}/state';`,
     );
 
     const appState = this.sourceFile.getFirstChildByKind(SyntaxKind.InterfaceDeclaration);
 
     appState.addProperty({
-      name: `${lowerFirst(moduleName)}?`,
+      name: `${lowerFirst(moduleName)}`,
       type: `I${upperFirst(moduleName)}State`,
     });
 

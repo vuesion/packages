@@ -31,7 +31,12 @@ export = {
     const filePath: string[] = data.name.split('/');
 
     data.componentName = filePath.pop();
-    data.basePath = path.join(process.cwd(), VuesionConfig.generators.outputDirectory, filePath.join('/'));
+    data.basePath = path.join(
+      process.cwd(),
+      VuesionConfig.generators.outputDirectory,
+      filePath.join('/'),
+      'components',
+    );
 
     const actions: any[] = [
       {
