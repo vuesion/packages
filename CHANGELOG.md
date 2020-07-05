@@ -1,3 +1,9 @@
+#### 2020-07-05
+
+##### New Features
+
+*  add nuxt support ([#61](https://github.com/vuesion/packages/pull/61)) ([2fe7e8d9](https://github.com/vuesion/packages/commit/2fe7e8d968610b3c18fb9db574516f176bd9aae8))
+
 #### 2020-03-31
 
 ##### Bug Fixes
