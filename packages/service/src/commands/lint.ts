@@ -19,7 +19,7 @@ export class Lint implements ICommandHandler {
       process.argv.push('--debug');
     }
 
-    const exitCode = cli.execute(process.argv);
+    const exitCode = await cli.execute(process.argv);
 
     if (exitCode === 0) {
       logSuccessBold('✓ All files passed linting');

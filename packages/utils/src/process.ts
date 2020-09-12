@@ -59,7 +59,7 @@ export const runProcess = (name: string, args: string[] = [], options?: IProcess
         cwd: options.cwd,
         env: process.env,
       },
-      options.silent === false || options.debug === true ? { stdio: 'inherit' } : {},
+      options.silent === false || options.debug === true ? { stdio: 'inherit' as 'inherit' } : {},
     );
     const childProcess: any = spawn(name, args, localOptions);
 

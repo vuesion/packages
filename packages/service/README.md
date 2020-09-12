@@ -18,26 +18,24 @@ Usage: vuesion [options] [command]
 vuesion service for development tasks
 
 Options:
-  -v, --version              Output the version number.
-  -d, --debug                Show debugging output. (default: false)
-  -h, --help                 Output usage information.
+  -v, --version             output the version number
+  -d, --debug               Show debugging output. (default: false)
+  -h, --help                Output usage information.
 
 Commands:
-  add|a [options] [package]  Add a vuesion package to your project.
-  build|b [options]          Build project for production.
-  clean                      Clean up the project directory.
-  dev|d [options]            Serve application for development.
-  e2e|e                      Run e2e tests with cypress.io. All cypress CLI options are supported.
-  extract-i18n-messages|em   Extract i18n default messages from .vue files.
-  generate|g                 Generate Components, Connected Components or Modules.
-  lint|l                     Lint project files.
-  parallel|p [commands...]   Run commands in parallel.
-  post-install <options>     Separate steps that run after creating a new vuesion app.
-  prettier [options]         Format project files.
-  release|r [options]        Generate changelog, release new npm version add new git tag.
-  statistics|s               Generate a report for certain project management KPIs.
-  storybook [options]        Run Storybook.
-  test|t [options]           Run unit-tests with jest. All Jest CLI options are supported.
-  update|u [options]         Update your local copy of vuesion.
+  clean                     Clean up the project directory.
+  e2e|e                     Run e2e tests with cypress.io. All cypress CLI options are supported.
+  extract-i18n-messages|em  Extract i18n default messages from .vue files.
+  generate|g                Generate Components, Connected Components or Modules.
+  lint|l                    Lint project files.
+  parallel|p [commands...]  Run commands in parallel.
+  post-install <options>    Separate steps that run after creating a new vuesion app.
+  prettier [options]        Format project files.
+  release|r [options]       Generate changelog, release new npm version add new git tag.
+  statistics|s              Generate a report for certain project management KPIs.
+  storybook [options]       Run Storybook.
+  test|t [options]          Run unit-tests with jest. All Jest CLI options are supported.
+  update|u [options]        Update your local copy of vuesion.
+  help [command]            display help for command
 
 ```

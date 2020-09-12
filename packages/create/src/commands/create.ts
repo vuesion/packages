@@ -10,7 +10,6 @@ const download = require('download-git-repo');
   arguments: [{ name: 'name', required: true }],
   options: [
     { flags: '-n, --next', description: 'Download latest version.', defaultValue: false },
-    { flags: '-nu, --nuxt', description: 'Download latest version based on nuxt.js.', defaultValue: false },
     { flags: '-d, --debug', description: 'Show debugging output.', defaultValue: false },
   ],
 })
@@ -19,7 +18,6 @@ export class Create implements ICommandHandler {
 
   public name: string;
   public next: boolean;
-  public nuxt: boolean;
   public debug: boolean;
 
   private download(branch, destination) {
@@ -60,10 +58,6 @@ export class Create implements ICommandHandler {
 
     if (this.next) {
       branch = 'github:vuesion/vuesion#next';
-    }
-
-    if (this.nuxt) {
-      branch = 'github:vuesion/vuesion#nuxt';
     }
 
     this.spinner.message = 'Downloading project...';
