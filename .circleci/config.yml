@@ -4,7 +4,7 @@ jobs:
     environment:
       CC_TEST_REPORTER_ID: 75513f407d75e3eaa34435a5eb2cc039ea35e816bdf01a3188919b2dc72ca768
     docker:
-      - image: circleci/node:12
+      - image: cypress/base:12.6.0
     working_directory: ~/repo
     steps:
       - checkout
@@ -13,6 +13,9 @@ jobs:
             - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
             - v1-deps-{{ .Branch }}
             - v1-deps
+      - run:
+          name: Test
+          command: git --version
       - run:
           name: Install dependencies
           command: |
