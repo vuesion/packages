@@ -1,3 +1,9 @@
+#### 2020-09-13
+
+##### Chores
+
+*  update deps and clean-up ([#62](https://github.com/vuesion/packages/pull/62)) ([1457a149](https://github.com/vuesion/packages/commit/1457a14977d1df0c03c0e17c56ed7fa2469de3f1))
+
 #### 2020-07-05
 
 ##### New Features

@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/service",
-  "version": "4.0.0-alpha.12",
+  "version": "4.0.0-alpha.13",
   "description": "vuesion service for development tasks",
   "keywords": [
     "vue.js",
@@ -53,8 +53,8 @@
     "@types/inquirer": "7.3.1",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
-    "@vuesion/models": "^4.0.0-alpha.12",
-    "@vuesion/utils": "^4.0.0-alpha.12",
+    "@vuesion/models": "^4.0.0-alpha.13",
+    "@vuesion/utils": "^4.0.0-alpha.13",
     "autoprefixer": "9.8.6",
     "axios": "^0.20.0",
     "babel-core": "6.26.3",
