@@ -14,9 +14,6 @@ jobs:
             - v1-deps-{{ .Branch }}
             - v1-deps
       - run:
-          name: Test
-          command: git --version
-      - run:
           name: Install dependencies
           command: |
             npm ci --silent
