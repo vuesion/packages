@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/service",
-  "version": "4.0.0-alpha.12-local",
+  "version": "4.0.0-alpha.12",
   "description": "vuesion service for development tasks",
   "keywords": [
     "vue.js",
