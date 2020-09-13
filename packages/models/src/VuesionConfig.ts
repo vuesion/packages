@@ -4,31 +4,15 @@ import { pathOr } from 'ramda';
 
 interface IVuesionConfig extends Object {
   [key: string]: any;
-  outputDirectory: string;
   currentVersion: string;
   generators: {
     blueprintDirectory: string;
     outputDirectory: string;
-    routerFile: string;
     stateFile: string;
-  };
-  i18n: {
-    defaultLocale: string;
-    supportedLocales: string[];
   };
   clean: string[];
   prettier: {
     extensions: string;
-  };
-  webpack: {
-    aliases: { [key: string]: string };
-  };
-  spa: {
-    appShellRoute: string;
-    additionalRoutes: string[];
-  };
-  devServer: {
-    watchOptions: any;
   };
 }
 
@@ -37,7 +21,7 @@ class Model extends JSONModel<IVuesionConfig> implements IVuesionConfig {
   public outputDirectory: string;
   public currentVersion: string;
   public devServer: { watchOptions: any };
-  public generators: { blueprintDirectory: string; outputDirectory: string; routerFile: string; stateFile: string };
+  public generators: { blueprintDirectory: string; outputDirectory: string; stateFile: string };
   public i18n: { defaultLocale: string; supportedLocales: string[] };
   public prettier: { extensions: string };
   public spa: { appShellRoute: string; additionalRoutes: string[] };
@@ -47,15 +31,10 @@ class Model extends JSONModel<IVuesionConfig> implements IVuesionConfig {
     super(runtimeRoot('.vuesion/config.json'));
 
     if (this.model !== null) {
-      this.clean = this.model.clean;
-      this.outputDirectory = this.model.outputDirectory || './dist';
       this.currentVersion = this.model.currentVersion;
-      this.devServer = this.model.devServer;
       this.generators = this.model.generators;
-      this.i18n = this.model.i18n;
+      this.clean = this.model.clean;
       this.prettier = this.model.prettier;
-      this.spa = this.model.spa;
-      this.webpack = this.model.webpack;
     }
   }
 
