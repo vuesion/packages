@@ -1,3 +1,9 @@
+#### 2020-09-19
+
+##### Bug Fixes
+
+* **service:**  use right base path for components ([c669ac0e](https://github.com/vuesion/packages/commit/c669ac0e60f6eaaf315f7f13e5709e1d72652d97))
+
 #### 2020-09-13
 
 ##### Chores
