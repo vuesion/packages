@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/models",
-  "version": "4.0.0-alpha.14",
+  "version": "4.0.0-alpha.15",
   "description": "models and AST tools for vuesion",
   "keywords": [
     "vue.js",
@@ -29,7 +29,7 @@
     "url": "https://github.com/vuesion/packages/issues"
   },
   "dependencies": {
-    "@vuesion/utils": "^4.0.0-alpha.14",
+    "@vuesion/utils": "^4.0.0-alpha.15",
     "ramda": "^0.27.1",
     "ts-morph": "^8.1.0"
   },

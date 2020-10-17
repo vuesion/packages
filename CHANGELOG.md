@@ -1,3 +1,9 @@
+#### 2020-10-17
+
+##### New Features
+
+* **service:**  support .t() in extract-i18n-messages ([#63](https://github.com/vuesion/packages/pull/63)) ([2af7fc37](https://github.com/vuesion/packages/commit/2af7fc372f99c35ae8fe74d0d185b3388018e19b))
+
 #### 2020-09-19
 
 ##### Bug Fixes
