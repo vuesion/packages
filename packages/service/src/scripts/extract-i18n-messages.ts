@@ -25,13 +25,13 @@ export const run = (): void => {
   });
   const NuxtConfig: any = require(runtimeRoot('nuxt.config.js')).default;
 
-  glob('./src/**/*.vue', (err: any, files: string[]) => {
+  glob('./src/**/*.*', (err: any, files: string[]) => {
     const basePath: string = path.resolve(process.cwd());
     const supportedLocales: string[] = NuxtConfig.i18n.locales.map((l: any) => l.code);
     const defaultLocale = NuxtConfig.i18n.defaultLocale;
     let translations: any = {};
 
-    HeadLine('Scanning files in: ./src/**/*.vue.');
+    HeadLine('Scanning files in: ./src/**/*.*');
 
     log('');
 

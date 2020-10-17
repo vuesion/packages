@@ -35,7 +35,16 @@ const testContent = `<div>
       return this.$t(
           'console.blocks.components.blockCard.notValid' /* Block failed to be uploaded. Please verify your manifest and try again */,
         );
-      } /* istanbul ignore else */ else if (this.disabled) {  
+      } /* istanbul ignore else */ else if (this.disabled) { 
+
+      this.t('key.from.normal.t.function' /* translation */);
+
+      i18n.t('function.from.i18n' /* translation */);
+
+      return this.t(
+          't.function.test' /* Block failed to be uploaded. Please verify your manifest and try again */,
+        );
+      } /* istanbul ignore else */ else if (this.disabled) { 
     </div>`;
 
 describe('Utils', () => {
@@ -66,6 +75,7 @@ describe('Utils', () => {
     expect(getTranslationsFromString(testContent)).toEqual([
       "$t(\n          'key',\n          { key: value } /* key:\n      {key}? */",
       "$t(\n          'console.blocks.components.blockCard.notValid' /* Block failed to be uploaded. Please verify your manifest and try again */",
+      ".t(\n          't.function.test' /* Block failed to be uploaded. Please verify your manifest and try again */",
       "$t('test' /* this is a test */)",
       "$t('foo' /* Foo */)",
       "$t('bar' /* bar */)",
@@ -75,6 +85,8 @@ describe('Utils', () => {
       "$t('App.nav.counter' /* Counter */)",
       "$t('components.register.submit.notification.text', model /* We've sent an email to: {email}! */)",
       "$t('components.markdown' /*\n      # Markdown support\\n\n      - build on top of marked\\n\n      - server side rendering!!!\\n\n      - `github style` markdown\n      */)",
+      ".t('key.from.normal.t.function' /* translation */)",
+      ".t('function.from.i18n' /* translation */)",
     ]);
 
     expect(getTranslationsFromString('')).toEqual([]);
@@ -86,7 +98,10 @@ describe('Utils', () => {
       bar: 'bar',
       'components.register.submit.notification.text': "We've sent an email to: {email}!",
       foo: 'Foo',
+      'function.from.i18n': 'translation',
       key: 'key: {key}?',
+      'key.from.normal.t.function': 'translation',
+      't.function.test': 'Block failed to be uploaded. Please verify your manifest and try again',
       test: 'this is a test',
       'test.foo': 'test (test) <test> test',
       'test.foo2': 'test (test) <test> test',
