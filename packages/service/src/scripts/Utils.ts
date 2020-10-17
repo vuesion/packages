@@ -1,8 +1,8 @@
 export const getTranslationsFromString = (content: string): RegExpMatchArray => {
   const result = [];
-  let matches = content.match(/\$t\(.*\/\*[\S,\s]*?\*\/\)/gm) || [];
+  let matches = content.match(/(\$|\.)t\(.*\/\*[\S,\s]*?\*\/\)/gm) || [];
 
-  matches = matches.concat(content.match(/\$t\(\s.*\s.*\s.*\s.*\)/gm) || []);
+  matches = matches.concat(content.match(/(\$|\.)t\(\s.*\s.*\s.*\s.*\)/gm) || []);
 
   /**
    * handle multiple comments
@@ -12,7 +12,7 @@ export const getTranslationsFromString = (content: string): RegExpMatchArray => 
     if (match.indexOf('*/,') > -1) {
       removeIdxs.push(idx);
       match.split('*/,').forEach((m: string) => {
-        if (m.indexOf('$t(') > -1) {
+        if (m.indexOf('$t(') > -1 || m.indexOf('.t(') > -1) {
           result.push(m.trim() + ' */');
         }
       });
