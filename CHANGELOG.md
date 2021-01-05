@@ -1,3 +1,9 @@
+#### 2021-01-05
+
+##### Chores
+
+*  update dependencies ([#64](https://github.com/vuesion/packages/pull/64)) ([dd313c52](https://github.com/vuesion/packages/commit/dd313c5231f26f51ab3d40bd6d03c93f96e64c60))
+
 #### 2020-10-17
 
 ##### New Features
