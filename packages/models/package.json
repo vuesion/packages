@@ -31,12 +31,12 @@
   "dependencies": {
     "@vuesion/utils": "^4.0.0-alpha.15",
     "ramda": "^0.27.1",
-    "ts-morph": "^8.1.0"
+    "ts-morph": "^9.1.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.21",
     "rimraf": "^3.0.2",
-    "typescript": "^4.0.2"
+    "typescript": "^4.1.3"
   },
   "publishConfig": {
     "access": "public"

@@ -91,7 +91,7 @@ export function Command(meta: ICommandMetadata): any {
       }
     });
 
-    command.action(function(...argsLocal) {
+    command.action(function (...argsLocal) {
       const hasArgs = meta.arguments.length > 0;
       const localCommand = isChildCommand ? getCommand(argsLocal) : command;
       const options = getOptions(localCommand);
