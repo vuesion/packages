@@ -18,8 +18,8 @@ function compile(fileNames: string[], options: ts.CompilerOptions): void {
 
 export const run = (): void => {
   compile([runtimeRoot('nuxt.config.ts')], {
-    noEmitOnError: true,
-    noImplicitAny: true,
+    noEmitOnError: false,
+    noImplicitAny: false,
     target: ts.ScriptTarget.ES5,
     module: ts.ModuleKind.CommonJS,
   });

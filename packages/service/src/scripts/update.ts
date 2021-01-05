@@ -19,7 +19,7 @@ const deleteFile = (status: string, filePath: string, idx: number) => {
     fs.unlink(filePath, () => {
       logError(`${idx} - ${status}: ${filePath}`);
 
-      resolve();
+      resolve(null);
     });
   });
 };
@@ -28,7 +28,7 @@ const renameFile = (status: string, oldPath: string, newPath: string, idx: numbe
     fs.rename(oldPath, newPath, () => {
       logInfo(`${idx} - ${status}: ${oldPath} --> ${newPath}`);
 
-      resolve();
+      resolve(null);
     });
   });
 };
@@ -56,12 +56,12 @@ const downloadFile = async (status: string, filePath: string, url: string, idx: 
         file.on('finish', () => {
           file.close();
           downloadFinished(status, filePath, idx);
-          resolve();
+          resolve(null);
         });
       })
       .on('error', () => {
         deleteFile(status, filePath, idx);
-        resolve();
+        resolve(null);
       });
   });
 };

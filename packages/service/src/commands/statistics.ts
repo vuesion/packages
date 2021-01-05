@@ -22,10 +22,7 @@ const getDate = (date: string) => {
   newDate.setHours(newDate.getHours() + 1);
   newDate.setMinutes(newDate.getMinutes() + 4);
 
-  return newDate
-    .toISOString()
-    .slice(0, 10)
-    .replace('T', ' ');
+  return newDate.toISOString().slice(0, 10).replace('T', ' ');
 };
 
 const getType = (message: string) => {

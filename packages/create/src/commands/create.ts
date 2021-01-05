@@ -26,7 +26,7 @@ export class Create implements ICommandHandler {
         if (e) {
           reject({ code: 1, trace: e.toString() });
         }
-        resolve();
+        resolve(null);
       });
     });
   }

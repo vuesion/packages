@@ -6,7 +6,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
-    "target": "esnext",
+    "target": "es2019",
     "skipLibCheck": true
   },
   "include": ["./packages/**/*", "./packages/**/*.vue", "./scripts/*.ts"],

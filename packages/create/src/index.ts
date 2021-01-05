@@ -10,9 +10,6 @@ const ServicePackage = JSON.parse(
   fs.readFileSync(path.join(packagesRoot('create'), '../..', 'package.json')).toString(),
 );
 
-commander
-  .name('create-vuesion-app')
-  .version(ServicePackage.version)
-  .description(ServicePackage.description);
+commander.name('create-vuesion-app').version(ServicePackage.version).description(ServicePackage.description);
 
 commander.parse(process.argv);
