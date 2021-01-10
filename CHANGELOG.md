@@ -1,3 +1,9 @@
+#### 2021-01-10
+
+##### New Features
+
+* **service:**  add interface generator ([#65](https://github.com/vuesion/packages/pull/65)) ([3a0660a6](https://github.com/vuesion/packages/commit/3a0660a6007015dbad49696a00519d05394d5b1f))
+
 #### 2021-01-05
 
 ##### Chores
