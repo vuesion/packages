@@ -7,7 +7,9 @@ import { getIntInRange } from '@vuesion/utils';
 interface IInterfaceDefinition {
   id: string;
   type: string;
+  plainType: string;
   isImported: boolean;
+  isArray: boolean;
 }
 
 export = {
@@ -63,33 +65,49 @@ export = {
       'interfaces',
       filePath.join('/'),
     );
-    data.interfaceImportPath = `@/interfaces/${filePath.join('/')}/${data.interfaceName}`;
+    data.interfaceImportPath = `@/interfaces/${filePath.length > 0 ? filePath.join('/') + '/' : ''}${
+      data.interfaceName
+    }`;
     data.interfaceImports = [];
     data.fixtureImports = [];
-    data.interfaceDefinition = data.definition.split(/[,;]/).map(
-      (definition: string): IInterfaceDefinition => {
-        let [id, type] = definition.split(':');
-        let isImported = false;
+    data.interfaceDefinition = data.definition
+      .replace(/(^,)|(,$)/g, '')
+      .replace(/(^;)|(;$)/g, '')
+      .split(/[,;]/)
+      .map(
+        (definition: string): IInterfaceDefinition => {
+          let [id, type] = definition.split(':');
 
-        id = id.trim();
-        type = type.trim();
+          id = id.trim();
+          type = type.trim();
 
-        if (type !== data.interfaceName) {
-          const files = glob.sync(`./src/interfaces/**/${type}.ts`);
-          isImported = files.length > 0;
+          let isImported = false;
+          const isArray = type.indexOf('[]') > -1 || type.indexOf('Array') > -1;
+          const plainType = type.replace('[]', '').replace('Array', '').replace('<', '').replace('>', '');
 
-          files.forEach((file) => {
-            const interfacePath = `@${file.replace('./src', '')}`;
-            const fixturePath = `@/fixtures${file.replace('./src/interfaces', '')}`;
+          if (type !== data.interfaceName) {
+            const files = glob.sync(`./src/interfaces/**/${plainType}.ts`);
+            isImported = files.length > 0;
 
-            data.interfaceImports.push(`import { ${type} } from '${interfacePath}'`);
-            data.fixtureImports.push(`import { ${type}Fixture } from '${fixturePath}'`);
-          });
-        }
+            files.forEach((file) => {
+              const interfacePath = `@${file.replace('./src', '')}`;
+              const fixturePath = `@/fixtures${file.replace('./src/interfaces', '')}`;
+              const interfaceImport = `import { ${plainType} } from '${interfacePath}'`;
+              const fixtureImport = `import { ${plainType}CollectionFixture, ${plainType}Fixture } from '${fixturePath}'`;
 
-        return { id, type, isImported };
-      },
-    );
+              if (data.interfaceImports.indexOf(interfaceImport) === -1) {
+                data.interfaceImports.push(interfaceImport);
+              }
+
+              if (data.fixtureImports.indexOf(fixtureImport) === -1) {
+                data.fixtureImports.push(fixtureImport);
+              }
+            });
+          }
+
+          return { id, type, isImported, isArray, plainType };
+        },
+      );
     data.fixturePath = path.join(
       process.cwd(),
       VuesionConfig.generators.outputDirectory,
@@ -122,20 +140,28 @@ export = {
 
         data.interfaceDefinition.forEach((item: IInterfaceDefinition, idx) => {
           const id = item.id.replace('?', '');
-          fixture += ` ${id}:`;
+          fixture += ` ${id}: `;
 
-          if (item.type.toLocaleLowerCase() === 'string') {
-            fixture += ` '${kebabCase(id)}-${i + 1}'`;
-          } else if (item.type.toLocaleLowerCase() === 'number') {
-            fixture += ` ${getIntInRange(1, 100)}`;
-          } else if (item.type.toLocaleLowerCase() === 'date') {
-            fixture += ` new Date('${today.toJSON().slice(0, 10)}')`;
-          } else if (item.type.toLocaleLowerCase() === 'boolean') {
-            fixture += ` true`;
+          if (item.isArray && !item.isImported) {
+            fixture += '[';
+          }
+
+          if (item.plainType.toLocaleLowerCase() === 'string') {
+            fixture += `'${kebabCase(id)}-${i + 1}'`;
+          } else if (item.plainType.toLocaleLowerCase() === 'number') {
+            fixture += `${getIntInRange(1, 100)}`;
+          } else if (item.plainType.toLocaleLowerCase() === 'date') {
+            fixture += `new Date('${today.toJSON().slice(0, 10)}')`;
+          } else if (item.plainType.toLocaleLowerCase() === 'boolean') {
+            fixture += `true`;
           } else if (item.isImported) {
-            fixture += ` ${item.type}Fixture()`;
+            fixture += item.isArray ? `${item.plainType}CollectionFixture()` : `${item.plainType}Fixture()`;
           } else {
-            fixture += ` null`;
+            fixture += `null`;
+          }
+
+          if (item.isArray && !item.isImported) {
+            fixture += ']';
           }
 
           fixture += idx < maxDefinitions - 1 ? ',' : '';
