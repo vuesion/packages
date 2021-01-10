@@ -2,6 +2,12 @@
 
 ##### New Features
 
+* **generators:**  support arrays in interface generator ([90f4e315](https://github.com/vuesion/packages/commit/90f4e3152216ef061fa1c0f28d08023a5bdb679e))
+
+#### 2021-01-10
+
+##### New Features
+
 * **service:**  add interface generator ([#65](https://github.com/vuesion/packages/pull/65)) ([3a0660a6](https://github.com/vuesion/packages/commit/3a0660a6007015dbad49696a00519d05394d5b1f))
 
 #### 2021-01-05
