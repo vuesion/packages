@@ -1,3 +1,9 @@
+#### 2021-01-23
+
+##### New Features
+
+* **service:**  improve i18n extraction ([fb64ae52](https://github.com/vuesion/packages/commit/fb64ae520fb11b695dd14fd6f955502b5d0767a3))
+
 #### 2021-01-10
 
 ##### New Features
