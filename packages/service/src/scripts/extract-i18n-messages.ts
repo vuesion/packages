@@ -27,7 +27,7 @@ export const run = (): void => {
 
   glob('./src/**/*.*', (err: any, files: string[]) => {
     const basePath: string = path.resolve(process.cwd());
-    const supportedLocales: string[] = NuxtConfig.i18n.locales.map((l: any) => l.code);
+    const supportedLocales: Array<{ code: string; file: string }> = NuxtConfig.i18n.locales;
     const defaultLocale = NuxtConfig.i18n.defaultLocale;
     let translations: any = {};
 
@@ -50,8 +50,8 @@ export const run = (): void => {
     /**
      * analyze and write languages files
      */
-    supportedLocales.forEach((locale: string) => {
-      const i18nFilePath: string = path.join(basePath, 'i18n', `${locale}.json`);
+    supportedLocales.forEach((locale) => {
+      const i18nFilePath: string = path.join(basePath, 'i18n', `${locale.file}`);
       const i18nFileContent: string = fs.existsSync(i18nFilePath) ? fs.readFileSync(i18nFilePath).toString() : null;
       const i18nFileObject: any = i18nFileContent ? JSON.parse(i18nFileContent) : {};
 
@@ -60,7 +60,7 @@ export const run = (): void => {
       });
 
       const newI18nObject: any =
-        locale === defaultLocale
+        locale.code === defaultLocale
           ? (Object as any).assign({}, i18nFileObject, translations)
           : (Object as any).assign({}, translations, i18nFileObject);
 
@@ -76,7 +76,7 @@ export const run = (): void => {
 
       fs.writeFileSync(i18nFilePath, `{\n  ${sortedEntries.join(',\n  ')}\n}\n`);
 
-      log(`Updated: ./i18n/${locale}.json.`);
+      log(`Updated locale ${locale.code}: ./i18n/${locale.file}.`);
     });
 
     log('');
