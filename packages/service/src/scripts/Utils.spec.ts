@@ -24,6 +24,18 @@ const testContent = `<div>
       - \`github style\` markdown
       */)
       
+           <vue-input
+              id="password"
+              v-model="password"
+              name="password"
+              type="password"
+              required
+              :label="$t('common.password' /* Password */)"
+              :placeholder="$t('common.password.placeholder' /* Enter any password */)"
+              validation="required|min:6"
+              :error-message="$t('auth.LoginForm.password.error' /* The password has to have at least 6 characters */)"
+            />
+      
 	    {{
         $t(
           'key',
@@ -45,6 +57,32 @@ const testContent = `<div>
           't.function.test' /* Block failed to be uploaded. Please verify your manifest and try again */,
         );
       } /* istanbul ignore else */ else if (this.disabled) { 
+      
+          else if (foo === 'foo') {
+        return vm.$t(
+          'fii.faa.question.fuu' /* fii.faa.question.fuu? */,
+        );
+    const bar = computed(() => {
+      if (value === 'blubb') {
+        return vm.$t(
+          'eins.zwei.drei.vier.fuenf' /* eins.zwei.drei.vier.fuenf */,
+        );
+      } else if (value === '1337') {
+        return vm.$t(
+          'one.two.three.four.five' /* one.two.three.four.five */,
+        );
+      } else if (value === 'balla balla') {
+        return vm.$t(
+          'whoop.whooooop.whop.whoooop' /* whoop.whooooop.whop.whoooop*/,
+        );
+      } else if (value === 'Juan') {
+        return vm.$t(
+          'Juan.Martin.Dennis.Charly.Hugo' /* Juan.Martin.Dennis.Charly.Hugo */,
+        );
+      } else if (value === 'ihhahhhh') {
+        return vm.$t('cloud.tifa.barrett.aerith.sephiroth' /* cloud.tifa.barrett.aerith.sephiroth */);
+      }
+    });
     </div>`;
 
 describe('Utils', () => {
@@ -71,27 +109,6 @@ describe('Utils', () => {
     expect(sanitizeMessage(message)).toBe('<a>test</a>');
   });
 
-  test('should parse translations from a string', () => {
-    expect(getTranslationsFromString(testContent)).toEqual([
-      "$t(\n          'key',\n          { key: value } /* key:\n      {key}? */",
-      "$t(\n          'console.blocks.components.blockCard.notValid' /* Block failed to be uploaded. Please verify your manifest and try again */",
-      ".t(\n          't.function.test' /* Block failed to be uploaded. Please verify your manifest and try again */",
-      "$t('test' /* this is a test */)",
-      "$t('foo' /* Foo */)",
-      "$t('bar' /* bar */)",
-      "$t('test.foo' /* test (test) [test] test */)",
-      "$t('test.foo2' /* test (test) [test] test */)",
-      '$t("test.bar" /* test (test) [test] test */)',
-      "$t('App.nav.counter' /* Counter */)",
-      "$t('components.register.submit.notification.text', model /* We've sent an email to: {email}! */)",
-      "$t('components.markdown' /*\n      # Markdown support\\n\n      - build on top of marked\\n\n      - server side rendering!!!\\n\n      - `github style` markdown\n      */)",
-      ".t('key.from.normal.t.function' /* translation */)",
-      ".t('function.from.i18n' /* translation */)",
-    ]);
-
-    expect(getTranslationsFromString('')).toEqual([]);
-  });
-
   test('should get a translation object', () => {
     expect(getTranslationObject(getTranslationsFromString(testContent))).toEqual({
       'App.nav.counter': 'Counter',
@@ -109,6 +126,19 @@ describe('Utils', () => {
         '# Markdown support\\n - build on top of marked\\n - server side rendering!!!\\n - `github style` markdown',
       'console.blocks.components.blockCard.notValid':
         'Block failed to be uploaded. Please verify your manifest and try again',
+      'common.password': 'Password',
+      'common.password.placeholder': 'Enter any password',
+      'auth.LoginForm.password.error': 'The password has to have at least 6 characters',
+      'Juan.Martin.Dennis.Charly.Hugo': 'Juan.Martin.Dennis.Charly.Hugo',
+      'cloud.tifa.barrett.aerith.sephiroth': 'cloud.tifa.barrett.aerith.sephiroth',
+      'eins.zwei.drei.vier.fuenf': 'eins.zwei.drei.vier.fuenf',
+      'fii.faa.question.fuu': 'fii.faa.question.fuu?',
+      'one.two.three.four.five': 'one.two.three.four.five',
+      'whoop.whooooop.whop.whoooop': 'whoop.whooooop.whop.whoooop',
     });
+  });
+
+  test('should get an empty translation object', () => {
+    expect(getTranslationObject(getTranslationsFromString(''))).toEqual({});
   });
 });

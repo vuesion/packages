@@ -12,9 +12,15 @@ export const getTranslationsFromString = (content: string): RegExpMatchArray => 
     if (match.indexOf('*/,') > -1) {
       removeIdxs.push(idx);
       match.split('*/,').forEach((m: string) => {
-        if (m.indexOf('$t(') > -1 || m.indexOf('.t(') > -1) {
-          result.push(m.trim() + ' */');
-        }
+        const checkMatchFor = (search: string) => {
+          if (m.indexOf(search) > -1) {
+            const r = m.substring(m.indexOf('$t(')) + ' */';
+
+            result.push(r.trim());
+          }
+        };
+        checkMatchFor('$t(');
+        checkMatchFor('.t(');
       });
     }
   });
