@@ -2,6 +2,12 @@
 
 ##### New Features
 
+* **generators:**  put interface in interfaces folder ([9a8a0408](https://github.com/vuesion/packages/commit/9a8a0408f1e653be2133f7bfe9c4d7cbc5e0c87d))
+
+#### 2021-01-23
+
+##### New Features
+
 * **service:**  use locale file as file name for i18n extraction ([87e33dd8](https://github.com/vuesion/packages/commit/87e33dd869ca397e4a2273f0b5c47e06af2bc7b9))
 
 #### 2021-01-23
