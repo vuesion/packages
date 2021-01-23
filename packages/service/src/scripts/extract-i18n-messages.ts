@@ -36,7 +36,7 @@ export const run = (): void => {
     log('');
 
     /**
-     * go through all *.vue files end extract the translation object $t('foo') -> {id: 'foo'}
+     * go through all files and extract the translation object $t('foo') -> {id: 'foo'}
      */
     files.forEach((file: string) => {
       const content = fs.readFileSync(file).toString();

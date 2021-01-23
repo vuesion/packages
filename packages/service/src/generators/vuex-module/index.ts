@@ -37,7 +37,8 @@ export = {
     data.pluralName = pluralName;
     data.modulePath = filePath.join('/');
     data.componentName = data.singularName;
-    data.basePath = path.join(process.cwd(), VuesionConfig.generators.outputDirectory, filePath.join('/'), 'store');
+    data.basePath = path.join(process.cwd(), VuesionConfig.generators.outputDirectory, 'store', filePath.join('/'));
+    data.outputDirectory = path.join(process.cwd(), VuesionConfig.generators.outputDirectory);
     data.wantRoutes = true;
     data.wantVuex = true;
 
@@ -112,7 +113,7 @@ export = {
       },
       {
         type: 'add',
-        path: '{{basePath}}/{{camelCase singularName}}/I{{properCase singularName}}.ts',
+        path: '{{outputDirectory}}/interfaces/I{{properCase singularName}}.ts',
         templateFile: path.join(
           process.cwd(),
           VuesionConfig.generators.blueprintDirectory,
