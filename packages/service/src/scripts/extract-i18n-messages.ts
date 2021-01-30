@@ -8,7 +8,7 @@ import { ensureDirectoryExists } from '@vuesion/utils/dist/fileSystem';
 import { sync } from 'rimraf';
 import { VuesionConfig } from '@vuesion/models';
 
-export const run = (): void => {
+export const run = (sort: boolean, update: boolean): void => {
   if (!VuesionConfig.i18n) {
     logErrorBold(`Please add the i18n property to ./.vuesion/config.json
 example:`);
@@ -60,21 +60,23 @@ example:`);
       });
 
       const newI18nObject: any =
-        locale.code === defaultLocale
+        locale.code === defaultLocale && update
           ? (Object as any).assign({}, i18nFileObject, translations)
           : (Object as any).assign({}, translations, i18nFileObject);
 
-      /**
-       * sort entries
-       */
-      const sortedKeys: string[] = (Object as any).keys(newI18nObject).sort();
-      const sortedEntries: string[] = sortedKeys.map((key: string) => {
+      let translationKeys: string[] = (Object as any).keys(newI18nObject);
+
+      if (sort) {
+        translationKeys = translationKeys.sort();
+      }
+
+      const entries: string[] = translationKeys.map((key: string) => {
         return `"${key}": "${newI18nObject[key]}"`;
       });
 
       ensureDirectoryExists(i18nFilePath);
 
-      fs.writeFileSync(i18nFilePath, `{\n  ${sortedEntries.join(',\n  ')}\n}\n`);
+      fs.writeFileSync(i18nFilePath, `{\n  ${entries.join(',\n  ')}\n}\n`);
 
       log(`Updated locale ${locale.code}: ./i18n/${locale.file}.`);
     });
