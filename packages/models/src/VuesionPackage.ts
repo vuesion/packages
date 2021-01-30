@@ -1,6 +1,5 @@
 import { JSONModel } from './JSONModel';
 import { runtimeRoot } from '@vuesion/utils';
-import { VuesionConfig } from './VuesionConfig';
 
 interface IVuesionPackage extends Object {
   name: string;
@@ -50,18 +49,6 @@ class Model extends JSONModel<IVuesionPackage> implements IVuesionPackage {
       this.dependencies = this.model.dependencies;
       this.devDependencies = this.model.devDependencies;
       this.jest = this.model.jest;
-    }
-  }
-
-  public updateModuleNameMapper() {
-    const aliases = VuesionConfig.getWebpackAliases();
-
-    if (aliases) {
-      Object.keys(aliases).map((alias: string) => {
-        this.model.jest.moduleNameMapper[`^${alias}/(.*)$`] = `<rootDir>/${aliases[alias]}/$1`;
-      });
-
-      this.save(false);
     }
   }
 
