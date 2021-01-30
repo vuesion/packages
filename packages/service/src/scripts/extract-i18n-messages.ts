@@ -1,34 +1,34 @@
 import * as glob from 'glob';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as ts from 'typescript';
 import { getTranslationObject, getTranslationsFromString } from './Utils';
-import { runtimeRoot } from '@vuesion/utils';
+import { logError, logErrorBold, runtimeRoot } from '@vuesion/utils';
 import { HeadLine, log, Result } from '@vuesion/utils/dist/ui';
 import { ensureDirectoryExists } from '@vuesion/utils/dist/fileSystem';
 import { sync } from 'rimraf';
-
-function compile(fileNames: string[], options: ts.CompilerOptions): void {
-  const program = ts.createProgram(fileNames, options);
-  const emitResult = program.emit();
-  const allDiagnostics = ts.getPreEmitDiagnostics(program).concat(emitResult.diagnostics);
-
-  allDiagnostics.forEach(() => null);
-}
+import { VuesionConfig } from '@vuesion/models';
 
 export const run = (): void => {
-  compile([runtimeRoot('nuxt.config.ts')], {
-    noEmitOnError: false,
-    noImplicitAny: false,
-    target: ts.ScriptTarget.ES5,
-    module: ts.ModuleKind.CommonJS,
-  });
-  const NuxtConfig: any = require(runtimeRoot('nuxt.config.js')).default;
+  if (!VuesionConfig.i18n) {
+    logErrorBold(`Please add the i18n property to ./.vuesion/config.json
+example:`);
+    logError(`"i18n": {
+  "locales": [
+    {
+      "code": "en", 
+      "file": "en.json"
+    }
+  ],
+  "defaultLocale": "en"
+}`);
+
+    return;
+  }
 
   glob('./src/**/*.*', (err: any, files: string[]) => {
     const basePath: string = path.resolve(process.cwd());
-    const supportedLocales: Array<{ code: string; file: string }> = NuxtConfig.i18n.locales;
-    const defaultLocale = NuxtConfig.i18n.defaultLocale;
+    const locales = VuesionConfig.i18n.locales;
+    const defaultLocale = VuesionConfig.i18n.defaultLocale;
     let translations: any = {};
 
     HeadLine('Scanning files in: ./src/**/*.*');
@@ -50,7 +50,7 @@ export const run = (): void => {
     /**
      * analyze and write languages files
      */
-    supportedLocales.forEach((locale) => {
+    locales.forEach((locale) => {
       const i18nFilePath: string = path.join(basePath, 'i18n', `${locale.file}`);
       const i18nFileContent: string = fs.existsSync(i18nFilePath) ? fs.readFileSync(i18nFilePath).toString() : null;
       const i18nFileObject: any = i18nFileContent ? JSON.parse(i18nFileContent) : {};
