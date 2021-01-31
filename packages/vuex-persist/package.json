@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/vuex-persist",
-  "version": "4.0.0-beta.0",
+  "version": "4.0.0-beta.1",
   "description": "vuesion vuex middleware to persist state + adapters",
   "keywords": [
     "vue.js",

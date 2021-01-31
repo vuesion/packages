@@ -1,3 +1,11 @@
+#### 2021-01-31
+
+##### New Features
+
+* **service:**
+  *  add flags for sort and update for i18n script ([3b49532a](https://github.com/vuesion/packages/commit/3b49532adfe236567391703c9ce9df4971711a72))
+  *  use VuesionConfig for i18n script ([84f1891c](https://github.com/vuesion/packages/commit/84f1891c218f76f4246deb9e221943ddebfa7ffe))
+
 #### 2021-01-23
 
 ##### New Features
