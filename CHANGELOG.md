@@ -1,3 +1,9 @@
+#### 2021-02-07
+
+##### New Features
+
+* **service:**  add flag for setting default translations for i18n script ([#67](https://github.com/vuesion/packages/pull/67)) ([a8d7fe01](https://github.com/vuesion/packages/commit/a8d7fe01636092f71bd9c96a7875886062b33c67))
+
 #### 2021-01-31
 
 ##### New Features
