@@ -8,7 +8,7 @@ import { ensureDirectoryExists } from '@vuesion/utils/dist/fileSystem';
 import { sync } from 'rimraf';
 import { VuesionConfig } from '@vuesion/models';
 
-export const run = (sort: boolean, update: boolean): void => {
+export const run = (sort: boolean, update: boolean, defaultTranslation: boolean): void => {
   if (!VuesionConfig.i18n) {
     logErrorBold(`Please add the i18n property to ./.vuesion/config.json
 example:`);
@@ -51,34 +51,52 @@ example:`);
      * analyze and write languages files
      */
     locales.forEach((locale) => {
-      const i18nFilePath: string = path.join(basePath, 'i18n', `${locale.file}`);
-      const i18nFileContent: string = fs.existsSync(i18nFilePath) ? fs.readFileSync(i18nFilePath).toString() : null;
-      const i18nFileObject: any = i18nFileContent ? JSON.parse(i18nFileContent) : {};
+      try {
+        const i18nFilePath: string = path.join(basePath, 'i18n', `${locale.file}`);
+        const i18nFileContent: string = fs.existsSync(i18nFilePath) ? fs.readFileSync(i18nFilePath).toString() : null;
+        const i18nFileObject: any = i18nFileContent ? JSON.parse(i18nFileContent) : {};
+        const isDefaultI18nFile = locale.code === defaultLocale;
 
-      (Object as any).keys(i18nFileObject).forEach((key: string) => {
-        i18nFileObject[key] = i18nFileObject[key].replace(/\n/g, '\\n').replace(/"/g, '\\"');
-      });
+        (Object as any).keys(i18nFileObject).forEach((key: string) => {
+          i18nFileObject[key] = i18nFileObject[key]
+            ? i18nFileObject[key].replace(/\n/g, '\\n').replace(/"/g, '\\"')
+            : null;
+        });
 
-      const newI18nObject: any =
-        locale.code === defaultLocale && update
-          ? (Object as any).assign({}, i18nFileObject, translations)
-          : (Object as any).assign({}, translations, i18nFileObject);
+        if (isDefaultI18nFile === false && defaultTranslation === false) {
+          Object.keys(translations).forEach((key) => (translations[key] = null));
+        }
 
-      let translationKeys: string[] = (Object as any).keys(newI18nObject);
+        let newI18nObject: any = (Object as any).assign({}, translations, i18nFileObject);
 
-      if (sort) {
-        translationKeys = translationKeys.sort();
+        if (isDefaultI18nFile && update) {
+          newI18nObject = (Object as any).assign({}, i18nFileObject, translations);
+        }
+
+        newI18nObject = (Object as any).assign({}, i18nFileObject, newI18nObject);
+
+        let translationKeys: string[] = (Object as any).keys(newI18nObject);
+
+        if (sort) {
+          translationKeys = translationKeys.sort();
+        }
+
+        const entries: string[] = translationKeys.map((key: string) => {
+          if (newI18nObject[key]) {
+            return `"${key}": "${newI18nObject[key]}"`;
+          }
+
+          return `"${key}": null`;
+        });
+
+        ensureDirectoryExists(i18nFilePath);
+
+        fs.writeFileSync(i18nFilePath, `{\n  ${entries.join(',\n  ')}\n}\n`);
+
+        log(`Updated locale ${locale.code}: ./i18n/${locale.file}.`);
+      } catch (e) {
+        logError(`Error in ./i18n/${locale.file}.: ${e}`);
       }
-
-      const entries: string[] = translationKeys.map((key: string) => {
-        return `"${key}": "${newI18nObject[key]}"`;
-      });
-
-      ensureDirectoryExists(i18nFilePath);
-
-      fs.writeFileSync(i18nFilePath, `{\n  ${entries.join(',\n  ')}\n}\n`);
-
-      log(`Updated locale ${locale.code}: ./i18n/${locale.file}.`);
     });
 
     log('');
