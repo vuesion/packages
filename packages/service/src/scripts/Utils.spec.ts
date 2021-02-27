@@ -94,6 +94,39 @@ const testContent = `<div>
           )
         : null;
     },
+    
+    myFunction() {
+      return this.myCondition
+        ? this.$t(
+            'key-with-brackets',
+            {
+              option: this.myOption,
+            } /* String with option: ({option}) */,
+          )
+        : null;
+    },
+    
+    myFunction() {
+      return this.myCondition
+        ? this.$t(
+            'key-with-squared-brackets',
+            {
+              option: this.myOption,
+            } /* String with option: [{option})] */,
+          )
+        : null;
+    },
+    
+    myFunction() {
+      return this.myCondition
+        ? this.$t(
+            'key-with-multiple-non-alpha-characters',
+            {
+              option: this.myOption,
+            } /* {option}, :-/()=?ß12324346346§$%"$!"$1241$"§% */,
+          )
+        : null;
+    },
     </div>`;
 
 describe('Utils', () => {
@@ -147,6 +180,9 @@ describe('Utils', () => {
       'one.two.three.four.five': 'one.two.three.four.five',
       'whoop.whooooop.whop.whoooop': 'whoop.whooooop.whop.whoooop',
       'my.super.duper.translation-key': 'String with option: {option}',
+      'key-with-brackets': 'String with option: ({option})',
+      'key-with-squared-brackets': 'String with option: <{option})>',
+      'key-with-multiple-non-alpha-characters': '{option}, :-/()=?ß12324346346§$%\\"$!\\"$1241$\\"§%',
     });
   });
 
