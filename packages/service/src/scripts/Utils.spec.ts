@@ -83,6 +83,17 @@ const testContent = `<div>
         return vm.$t('cloud.tifa.barrett.aerith.sephiroth' /* cloud.tifa.barrett.aerith.sephiroth */);
       }
     });
+    
+    myFunction() {
+      return this.myCondition
+        ? this.$t(
+            'my.super.duper.translation-key',
+            {
+              option: this.myOption,
+            } /* String with option: {option} */,
+          )
+        : null;
+    },
     </div>`;
 
 describe('Utils', () => {
@@ -135,6 +146,7 @@ describe('Utils', () => {
       'fii.faa.question.fuu': 'fii.faa.question.fuu?',
       'one.two.three.four.five': 'one.two.three.four.five',
       'whoop.whooooop.whop.whoooop': 'whoop.whooooop.whop.whoooop',
+      'my.super.duper.translation-key': 'String with option: {option}',
     });
   });
 

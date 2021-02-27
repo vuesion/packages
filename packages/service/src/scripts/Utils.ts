@@ -2,7 +2,7 @@ export const getTranslationsFromString = (content: string): RegExpMatchArray => 
   const result = [];
   let matches = content.match(/(\$|\.)t\(.*\/\*[\S,\s]*?\*\/\)/gm) || [];
 
-  matches = matches.concat(content.match(/(\$|\.)t\(\s.*\s.*\s.*\s.*\)/gm) || []);
+  matches = matches.concat(content.match(/(\$|\.)t\([^)]*\)/gm) || []);
 
   /**
    * handle multiple comments
