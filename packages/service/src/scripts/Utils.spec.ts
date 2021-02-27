@@ -83,6 +83,50 @@ const testContent = `<div>
         return vm.$t('cloud.tifa.barrett.aerith.sephiroth' /* cloud.tifa.barrett.aerith.sephiroth */);
       }
     });
+    
+    myFunction() {
+      return this.myCondition
+        ? this.$t(
+            'my.super.duper.translation-key',
+            {
+              option: this.myOption,
+            } /* String with option: {option} */,
+          )
+        : null;
+    },
+    
+    myFunction() {
+      return this.myCondition
+        ? this.$t(
+            'key-with-brackets',
+            {
+              option: this.myOption,
+            } /* String with option: ({option}) */,
+          )
+        : null;
+    },
+    
+    myFunction() {
+      return this.myCondition
+        ? this.$t(
+            'key-with-squared-brackets',
+            {
+              option: this.myOption,
+            } /* String with option: [{option})] */,
+          )
+        : null;
+    },
+    
+    myFunction() {
+      return this.myCondition
+        ? this.$t(
+            'key-with-multiple-non-alpha-characters',
+            {
+              option: this.myOption,
+            } /* {option}, :-/()=?ß12324346346§$%"$!"$1241$"§% */,
+          )
+        : null;
+    },
     </div>`;
 
 describe('Utils', () => {
@@ -135,6 +179,10 @@ describe('Utils', () => {
       'fii.faa.question.fuu': 'fii.faa.question.fuu?',
       'one.two.three.four.five': 'one.two.three.four.five',
       'whoop.whooooop.whop.whoooop': 'whoop.whooooop.whop.whoooop',
+      'my.super.duper.translation-key': 'String with option: {option}',
+      'key-with-brackets': 'String with option: ({option})',
+      'key-with-squared-brackets': 'String with option: <{option})>',
+      'key-with-multiple-non-alpha-characters': '{option}, :-/()=?ß12324346346§$%\\"$!\\"$1241$\\"§%',
     });
   });
 
