@@ -1,3 +1,9 @@
+#### 2021-02-27
+
+##### New Features
+
+* **service:**  more use-cases for i18n script ([#68](https://github.com/vuesion/packages/pull/68)) ([fb070e61](https://github.com/vuesion/packages/commit/fb070e618bdf6f1e7f78953b44ded7d966186bb3))
+
 #### 2021-02-07
 
 ##### New Features

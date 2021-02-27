@@ -1,6 +1,6 @@
 {
   "name": "@vuesion/create",
-  "version": "4.0.0-beta.2",
+  "version": "4.0.0-beta.3",
   "description": "vuesion cli for creating vuesion applications",
   "keywords": [
     "vue.js",
