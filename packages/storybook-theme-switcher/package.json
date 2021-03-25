@@ -10,7 +10,8 @@
     "theming",
     "themes",
     "vuesion",
-    "vue-starter"
+    "vue-starter",
+    "storybook-addon"
   ],
   "author": "Johannes Werner <johannes.werner86@gmail.com>",
   "homepage": "https://github.com/vuesion/packages#readme",
