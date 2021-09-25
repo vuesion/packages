@@ -29,7 +29,7 @@ export class PostInstall implements ICommandHandler {
 
   private updateVuesionPackage() {
     VuesionPackage.name = kebabCase(lowerCase(this.optionsObject.name));
-    VuesionPackage.version = '0.0.0';
+    VuesionPackage.version = '0.0.1';
     VuesionPackage.description = 'Created with vuesion.';
     VuesionPackage.repository = { type: '', url: '' };
     VuesionPackage.keywords = [];

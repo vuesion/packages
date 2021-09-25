@@ -66,14 +66,23 @@ export class Create implements ICommandHandler {
       await this.download(branch, destination);
 
       process.chdir(destination);
-
-      await this.install(options);
-      await this.postInstall(destination, options);
-
-      this.spinner.message = `Project ${chalk.bold(this.name)} successfully created`;
-      this.spinner.stop();
     } catch (e) {
       handleProcessError(e, this.spinner);
     }
+
+    try {
+      await this.install(options);
+    } catch (e) {
+      this.spinner.message = '';
+    }
+
+    try {
+      await this.postInstall(destination, options);
+    } catch (e) {
+      this.spinner.message = '';
+    }
+
+    this.spinner.message = `Project ${chalk.bold(this.name)} successfully created`;
+    this.spinner.stop();
   }
 }
