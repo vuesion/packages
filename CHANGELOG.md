@@ -1,3 +1,13 @@
+#### 2021-09-25
+
+##### Chores
+
+*  update @vuesion/storybook-theme-switcher package.json for addon-catalog ([#69](https://github.com/vuesion/packages/pull/69)) ([2a3c64fc](https://github.com/vuesion/packages/commit/2a3c64fc3bdcaac0168a4957e3158e5bdf49f51d))
+
+##### New Features
+
+* **create:**  make install process more stable ([15b839d5](https://github.com/vuesion/packages/commit/15b839d51f759ebf4d27201f0b1d209d8862a405))
+
 #### 2021-02-27
 
 ##### New Features
