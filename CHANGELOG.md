@@ -1,3 +1,9 @@
+#### 2023-01-05
+
+##### Chores
+
+*  update main repo deps ([e4c926ae](https://github.com/vuesion/packages/commit/e4c926ae19277d08c03c7d0d1823159e37d20829))
+
 #### 2021-09-25
 
 ##### Chores
