@@ -1,8 +1,8 @@
-import * as chalk from 'chalk';
 import { Command, ICommandHandler, IRunOptions } from '../../../service/src/decorators/command';
 import { handleProcessError, runProcess, runtimeRoot, Spinner } from '../../../utils/src';
 import { lowerCase, kebabCase } from 'lodash';
 
+const clc = require("cli-color");
 const download = require('download-git-repo');
 
 @Command({
@@ -82,7 +82,7 @@ export class Create implements ICommandHandler {
       this.spinner.message = '';
     }
 
-    this.spinner.message = `Project ${chalk.bold(this.name)} successfully created`;
+    this.spinner.message = `Project ${clc.bold(this.name)} successfully created`;
     this.spinner.stop();
   }
 }

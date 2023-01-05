@@ -1,6 +1,5 @@
 import React from 'react';
 import { STORY_RENDERED } from '@storybook/core-events';
-// @ts-ignore
 import { Icons, IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 import { styled } from '@storybook/theming';
 
@@ -55,8 +54,7 @@ export class ThemeSwitcher extends React.Component<any, any> {
     };
   }
 
-  // @ts-ignore
-  public change = (...args: any) => this.setState(...args);
+  public change = (...args: Array<string>) => this.setState([...args]);
 
   public componentDidMount() {
     const { api } = this.props;

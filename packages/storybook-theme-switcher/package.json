@@ -35,18 +35,13 @@
     "url": "https://github.com/vuesion/packages/issues"
   },
   "devDependencies": {
-    "@storybook/addons": "^5.0.11",
-    "@storybook/components": "^5.3.17",
-    "@storybook/theming": "^5.3.17",
-    "@storybook/vue": "^5.0.11",
-    "@types/react": "^17.0.0",
+    "@storybook/addons": "^6.5.15",
+    "@storybook/components": "^6.5.15",
+    "@storybook/theming": "^6.5.15",
+    "@storybook/vue3": "^6.5.15",
+    "@types/react": "^18.0.26",
     "rimraf": "^3.0.2",
-    "typescript": "^4.1.3"
-  },
-  "peerDependencies": {
-    "@storybook/addons": ">=5",
-    "@storybook/vue": ">=5",
-    "react": "*"
+    "typescript": "^4.9.4"
   },
   "publishConfig": {
     "access": "public"
