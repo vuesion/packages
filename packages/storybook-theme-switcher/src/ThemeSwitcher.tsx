@@ -7,7 +7,7 @@ const createItem = (id: string, title: string, change: any) => ({
   id,
   title,
   onClick: () => {
-    change({ selected: { id, title }, expanded: false });
+    change({ id, title });
     (document as any).querySelector('#storybook-preview-iframe').contentDocument.documentElement.className = id;
   },
 });
@@ -22,7 +22,6 @@ const IconButtonLabel: any = styled.div(({ theme }) => ({
 
 export class ThemeSwitcher extends React.Component<any, any> {
   public listener: any;
-  public document: any = null;
 
   constructor(props: any) {
     super(props);
@@ -30,7 +29,6 @@ export class ThemeSwitcher extends React.Component<any, any> {
     this.state = {
       themes: [],
       selected: null,
-      expanded: false,
     };
 
     this.listener = () => {
@@ -54,7 +52,7 @@ export class ThemeSwitcher extends React.Component<any, any> {
     };
   }
 
-  public change = (...args: Array<string>) => this.setState([...args]);
+  public change = (selected: any) => this.setState({ selected: selected });
 
   public componentDidMount() {
     const { api } = this.props;
@@ -62,15 +60,14 @@ export class ThemeSwitcher extends React.Component<any, any> {
   }
 
   public render() {
-    const { selected, themes, expanded } = this.state;
+    const { selected, themes } = this.state;
     return themes.length > 0 ? (
       <WithTooltip
         placement="top"
         trigger="click"
-        tooltipShown={expanded}
-        onVisibilityChange={(s: any) => this.setState({ expanded: s })}
+        onVisibleChange={(s: any) => this.setState({ expanded: s })}
         tooltip={<TooltipLinkList links={themes} />}
-        closeOnClick
+        closeOnOutsideClick
       >
         <IconButtonWithLabel key="theme" title="Change the application theme">
           <Icons icon="eye" />

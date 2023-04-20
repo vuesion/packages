@@ -2,4 +2,4 @@
 'use strict';
 
 process.title = 'create-vuesion-app';
-require('../dist/create/src/index');
+require('../dist/index');

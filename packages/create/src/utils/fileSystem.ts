@@ -1,5 +1,5 @@
 import * as path from 'path';
-import * as fs from 'fs';
+import * as fs   from 'fs';
 
 export const folderExists = (folder: string): boolean => {
   return fs.existsSync(path.resolve(folder));

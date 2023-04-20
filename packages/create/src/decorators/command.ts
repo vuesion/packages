@@ -1,4 +1,4 @@
-import * as commander from 'commander';
+import { program } from 'commander';
 
 export interface ICommandMetadata {
   name?: string;
@@ -63,7 +63,7 @@ export function Command(meta: ICommandMetadata): any {
   return (Target) => {
     const target: ICommandHandler = new Target();
     const isChildCommand = meta.name !== undefined;
-    const command = isChildCommand ? commander.command(meta.name) : commander;
+    const command = isChildCommand ? program.command(meta.name) : program;
 
     command.allowUnknownOption();
 
@@ -91,14 +91,14 @@ export function Command(meta: ICommandMetadata): any {
       }
     });
 
-    command.action(function (...argsLocal) {
+    command.action(function (...argsLocal: Array<any>) {
       const hasArgs = meta.arguments.length > 0;
+      const options: any = argsLocal.slice(0, argsLocal.length - 1).pop();
       const localCommand = isChildCommand ? getCommand(argsLocal) : command;
-      const options = getOptions(localCommand);
-      const args = isChildCommand ? localCommand.parent.rawArgs.splice(3) : localCommand.rawArgs.splice(3);
+      const args = localCommand.rawArgs.splice(3);
       const debug = localCommand.parent ? !!localCommand.parent.debug : !!localCommand.debug;
 
-      options.forEach((option: string) => (target[option] = localCommand[option]));
+      Object.keys(options).forEach((option: string) => (target[option] = options[option]));
 
       if (hasArgs) {
         meta.arguments.forEach((arg: IArgument, idx: number) => {

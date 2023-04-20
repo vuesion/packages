@@ -1,8 +1,10 @@
-import { Command, ICommandHandler, IRunOptions } from '../../../service/src/decorators/command';
-import { handleProcessError, runProcess, runtimeRoot, Spinner } from '../../../utils/src';
+import { Command, ICommandHandler, IRunOptions } from '../decorators/command';
+import { handleProcessError, runProcess, runtimeRoot, Spinner } from '../utils';
 import { lowerCase, kebabCase } from 'lodash';
+import { PackageJson } from '../models/PackageJson';
+import * as path from 'path';
 
-const clc = require("cli-color");
+const clc = require('cli-color');
 const download = require('download-git-repo');
 
 @Command({
@@ -34,20 +36,24 @@ export class Create implements ICommandHandler {
   private async install(options) {
     this.spinner.message = 'Installing dependencies...';
 
-    await runProcess('npm', ['install'], { silent: true, ...options });
+    await runProcess('npm', ['install', '--legacy-peer-deps'], { silent: true, ...options });
   }
 
   private async postInstall(destination, options) {
     this.spinner.message = 'Running post-install...';
 
-    await runProcess(
-      destination + '/node_modules/.bin/vuesion',
-      ['post-install', JSON.stringify({ name: this.name })],
-      {
-        silent: true,
-        ...options,
-      },
-    );
+    const packageJson = new PackageJson(path.join(destination, 'package.json'));
+
+    packageJson.name = this.name;
+    packageJson.version = '0.0.1';
+    packageJson.description = 'This Project is powered by vuesion.';
+    packageJson.repository = { type: '', url: '' };
+    packageJson.keywords = [];
+    packageJson.author = '';
+    packageJson.homepage = '';
+    packageJson.bugs = { url: '' };
+
+    packageJson.save(true);
   }
 
   public async run(args: string[], options: IRunOptions) {

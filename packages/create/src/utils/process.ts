@@ -1,5 +1,5 @@
 import { ChildProcess, SpawnOptions } from 'child_process';
-import { logError, Spinner } from './ui';
+import { logError, Spinner }          from './ui';
 import Signals = NodeJS.Signals;
 
 export interface IProcessOptions {

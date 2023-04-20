@@ -1,6 +1,6 @@
 import * as fs from 'fs';
-import * as path from 'path';
-import { runProcess } from '../packages/utils/src';
+import * as path                 from 'path';
+import { runProcess }            from '../packages/create/src/utils';
 import { getPackages, IPackage } from './Packages';
 import { getGraph, INode } from './Graph';
 
