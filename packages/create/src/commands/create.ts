@@ -36,7 +36,7 @@ export class Create implements ICommandHandler {
   private async install(options) {
     this.spinner.message = 'Installing dependencies...';
 
-    await runProcess('npm', ['install', '--legacy-peer-deps'], { silent: true, ...options });
+    await runProcess('npm', ['install'], { silent: true, ...options });
   }
 
   private async postInstall(destination, options) {
@@ -60,7 +60,7 @@ export class Create implements ICommandHandler {
     this.name = kebabCase(lowerCase(this.name));
 
     const destination = runtimeRoot(this.name);
-    let branch = 'github:vuesion/vuesion';
+    let branch = 'github:vuesion/vuesion#main';
 
     if (this.next) {
       branch = 'github:vuesion/vuesion#next';
