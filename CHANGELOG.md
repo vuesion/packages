@@ -1,3 +1,9 @@
+#### 2023-09-09
+
+##### New Features
+
+* **create:**  use main branch as default ([4b51ecfa](https://github.com/vuesion/packages/commit/4b51ecfa9c67d8dbee72e9c26a268703963c3190))
+
 #### 2023-04-24
 
 #### 2023-04-20
